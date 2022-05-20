@@ -420,6 +420,49 @@ namespace ImpHoleCalculation
             return i;
         }
 
+
+        //получение всех скважин со всеми индексами
+        public void getAllHole()
+        {
+            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+            SqlConnection con = new SqlConnection(connectionString);
+            String query = @"select SensorHole.HoleID, Holes.Name, SensorHole.SensorID, Sensors.HWID, SensorHole.BeginTime, SensorHole.EndTime 
+                            from SensorHole, Sensors, Holes
+                            where Sensors.ID = SensorHole.SensorID 
+                            AND Holes.ID = SensorHole.HoleID
+                            " +
+                            @"  ";
+            con.Open();
+            SqlCommand command = new SqlCommand(query, con);
+            SqlDataReader reader = command.ExecuteReader();
+            int i = 0;
+
+            while (reader.Read())
+            {
+                TempHoleGridView.Rows.Add();
+                String holeID = reader[0].ToString();
+                String holeName = reader[1].ToString();
+                String sensorID = reader[2].ToString();
+                String hwid = reader[3].ToString();
+
+                //DateTime dateBefore = DateTime.Parse(reader[4].ToString());
+                //DateTime dateAfter = DateTime.Parse(reader[5].ToString());
+
+                int colCount = TempHoleGridView.ColumnCount;
+
+                TempHoleGridView.Rows[i].Cells[0].Value = double.Parse(holeID); ;
+                TempHoleGridView.Rows[i].Cells[1].Value = double.Parse(holeName);
+                TempHoleGridView.Rows[i].Cells[2].Value = double.Parse(sensorID);
+                TempHoleGridView.Rows[i].Cells[3].Value = double.Parse(hwid);
+                try { TempHoleGridView.Rows[i].Cells[4].Value = DateTime.Parse(reader[4].ToString()); }
+                catch { TempHoleGridView.Rows[i].Cells[4].Value = DateTime.MaxValue; }
+                try { TempHoleGridView.Rows[i].Cells[5].Value = DateTime.Parse(reader[5].ToString()); }
+                catch { TempHoleGridView.Rows[i].Cells[5].Value = DateTime.MaxValue; }
+                i++;
+            }
+            con.Close();
+        }
+
         //добавление всех Т по событиям в вспомог табл (2й запрос)
         //public List<string> getT()
         public void setT()
@@ -956,15 +999,19 @@ namespace ImpHoleCalculation
             //progressBar.Value = 0;
             //progressBar2.Value = 0;
             //labelNumbImpAll.Text = "";
-            
+
             //typeCheck();
             //progressBarSet_Impulses();
 
+            /*
             getAllImpulses();
             sortDate(); // сортировка выбившихся значений
 
             setHoleDateRow();
-            
+            */
+
+            getAllHole();
+
             //setT2();
             //setImpulses();
 
@@ -1711,6 +1758,7 @@ namespace ImpHoleCalculation
             }
             return numArray;
         }
+        //=============================================================================
 
         private void ReturnButton_Click(object sender, EventArgs e)
         {
