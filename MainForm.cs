@@ -607,6 +607,44 @@ namespace ImpHoleCalculation
             }
         }
 
+        //получение списка скважин в таблицу
+        public void HoleList()
+        {
+            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+            SqlConnection con = new SqlConnection(connectionString);
+            String query = @"select Holes.Name 
+                            from Holes
+                            " +
+                            @"  ";
+
+            con.Open();
+            SqlCommand command = new SqlCommand(query, con);
+            SqlDataReader reader = command.ExecuteReader();
+            int i = 0;
+
+            while (reader.Read())
+            {
+                HoleListGridView.Rows.Add();
+
+
+                int colCount = HoleListGridView.ColumnCount;
+
+                HoleListGridView.Rows[i].Cells[0].Value = i + 1;
+                HoleListGridView.Rows[i].Cells[1].Value = double.Parse(reader[0].ToString());
+                HoleListGridView.Rows[i].Cells[2].Value = 0;
+                i++;
+
+                //progressBar.Value += 1; // увел счетчика прогресс бара
+            }
+            con.Close();
+        }
+
+        //расчет количества ипульсов по скважинам
+        public void countImpByHole()
+        {
+            HoleList();
+        }
+
         //вычисление частоты
         private void getAllFreq()
         {
@@ -742,6 +780,8 @@ namespace ImpHoleCalculation
             getAllImpulses();
             sortDate(); // сортировка выбившихся значений по дате (импульсы)
             setImpHoleData(); // проставление имен скважин
+
+            countImpByHole(); //расчет количества импульсов по скважинам
 
             //setHoleDateRow();
 

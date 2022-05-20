@@ -79,6 +79,10 @@
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HoleListGridView = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TempHoleGridView)).BeginInit();
@@ -87,6 +91,7 @@
             this.tabControl1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupboxType.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.HoleListGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // dateBefore
@@ -195,6 +200,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.HoleListGridView);
             this.tabPage1.Controls.Add(this.TempHoleGridView);
             this.tabPage1.Controls.Add(this.ImpulsesGridView);
             this.tabPage1.Controls.Add(this.ImpulseHoleGridView);
@@ -218,7 +224,7 @@
             this.Column9,
             this.Column10,
             this.Column11});
-            this.TempHoleGridView.Location = new System.Drawing.Point(579, 0);
+            this.TempHoleGridView.Location = new System.Drawing.Point(364, 6);
             this.TempHoleGridView.Name = "TempHoleGridView";
             this.TempHoleGridView.Size = new System.Drawing.Size(406, 235);
             this.TempHoleGridView.TabIndex = 4;
@@ -236,7 +242,7 @@
             this.Column3});
             this.ImpulsesGridView.Location = new System.Drawing.Point(6, 258);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
-            this.ImpulsesGridView.Size = new System.Drawing.Size(546, 245);
+            this.ImpulsesGridView.Size = new System.Drawing.Size(368, 245);
             this.ImpulsesGridView.TabIndex = 3;
             // 
             // ImpulseHoleGridView
@@ -249,9 +255,9 @@
             this.Column6,
             this.Column7,
             this.Column23});
-            this.ImpulseHoleGridView.Location = new System.Drawing.Point(6, 18);
+            this.ImpulseHoleGridView.Location = new System.Drawing.Point(918, 6);
             this.ImpulseHoleGridView.Name = "ImpulseHoleGridView";
-            this.ImpulseHoleGridView.Size = new System.Drawing.Size(368, 234);
+            this.ImpulseHoleGridView.Size = new System.Drawing.Size(87, 234);
             this.ImpulseHoleGridView.TabIndex = 2;
             // 
             // Column6
@@ -561,6 +567,33 @@
             this.Column3.HeaderText = "Имя скважины";
             this.Column3.Name = "Column3";
             // 
+            // HoleListGridView
+            // 
+            this.HoleListGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.HoleListGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column12});
+            this.HoleListGridView.Location = new System.Drawing.Point(6, 6);
+            this.HoleListGridView.Name = "HoleListGridView";
+            this.HoleListGridView.Size = new System.Drawing.Size(352, 227);
+            this.HoleListGridView.TabIndex = 44;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "№";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Имя скважины";
+            this.Column2.Name = "Column2";
+            // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "Количество импульсов";
+            this.Column12.Name = "Column12";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -596,6 +629,7 @@
             this.groupBox4.PerformLayout();
             this.groupboxType.ResumeLayout(false);
             this.groupboxType.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.HoleListGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -653,5 +687,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column34;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridView HoleListGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
     }
 }
