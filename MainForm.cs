@@ -401,7 +401,8 @@ namespace ImpHoleCalculation
                 ImpulsesGridView.Rows[i].Cells[0].Value = i + 1;
                 ImpulsesGridView.Rows[i].Cells[1].Value = double.Parse(impID);
                 ImpulsesGridView.Rows[i].Cells[2].Value = double.Parse(hwid);
-                ImpulsesGridView.Rows[i].Cells[3].Value = DateTime.Parse(eventDate); 
+                ImpulsesGridView.Rows[i].Cells[3].Value = DateTime.Parse(eventDate);
+                ImpulsesGridView.Rows[i].Cells[4].Value = 0; // имя скважины
 
                 /*
                 try {ImpulsesGridView.Rows[i].Cells[13].Value = double.Parse(reader[9].ToString());}
@@ -463,175 +464,6 @@ namespace ImpHoleCalculation
             con.Close();
         }
 
-        //добавление всех Т по событиям в вспомог табл (2й запрос)
-        //public List<string> getT()
-        public void setT()
-        {
-            List<string> listT = new List<string>();
-
-            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
-            SqlConnection con = new SqlConnection(connectionString);
-            String query = @"select AE_Events.T1, AE_Events.T2, AE_Events.T3, AE_Events.T4, AE_Events.T5, AE_Events.T6, AE_Events.T7,AE_Events.T8, AE_Events.T9,
-                            AE_Events.EventType,  AE_Events.EventID  
-                            from AE_Events
-                             ";
-
-            DateTime dateB = Convert.ToDateTime(dateBefore.Text);
-            DateTime dateA = Convert.ToDateTime(dateAfter.Text);
-
-            String date = @" where 
-                         (AE_Events.EventDateTime BETWEEN '" + dateB.Ticks + "' AND '" +
-                  dateA.Ticks + "')";
-            if (!dateCheckBox.Checked) //вывести по всей бд
-                query += date;
-
-            con.Open();
-            SqlCommand command = new SqlCommand(query, con);
-            SqlDataReader reader = command.ExecuteReader();
-
-            int i = 0;
-            int checkCountT = 1;
-            int checkRow = 0;
-
-            int rowCount = ImpulsesGridView.Rows.Count;
-            while (reader.Read())
-            {
-                double type = double.Parse(reader[9].ToString());
-                if (!correctType.Contains(type)) continue;
-                String T0 = "0";
-                //listT.Add(T0);
-                ImpulsesGridView.Rows[i].Cells[9].Value = T0;
-                ImpulsesGridView.Rows[i].Cells[10].Value = 1;
-                checkRow = i; //для обозначения первой строчки с новым событием
-                i++;
-                progressBar.Value += 1; // увел счетчика прогресс бара
-
-                String T1 = reader[0].ToString();
-                //if (T1 != "") listT.Add(T1);
-                if (T1 != "") {
-                    ImpulsesGridView.Rows[i].Cells[9].Value = T1;
-                    ImpulsesGridView.Rows[i].Cells[10].Value = 2;
-                    i++;
-                    checkCountT = 2;
-                    progressBar.Value += 1; // увел счетчика прогресс бара
-                }
-                
-                String T2 = reader[1].ToString();
-                //if (T2 != "") listT.Add(T2) ;
-                if (T2 != "") {
-                    ImpulsesGridView.Rows[i].Cells[9].Value = T2;
-                    ImpulsesGridView.Rows[i].Cells[10].Value = 3;
-                    i++;
-                    checkCountT = 3;
-                    progressBar.Value += 1; // увел счетчика прогресс бара
-                }
-                
-                String T3 = reader[2].ToString();
-                //if (T3 != "") listT.Add(T3);
-                if (T3 != "") {
-                    ImpulsesGridView.Rows[i].Cells[9].Value = T3;
-                    ImpulsesGridView.Rows[i].Cells[10].Value = 4;
-                    i++;
-                    checkCountT = 4;
-                    progressBar.Value += 1; // увел счетчика прогресс бара
-                }
-                
-                String T4 = reader[3].ToString();
-                //if (T4 != "") listT.Add(T4);
-                if (T4 != "") {
-                    ImpulsesGridView.Rows[i].Cells[9].Value = T4;
-                    ImpulsesGridView.Rows[i].Cells[10].Value = 5;
-                    i++;
-                    checkCountT = 5;
-                    progressBar.Value += 1; // увел счетчика прогресс бара
-                }
-                
-                String T5 = reader[4].ToString();
-                //if (T5 != "") listT.Add(T5);
-                if (T5 != "") {
-                    ImpulsesGridView.Rows[i].Cells[9].Value = T5;
-                    ImpulsesGridView.Rows[i].Cells[10].Value = 6;
-                    i++;
-                    checkCountT = 6;
-                    progressBar.Value += 1; // увел счетчика прогресс бара
-                }
-                
-                String T6 = reader[5].ToString();
-                //if (T6 != "") listT.Add(T6);
-                if (T6 != "") {
-                    ImpulsesGridView.Rows[i].Cells[9].Value = T6;
-                    ImpulsesGridView.Rows[i].Cells[10].Value = 7;
-                    i++;
-                    checkCountT = 7;
-                    progressBar.Value += 1; // увел счетчика прогресс бара
-                }
-               
-                String T7 = reader[6].ToString();
-                //if (T7 != "") listT.Add(T7);
-                if (T7 != "") {
-                    ImpulsesGridView.Rows[i].Cells[9].Value = T7;
-                    ImpulsesGridView.Rows[i].Cells[10].Value = 8;
-                    i++;
-                    checkCountT = 8;
-                    progressBar.Value += 1; // увел счетчика прогресс бара
-                }
-                
-                String T8 = reader[7].ToString();
-                //if (T8 != "") listT.Add(T8);
-                if (T8 != "") {
-                    ImpulsesGridView.Rows[i].Cells[9].Value = T8;
-                    ImpulsesGridView.Rows[i].Cells[10].Value = 9;
-                    i++;
-                    checkCountT = 9;
-                    progressBar.Value += 1; // увел счетчика прогресс бара
-                }
-               
-                String T9 = reader[8].ToString();
-                //if (T9 != "") listT.Add(T9); 
-                if (T9 != "") {
-                    ImpulsesGridView.Rows[i].Cells[9].Value = T9;
-                    ImpulsesGridView.Rows[i].Cells[10].Value = 10;
-                    i++;
-                    checkCountT = 10;
-                    progressBar.Value += 1; // увел счетчика прогресс бара
-                }
-                ImpulsesGridView.Rows[checkRow].Cells[11].Value = checkCountT;
-                checkCountT = 1;
-                
-            }
-
-            con.Close();
-
-            //return listT;
-        }
-        //добавление всех Т по событиям в вспомог табл (диагональный перебор)
-        public void setT2()
-        {
-            int rowCount = ImpulsesGridView.Rows.Count;
-            bool check = true;
-            int ImpIndex = 0; //индекc количества импульсов в событии
-            int c = 0; // счетчик прохождения по импульсам
-            double currentEvent = 0;
-
-            for (int i = 0; i< rowCount-1; i++)
-            {
-                currentEvent = double.Parse(ImpulsesGridView.Rows[i].Cells[1].Value.ToString());
-                ImpIndex = i;
-                while (currentEvent == double.Parse(ImpulsesGridView.Rows[i].Cells[1].Value.ToString()))
-                {
-                    ImpulsesGridView.Rows[i].Cells[9].Value = ImpulsesGridView.Rows[i].Cells[12+c].Value.ToString();               
-                    c++;
-                    ImpulsesGridView.Rows[i].Cells[10].Value = c; // № импульса
-                    i++;
-
-                    if (i == rowCount - 1) break;
-                }
-                ImpulsesGridView.Rows[ImpIndex].Cells[11].Value = c; //кол-во импульсов
-                c = 0;
-                i--;
-            }
-        }
-
         public void sortDate()
         {
             ImpulsesGridView.Sort(ImpulsesGridView.Columns[3], ListSortDirection.Ascending);
@@ -671,20 +503,7 @@ namespace ImpHoleCalculation
         }
 
 
-        /*
-        //вставка в вспомонтателную таблицу всех Т
-        public void addTtoGrid()
-        {
-            List<string> ListT = getT();
-            int i = 0;
-            int colCount = ImpulsesGridView.ColumnCount;
-            foreach (string T in ListT)
-            {
-                ImpulsesGridView.Rows[i].Cells[9].Value = T;
-                i++;
-            }
-        }
-        */
+  
 
         //добавление импульсов в основную таблицу
         public void setImpulses()
@@ -754,39 +573,6 @@ namespace ImpHoleCalculation
             }
         }
 
-        //получение всех импульсов по номерам ААЗ в таблицу (временное решение ;) ) - старая версия по ААЗ
-        private void getAllImpulsesAAZ()
-        {
-            ImpulsesGridView.Rows.Clear();
-            List<string[]> listAAZ = listAZZ();// получение списка ААЗ
-            int i = 0; // счетчик строк
-            foreach (string[] AAZID in listAAZ)
-            {
-                List<string> imp = getImpulsesHWID_AAZ(AAZID);
-                foreach (string HWID in imp)
-                {
-                    i = setImpulsesByHWID_AAZ(HWID, AAZID[0], AAZID[4], i); //0 - номер, 4 - тип
-                }
-            }
-            //format(0, 2); // изм-ие HWID'a под Геоаккустикс
-        }
-
-        //получение всех импульсов по номерам Событий в таблицу - версия по событиям
-        private void getAllImpulsesEvent()
-        {
-            ImpulsesGridView.Rows.Clear();
-
-            List<string[]> listEvent = listEvents();// получение списка ААЗ
-            int i = 0; // счетчик строк
-            foreach (string[] EventsID in listEvent)
-            {
-                List<string> imp = getImpulsesHWID_Events(EventsID);
-                foreach (string HWID in imp)
-                {
-                    i = setImpulsesByHWID_Events(HWID, EventsID[0], EventsID[1], i); //0 - номер, 1 - тип
-                }
-            } 
-        }
 
         //получение всех импульсов по номерам Событий в таблицу - версия по событиям (сбор скопом)
         private void getAllImpulses()
@@ -794,6 +580,31 @@ namespace ImpHoleCalculation
             ImpulsesGridView.Rows.Clear();
             ImpulseHoleGridView.Rows.Clear();
             setImpulsesByDate();
+        }
+
+        //заполнение в вспомогательную таблицу импульсов соответствующие скважины
+        public void setImpHoleData()
+        {
+            int rowCountImp = ImpulsesGridView.RowCount;
+            int rowCountHoleImp = TempHoleGridView.RowCount;
+
+            for (int i = 0; i< rowCountImp-1; i++)
+            {
+                for (int j = 0; j< rowCountHoleImp-1; j++)
+                {
+                    DateTime dateBefore = DateTime.Parse(TempHoleGridView.Rows[j].Cells[4].Value.ToString());
+                    DateTime dateAfter = DateTime.Parse(TempHoleGridView.Rows[j].Cells[5].Value.ToString());
+                    int hwidInHole = int.Parse(TempHoleGridView.Rows[j].Cells[3].Value.ToString());
+
+                    DateTime dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                    int hwidImp = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
+                    if (dateBefore<=dateImp && dateImp<= dateAfter && hwidImp == hwidInHole)
+                    {
+                        ImpulsesGridView.Rows[i].Cells[4].Value = TempHoleGridView.Rows[j].Cells[1].Value.ToString();
+                        break;
+                    }
+                }
+            }
         }
 
         //вычисление частоты
@@ -898,82 +709,6 @@ namespace ImpHoleCalculation
             return res;//1960
         }
 
-        //сбор зон (ААЗ)
-        private List<String[]> listAZZ()
-        {
-            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
-            SqlConnection con = new SqlConnection(connectionString);
-            String query = @"select AAZID, AAZEventFirstTime,   AAZEventLastTime, EventCount, AazType  " +
-                           @" from AAZ ";
-                              
-            /*
-           String date = @" where 
-                         (AAZEventLastTime BETWEEN '" + dateBefore.Text + "' AND '" +
-                             dateAfter.Text + "' OR AAZEventFirstTime BETWEEN '" +
-                             dateBefore.Text + "'  AND '" + dateAfter.Text + "')";
-            if(!dateCheckBox.Checked) //вывести по всей бд
-                query += date;
-                */
-            SqlCommand command = new SqlCommand(query, con);
-            con.Open();
-            SqlDataReader reader = command.ExecuteReader();
-
-
-            List<string[]> listAAZ = new List<string[]>();
-
-            while (reader.Read())
-            {
-                String[] mas = new String[5];
-                mas[0] = reader[0].ToString();
-                mas[1] = reader[1].ToString();
-                mas[2] = reader[2].ToString();
-                mas[3] = reader[3].ToString();
-                mas[4] = reader[4].ToString();
-                listAAZ.Add(mas);
-
-
-            }
-            // for (int i = 0; i < AAZdataGridView.Rows.Count - 1; i++)
-            // {
-            //     listAAZ.Add(AAZdataGridView.Rows[i].Cells[0].Value.ToString());
-            // }
-            con.Close();
-            return listAAZ;
-        }
-
-        private List<String[]> listEvents()
-        {
-            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
-            SqlConnection con = new SqlConnection(connectionString);
-            String query = @"select AE_Events.ID_of_Event, AE_Events.EventType " +
-                           @" from AE_Events ";
-
-
-            String date = @" where 
-                             (AE_Events.ImportDateTime BETWEEN '" + dateBefore.Text + "' AND '" +
-                              dateAfter.Text + "')";
-
-            if (!dateCheckBox.Checked) //вывести по всей бд
-                query += date;
-
-            SqlCommand command = new SqlCommand(query, con);
-            con.Open();
-            SqlDataReader reader = command.ExecuteReader();
-
-
-            List<string[]> listEvents = new List<string[]>();
-
-            while (reader.Read())
-            {
-                String[] mas = new String[2];
-                mas[0] = reader[0].ToString(); //ID
-                mas[1] = reader[1].ToString(); //Тип
-                listEvents.Add(mas);
-            }
-            con.Close();
-            return listEvents;
-        }
-
             private void format(int position, int col)
         {
             int id = 0;
@@ -1003,14 +738,15 @@ namespace ImpHoleCalculation
             //typeCheck();
             //progressBarSet_Impulses();
 
-            /*
-            getAllImpulses();
-            sortDate(); // сортировка выбившихся значений
-
-            setHoleDateRow();
-            */
-
             getAllHole();
+            getAllImpulses();
+            sortDate(); // сортировка выбившихся значений по дате (импульсы)
+            setImpHoleData(); // проставление имен скважин
+
+            //setHoleDateRow();
+
+
+
 
             //setT2();
             //setImpulses();
