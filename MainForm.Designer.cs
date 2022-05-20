@@ -40,42 +40,7 @@
             this.startButtonTest = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.ImpulsesGridView = new System.Windows.Forms.DataGridView();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column33 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column31 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column35 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ImpulseDiffGridView = new System.Windows.Forms.DataGridView();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImpulseHoleGridView = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.labelNumbImpAll = new System.Windows.Forms.Label();
@@ -99,10 +64,20 @@
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulsesGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ImpulseDiffGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupboxType.SuspendLayout();
@@ -215,7 +190,7 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.ImpulsesGridView);
-            this.tabPage1.Controls.Add(this.ImpulseDiffGridView);
+            this.tabPage1.Controls.Add(this.ImpulseHoleGridView);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -231,232 +206,31 @@
             this.ImpulsesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ImpulsesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column18,
-            this.Column33,
-            this.Column34,
             this.Column24,
             this.Column13,
-            this.Column14,
-            this.Column15,
-            this.Column3,
-            this.Column16,
-            this.Column19,
-            this.Column4,
-            this.Column25,
+            this.Column34,
             this.Column1,
             this.Column2,
-            this.Column26,
-            this.Column27,
-            this.Column28,
-            this.Column29,
-            this.Column30,
-            this.Column31,
-            this.Column32,
-            this.Column35});
-            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 493);
+            this.Column3});
+            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 258);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
-            this.ImpulsesGridView.Size = new System.Drawing.Size(989, 10);
+            this.ImpulsesGridView.Size = new System.Drawing.Size(989, 245);
             this.ImpulsesGridView.TabIndex = 3;
-            this.ImpulsesGridView.Visible = false;
             // 
-            // Column18
+            // ImpulseHoleGridView
             // 
-            this.Column18.HeaderText = "№";
-            this.Column18.Name = "Column18";
-            // 
-            // Column33
-            // 
-            this.Column33.HeaderText = "№ события";
-            this.Column33.Name = "Column33";
-            // 
-            // Column34
-            // 
-            this.Column34.HeaderText = "Дата (событие)";
-            this.Column34.Name = "Column34";
-            // 
-            // Column24
-            // 
-            this.Column24.HeaderText = "ID";
-            this.Column24.Name = "Column24";
-            // 
-            // Column13
-            // 
-            this.Column13.HeaderText = "HWID";
-            this.Column13.Name = "Column13";
-            // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "Амплитуда";
-            this.Column14.Name = "Column14";
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "Длительность";
-            this.Column15.Name = "Column15";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Длит. фронта";
-            this.Column3.Name = "Column3";
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "Тип";
-            this.Column16.Name = "Column16";
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "Т";
-            this.Column19.Name = "Column19";
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "№ T для события";
-            this.Column4.Name = "Column4";
-            // 
-            // Column25
-            // 
-            this.Column25.HeaderText = "Количество импульсов";
-            this.Column25.Name = "Column25";
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "T0";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "T1";
-            this.Column2.Name = "Column2";
-            // 
-            // Column26
-            // 
-            this.Column26.HeaderText = "T2";
-            this.Column26.Name = "Column26";
-            // 
-            // Column27
-            // 
-            this.Column27.HeaderText = "T3";
-            this.Column27.Name = "Column27";
-            // 
-            // Column28
-            // 
-            this.Column28.HeaderText = "T4";
-            this.Column28.Name = "Column28";
-            // 
-            // Column29
-            // 
-            this.Column29.HeaderText = "T5";
-            this.Column29.Name = "Column29";
-            // 
-            // Column30
-            // 
-            this.Column30.HeaderText = "T6";
-            this.Column30.Name = "Column30";
-            // 
-            // Column31
-            // 
-            this.Column31.HeaderText = "T7";
-            this.Column31.Name = "Column31";
-            // 
-            // Column32
-            // 
-            this.Column32.HeaderText = "T8";
-            this.Column32.Name = "Column32";
-            // 
-            // Column35
-            // 
-            this.Column35.HeaderText = "T9";
-            this.Column35.Name = "Column35";
-            // 
-            // ImpulseDiffGridView
-            // 
-            this.ImpulseDiffGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ImpulseHoleGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ImpulseDiffGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ImpulseDiffGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ImpulseHoleGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ImpulseHoleGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column6,
-            this.Column5,
             this.Column7,
-            this.Column23,
-            this.Column8,
-            this.Column9,
-            this.Column12,
-            this.Column17,
-            this.Column10,
-            this.Column11,
-            this.Column20,
-            this.Column21,
-            this.Column22});
-            this.ImpulseDiffGridView.Location = new System.Drawing.Point(6, 18);
-            this.ImpulseDiffGridView.Name = "ImpulseDiffGridView";
-            this.ImpulseDiffGridView.Size = new System.Drawing.Size(989, 469);
-            this.ImpulseDiffGridView.TabIndex = 2;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "№";
-            this.Column6.Name = "Column6";
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "№ события";
-            this.Column5.Name = "Column5";
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "Дата";
-            this.Column7.Name = "Column7";
-            // 
-            // Column23
-            // 
-            this.Column23.HeaderText = "Тип события";
-            this.Column23.Name = "Column23";
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "Импульсы";
-            this.Column8.Name = "Column8";
-            // 
-            // Column9
-            // 
-            this.Column9.HeaderText = "РВП";
-            this.Column9.Name = "Column9";
-            // 
-            // Column12
-            // 
-            this.Column12.HeaderText = "Амплитуда 1";
-            this.Column12.Name = "Column12";
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "Амплитуда 2";
-            this.Column17.Name = "Column17";
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "Длительность 1";
-            this.Column10.Name = "Column10";
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "Длительность 2";
-            this.Column11.Name = "Column11";
-            // 
-            // Column20
-            // 
-            this.Column20.HeaderText = "Длительность фронта 1";
-            this.Column20.Name = "Column20";
-            // 
-            // Column21
-            // 
-            this.Column21.HeaderText = "Длительность фронта 2";
-            this.Column21.Name = "Column21";
-            // 
-            // Column22
-            // 
-            this.Column22.HeaderText = "Коэффициент";
-            this.Column22.Name = "Column22";
+            this.Column23});
+            this.ImpulseHoleGridView.Location = new System.Drawing.Point(6, 18);
+            this.ImpulseHoleGridView.Name = "ImpulseHoleGridView";
+            this.ImpulseHoleGridView.Size = new System.Drawing.Size(989, 234);
+            this.ImpulseHoleGridView.TabIndex = 2;
             // 
             // tabControl1
             // 
@@ -695,6 +469,56 @@
             this.label2.TabIndex = 43;
             this.label2.Text = "Прогресс подсчета";
             // 
+            // Column18
+            // 
+            this.Column18.HeaderText = "№";
+            this.Column18.Name = "Column18";
+            // 
+            // Column24
+            // 
+            this.Column24.HeaderText = "ID";
+            this.Column24.Name = "Column24";
+            // 
+            // Column13
+            // 
+            this.Column13.HeaderText = "HWID";
+            this.Column13.Name = "Column13";
+            // 
+            // Column34
+            // 
+            this.Column34.HeaderText = "Дата (импульс)";
+            this.Column34.Name = "Column34";
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Sensor ID";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Hole ID";
+            this.Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Имя скважины";
+            this.Column3.Name = "Column3";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "№";
+            this.Column6.Name = "Column6";
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Дата";
+            this.Column7.Name = "Column7";
+            // 
+            // Column23
+            // 
+            this.Column23.HeaderText = "Количество событий";
+            this.Column23.Name = "Column23";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -723,7 +547,7 @@
             this.groupBox1.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ImpulsesGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ImpulseDiffGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -746,24 +570,11 @@
         public System.Windows.Forms.Button startButtonTest;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView ImpulsesGridView;
-        private System.Windows.Forms.DataGridView ImpulseDiffGridView;
+        private System.Windows.Forms.DataGridView ImpulseHoleGridView;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.CheckBox dateCheckBox;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label labelNumbImpAll;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column22;
         private System.Windows.Forms.TextBox freqAfter;
         private System.Windows.Forms.TextBox freqBefore;
         private System.Windows.Forms.TextBox freqStep;
@@ -785,26 +596,14 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column33;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column34;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column24;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column25;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column34;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column26;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column27;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column28;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column29;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column30;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column31;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column32;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column35;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
     }
 }
