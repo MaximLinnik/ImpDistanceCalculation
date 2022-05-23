@@ -23,17 +23,15 @@ namespace ImpHoleCalculation
 
 
         MainForm MainForm;
-        List<List<double>> data;
         DataGridView ImpulsesGridView;
 
-        public HoleForm(MainForm MainForm, DataGridView ImpulsesGridView, String id, List<List<double>> data, String server, String db, String login, String password)
+        public HoleForm(MainForm MainForm, DataGridView ImpulsesGridView, String id, String server, String db, String login, String password)
         {
             this.server = server;
             this.db = db;
             this.login = login;
             this.password = password;
             this.id = id;
-            this.data = data;
             this.ImpulsesGridView = ImpulsesGridView;
             this.MainForm = MainForm;
 
@@ -112,9 +110,10 @@ namespace ImpHoleCalculation
         {
             int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
             Series series = impulseChart.Series[0];
-            for(int i = 0; i< rowCountImpHole-1; i++)
+            impulseChart.ChartAreas[0].AxisX.Maximum = rowCountImpHole-1;
+            for (int i = 0; i< rowCountImpHole-1; i++)
             {
-                DateTime dateImp = DateTime.Parse(ImpulseHoleGridView.Rows[i].Cells[1].Value.ToString());
+                String dateImp = ImpulseHoleGridView.Rows[i].Cells[1].Value.ToString();
                 int count = int.Parse(ImpulseHoleGridView.Rows[i].Cells[2].Value.ToString());
                 series.Points.AddXY(dateImp, count);
                 //series.Points.AddXY(i, i+1);

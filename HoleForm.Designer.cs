@@ -104,6 +104,7 @@
             this.impulseChart.Location = new System.Drawing.Point(351, 35);
             this.impulseChart.Name = "impulseChart";
             series1.ChartArea = "ChartArea1";
+            series1.IsVisibleInLegend = false;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.impulseChart.Series.Add(series1);

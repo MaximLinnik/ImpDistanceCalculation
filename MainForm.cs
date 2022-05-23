@@ -1651,9 +1651,9 @@ namespace ImpHoleCalculation
                 String id = row.Cells["Column2"].Value.ToString();
                 //String type = typeAAZ(id, this.connectionString);
                 MessageBox.Show("Выбранная скважина: " + id);
-                List<List<double>> list = sample(id);
+                //List<List<double>> list = sample(id);
                 //SelectUnitedForm.FormImpulse = new FormImpulse(this, SelectUnitedForm, id, type, server, db, login, password);
-                HoleForm = new HoleForm(this, ImpulsesGridView, id, list, server, db, login, password);
+                HoleForm = new HoleForm(this, ImpulsesGridView, id, server, db, login, password);
                 HoleForm.Show();
                 
                 
