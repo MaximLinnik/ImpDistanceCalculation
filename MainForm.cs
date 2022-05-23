@@ -639,10 +639,32 @@ namespace ImpHoleCalculation
             con.Close();
         }
 
+        //расчет количества импульсов по скважинамы
+        public void numberImpByHoles()
+        {
+            int colCountHoles = HoleListGridView.RowCount;
+            int colCountImp = ImpulsesGridView.RowCount;
+
+            for(int i = 0; i < colCountImp-1; i++)
+            {
+                int impHoleName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
+                for(int j = 0; j < colCountHoles-1; j++)
+                {
+                    int holeName = int.Parse(HoleListGridView.Rows[j].Cells[1].Value.ToString());
+                    if (impHoleName == holeName)
+                    {
+                        HoleListGridView.Rows[j].Cells[2].Value = int.Parse(HoleListGridView.Rows[j].Cells[2].Value.ToString()) + 1;
+                        break;
+                    }
+                }
+            }
+        }
+
         //расчет количества ипульсов по скважинам
         public void countImpByHole()
         {
             HoleList();
+            numberImpByHoles();
         }
 
         //вычисление частоты
