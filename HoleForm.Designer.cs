@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.labelHole = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.ImpulseHoleGridView = new System.Windows.Forms.DataGridView();
@@ -42,6 +42,7 @@
             this.hoursRadioButton = new System.Windows.Forms.RadioButton();
             this.daysRadioButton2 = new System.Windows.Forms.RadioButton();
             this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.impulseChart)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -102,17 +103,17 @@
             // 
             // impulseChart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.impulseChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.impulseChart.Legends.Add(legend3);
+            chartArea6.Name = "ChartArea1";
+            this.impulseChart.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.impulseChart.Legends.Add(legend6);
             this.impulseChart.Location = new System.Drawing.Point(351, 35);
             this.impulseChart.Name = "impulseChart";
-            series3.ChartArea = "ChartArea1";
-            series3.IsVisibleInLegend = false;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.impulseChart.Series.Add(series3);
+            series6.ChartArea = "ChartArea1";
+            series6.IsVisibleInLegend = false;
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.impulseChart.Series.Add(series6);
             this.impulseChart.Size = new System.Drawing.Size(562, 403);
             this.impulseChart.TabIndex = 5;
             this.impulseChart.Text = "chart1";
@@ -160,11 +161,22 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(538, 9);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(153, 23);
+            this.button3.TabIndex = 8;
+            this.button3.Text = "Сохранить график";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
+            // 
             // HoleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(925, 450);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.impulseChart);
@@ -195,5 +207,6 @@
         private System.Windows.Forms.RadioButton daysRadioButton2;
         private System.Windows.Forms.RadioButton hoursRadioButton;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }

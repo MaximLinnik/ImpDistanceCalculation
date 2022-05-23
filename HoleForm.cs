@@ -261,5 +261,18 @@ namespace ImpHoleCalculation
         {
             start();
         }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Image Files(*.png) | *.jpg";
+            saveDialog.FilterIndex = 1;
+            if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                impulseChart.SaveImage(saveDialog.FileName, ChartImageFormat.Png);
+                MessageBox.Show("Сохранено");
+            }
+
+        }
     }
 }
