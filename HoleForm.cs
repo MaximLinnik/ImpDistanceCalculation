@@ -73,6 +73,7 @@ namespace ImpHoleCalculation
                 ImpulseHoleGridView.Rows.Add();
                 ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;
                 ImpulseHoleGridView.Rows[i].Cells[1].Value = dateBefore;
+                ImpulseHoleGridView.Rows[i].Cells[2].Value = 0;
                 dateBefore = dateBefore.AddHours(1);
                 i++;
             }
@@ -81,7 +82,29 @@ namespace ImpHoleCalculation
         //разбиение импульсов по скважине по часам
         public void countImpulses()
         {
+            int rowCountImp = ImpulsesGridView.Rows.Count;
+            int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
+            DateTime currentDateBefore, currentDateAfter, dateImp;
+            for (int i = 0; i< rowCountImp - 1; i++)
+            {
 
+                dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
+
+                for (int j = 0; j < rowCountImpHole - 2; j++)
+                {
+                    currentDateBefore = DateTime.Parse(ImpulseHoleGridView.Rows[j].Cells[1].Value.ToString());
+                    currentDateAfter = DateTime.Parse(ImpulseHoleGridView.Rows[j + 1].Cells[1].Value.ToString());
+
+                    if (dateImp >= currentDateBefore && dateImp<= currentDateAfter && holeName == int.Parse(id))
+                    {
+                        ImpulseHoleGridView.Rows[j].Cells[2].Value = int.Parse(ImpulseHoleGridView.Rows[j].Cells[2].Value.ToString()) + 1;
+                    }
+                }
+                //место для сортировки в последней строчке
+                DateTime lastDate = DateTime.Parse(ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[1].Value.ToString());
+                if(dateImp>= lastDate) ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[2].Value = int.Parse(ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[0].Value.ToString()) + 1;
+            }
         }
 
         public void start()
@@ -93,6 +116,7 @@ namespace ImpHoleCalculation
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(Double));
 
             setHoleDateRow();
+            countImpulses();
 
             /*
             foreach (List<double> row in data)

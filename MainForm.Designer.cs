@@ -254,7 +254,7 @@
             this.Column11});
             this.TempHoleGridView.Location = new System.Drawing.Point(364, 6);
             this.TempHoleGridView.Name = "TempHoleGridView";
-            this.TempHoleGridView.Size = new System.Drawing.Size(406, 235);
+            this.TempHoleGridView.Size = new System.Drawing.Size(514, 235);
             this.TempHoleGridView.TabIndex = 4;
             // 
             // Column5
