@@ -198,7 +198,7 @@ namespace ImpHoleCalculation
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            /*
+            
             Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
             Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
@@ -208,7 +208,7 @@ namespace ImpHoleCalculation
 
                 worksheet = workbook.ActiveSheet;
 
-                worksheet.Name = "Параметры кластера";
+                worksheet.Name = "Скважина "+id;
 
 
                 for (int j = 0; j < ImpulseHoleGridView.Columns.Count; j++)
@@ -254,7 +254,7 @@ namespace ImpHoleCalculation
                 workbook = null;
                 excel = null;
             }
-                    */
+                    
         }
 
         private void Button2_Click(object sender, EventArgs e)
