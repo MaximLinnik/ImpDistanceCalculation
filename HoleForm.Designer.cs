@@ -28,13 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.labelHole = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.ImpulseHoleGridView = new System.Windows.Forms.DataGridView();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.impulseChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.impulseChart)).BeginInit();
             this.SuspendLayout();
             // 
             // labelHole
@@ -90,11 +95,28 @@
             this.Column23.HeaderText = "Количество событий";
             this.Column23.Name = "Column23";
             // 
+            // impulseChart
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.impulseChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.impulseChart.Legends.Add(legend1);
+            this.impulseChart.Location = new System.Drawing.Point(351, 35);
+            this.impulseChart.Name = "impulseChart";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.impulseChart.Series.Add(series1);
+            this.impulseChart.Size = new System.Drawing.Size(562, 403);
+            this.impulseChart.TabIndex = 5;
+            this.impulseChart.Text = "chart1";
+            // 
             // HoleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(925, 450);
+            this.Controls.Add(this.impulseChart);
             this.Controls.Add(this.ImpulseHoleGridView);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.labelHole);
@@ -102,6 +124,7 @@
             this.Text = "Выбранная скважина";
             this.Load += new System.EventHandler(this.ClusterForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.impulseChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,5 +137,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
+        private System.Windows.Forms.DataVisualization.Charting.Chart impulseChart;
     }
 }

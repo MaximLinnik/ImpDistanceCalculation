@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Windows.Forms.DataVisualization.Charting;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ImpHoleCalculation
@@ -107,6 +107,22 @@ namespace ImpHoleCalculation
             }
         }
 
+        //график
+        public void setChart()
+        {
+            int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
+            Series series = impulseChart.Series[0];
+            for(int i = 0; i< rowCountImpHole-1; i++)
+            {
+                DateTime dateImp = DateTime.Parse(ImpulseHoleGridView.Rows[i].Cells[1].Value.ToString());
+                int count = int.Parse(ImpulseHoleGridView.Rows[i].Cells[2].Value.ToString());
+                series.Points.AddXY(dateImp, count);
+                //series.Points.AddXY(i, i+1);
+            }
+
+
+        }
+
         public void start()
         {
             ImpulseHoleGridView.Rows.Clear();
@@ -117,6 +133,7 @@ namespace ImpHoleCalculation
 
             setHoleDateRow();
             countImpulses();
+            setChart();
 
             /*
             foreach (List<double> row in data)
