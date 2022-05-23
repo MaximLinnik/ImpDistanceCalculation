@@ -39,6 +39,8 @@ namespace ImpHoleCalculation
 
             InitializeComponent();
         }
+
+
         /*
         // для сортировки ампл, дл и проч
         public void sortImp()
@@ -52,6 +54,35 @@ namespace ImpHoleCalculation
             format(0, 1);
         }
         */
+        //вывод импульсов
+        public void setHoleDateRow()
+        {
+            int rowCount = ImpulsesGridView.Rows.Count;
+
+            DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
+
+            DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
+
+            dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, dateAfter.Hour, 0, 0);
+
+
+            int i = 0;
+            while (dateBefore <= dateAfter)
+            {
+                ImpulseHoleGridView.Rows.Add();
+                ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;
+                ImpulseHoleGridView.Rows[i].Cells[1].Value = dateBefore;
+                dateBefore = dateBefore.AddHours(1);
+                i++;
+            }
+        }
+
+        //разбиение импульсов по скважине по часам
+        public void countImpulses()
+        {
+
+        }
 
         public void start()
         {
@@ -60,6 +91,9 @@ namespace ImpHoleCalculation
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             int i = 0;
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(Double));
+
+            setHoleDateRow();
+
             /*
             foreach (List<double> row in data)
             {

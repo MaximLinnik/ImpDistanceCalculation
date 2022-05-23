@@ -466,7 +466,7 @@ namespace ImpHoleCalculation
             
         }
 
-        //добавление в основную таблица списка дат
+        //добавление в основную таблица списка дат (олд версия)
         public void setHoleDateRow()
         {
             int rowCount = ImpulsesGridView.Rows.Count;
