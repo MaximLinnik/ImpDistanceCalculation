@@ -52,8 +52,8 @@ namespace ImpHoleCalculation
             format(0, 1);
         }
         */
-        //вывод импульсов
-        public void setHoleDateRow()
+        //вывод импульсов (часы)
+        public void setHoleDateRowHours()
         {
             int rowCount = ImpulsesGridView.Rows.Count;
 
@@ -73,6 +73,31 @@ namespace ImpHoleCalculation
                 ImpulseHoleGridView.Rows[i].Cells[1].Value = dateBefore;
                 ImpulseHoleGridView.Rows[i].Cells[2].Value = 0;
                 dateBefore = dateBefore.AddHours(1);
+                i++;
+            }
+        }
+
+        //вывод импульсов (часы)
+        public void setHoleDateRowDays()
+        {
+            int rowCount = ImpulsesGridView.Rows.Count;
+
+            DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
+
+            DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
+
+            dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, 0, 0, 0);
+
+
+            int i = 0;
+            while (dateBefore <= dateAfter)
+            {
+                ImpulseHoleGridView.Rows.Add();
+                ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;
+                ImpulseHoleGridView.Rows[i].Cells[1].Value = dateBefore;
+                ImpulseHoleGridView.Rows[i].Cells[2].Value = 0;
+                dateBefore = dateBefore.AddDays(1);
                 i++;
             }
         }
@@ -129,9 +154,12 @@ namespace ImpHoleCalculation
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             int i = 0;
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(Double));
-
-            setHoleDateRow();
+            if (hoursRadioButton.Checked)
+                setHoleDateRowHours();
+            else
+                setHoleDateRowDays();
             countImpulses();
+
             setChart();
 
             /*
@@ -165,7 +193,7 @@ namespace ImpHoleCalculation
 
         private void ClusterForm_Load(object sender, EventArgs e)
         {
-            start();
+            //start();
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -227,6 +255,11 @@ namespace ImpHoleCalculation
                 excel = null;
             }
                     */
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            start();
         }
     }
 }

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.labelHole = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.ImpulseHoleGridView = new System.Windows.Forms.DataGridView();
@@ -38,8 +38,13 @@
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.impulseChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.hoursRadioButton = new System.Windows.Forms.RadioButton();
+            this.daysRadioButton2 = new System.Windows.Forms.RadioButton();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.impulseChart)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelHole
@@ -75,9 +80,9 @@
             this.Column6,
             this.Column7,
             this.Column23});
-            this.ImpulseHoleGridView.Location = new System.Drawing.Point(12, 35);
+            this.ImpulseHoleGridView.Location = new System.Drawing.Point(12, 118);
             this.ImpulseHoleGridView.Name = "ImpulseHoleGridView";
-            this.ImpulseHoleGridView.Size = new System.Drawing.Size(333, 403);
+            this.ImpulseHoleGridView.Size = new System.Drawing.Size(333, 320);
             this.ImpulseHoleGridView.TabIndex = 4;
             // 
             // Column6
@@ -97,26 +102,71 @@
             // 
             // impulseChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.impulseChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.impulseChart.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.impulseChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.impulseChart.Legends.Add(legend3);
             this.impulseChart.Location = new System.Drawing.Point(351, 35);
             this.impulseChart.Name = "impulseChart";
-            series1.ChartArea = "ChartArea1";
-            series1.IsVisibleInLegend = false;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.impulseChart.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.IsVisibleInLegend = false;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.impulseChart.Series.Add(series3);
             this.impulseChart.Size = new System.Drawing.Size(562, 403);
             this.impulseChart.TabIndex = 5;
             this.impulseChart.Text = "chart1";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.daysRadioButton2);
+            this.groupBox1.Controls.Add(this.hoursRadioButton);
+            this.groupBox1.Location = new System.Drawing.Point(27, 35);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(186, 77);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Группировка";
+            // 
+            // hoursRadioButton
+            // 
+            this.hoursRadioButton.AutoSize = true;
+            this.hoursRadioButton.Checked = true;
+            this.hoursRadioButton.Location = new System.Drawing.Point(7, 20);
+            this.hoursRadioButton.Name = "hoursRadioButton";
+            this.hoursRadioButton.Size = new System.Drawing.Size(71, 17);
+            this.hoursRadioButton.TabIndex = 0;
+            this.hoursRadioButton.TabStop = true;
+            this.hoursRadioButton.Text = "по часам";
+            this.hoursRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // daysRadioButton2
+            // 
+            this.daysRadioButton2.AutoSize = true;
+            this.daysRadioButton2.Location = new System.Drawing.Point(7, 44);
+            this.daysRadioButton2.Name = "daysRadioButton2";
+            this.daysRadioButton2.Size = new System.Drawing.Size(66, 17);
+            this.daysRadioButton2.TabIndex = 1;
+            this.daysRadioButton2.Text = "по дням";
+            this.daysRadioButton2.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(219, 49);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Вычислить";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // HoleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(925, 450);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.impulseChart);
             this.Controls.Add(this.ImpulseHoleGridView);
             this.Controls.Add(this.button1);
@@ -126,6 +176,8 @@
             this.Load += new System.EventHandler(this.ClusterForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.impulseChart)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,5 +191,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
         private System.Windows.Forms.DataVisualization.Charting.Chart impulseChart;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton daysRadioButton2;
+        private System.Windows.Forms.RadioButton hoursRadioButton;
+        private System.Windows.Forms.Button button2;
     }
 }
