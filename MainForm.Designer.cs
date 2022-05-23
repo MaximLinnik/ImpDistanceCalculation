@@ -223,6 +223,7 @@
             this.HoleListGridView.Name = "HoleListGridView";
             this.HoleListGridView.Size = new System.Drawing.Size(352, 227);
             this.HoleListGridView.TabIndex = 44;
+            this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
             // 
             // Column1
             // 

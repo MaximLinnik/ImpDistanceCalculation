@@ -100,7 +100,7 @@ namespace ImpHoleCalculation
                 MessageBox.Show("Поключение установлено");
             }
 
-            MainForm newForm = new MainForm(null, server.Text, db.Text, login.Text, password.Text);
+            MainForm newForm = new MainForm(server.Text, db.Text, login.Text, password.Text);
             this.Hide();
             newForm.Closed += (s, args) => this.Close();
             newForm.Show();

@@ -12,7 +12,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ImpHoleCalculation
 {
-    public partial class ClusterForm : Form
+    public partial class HoleForm : Form
     {
         String id;
         String connectionString;
@@ -21,21 +21,25 @@ namespace ImpHoleCalculation
         String login;
         String password;
 
-        MainForm clusterForm;
-        List<List<double>> data;
 
-        public ClusterForm(MainForm clusterForm, String id, List<List<double>> data, String server, String db, String login, String password)
+        MainForm MainForm;
+        List<List<double>> data;
+        DataGridView ImpulsesGridView;
+
+        public HoleForm(MainForm MainForm, DataGridView ImpulsesGridView, String id, List<List<double>> data, String server, String db, String login, String password)
         {
             this.server = server;
             this.db = db;
             this.login = login;
             this.password = password;
             this.id = id;
-            this.data = data; 
-            this.clusterForm = clusterForm;
+            this.data = data;
+            this.ImpulsesGridView = ImpulsesGridView;
+            this.MainForm = MainForm;
 
             InitializeComponent();
         }
+        /*
         // для сортировки ампл, дл и проч
         public void sortImp()
         {
@@ -47,26 +51,31 @@ namespace ImpHoleCalculation
             }
             format(0, 1);
         }
+        */
 
         public void start()
         {
-            ImpulsesByClusterGridView.Rows.Clear();
-            labelCluster.Text = "Выбранный кластер: " + id;
+            ImpulseHoleGridView.Rows.Clear();
+            labelHole.Text = "Выбранная скважина: " + id;
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             int i = 0;
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(Double));
+            /*
             foreach (List<double> row in data)
             {
-                ImpulsesByClusterGridView.Rows.Add();
+                ImpulseHoleGridView.Rows.Add();
                 for(int j = 0; j < row.Count; j++)
                 {
-                    
-                 ImpulsesByClusterGridView.Rows[i].Cells[j].Value = row[j];
+
+                    ImpulseHoleGridView.Rows[i].Cells[j].Value = row[j];
                 }
                 i++;
             }
-            sortImp();
+            */
+            //sortImp();
         }
+
+        /*
 
         private void format(int position, int col)
         {
@@ -78,7 +87,7 @@ namespace ImpHoleCalculation
 
             }
         }
-
+        */
 
         private void ClusterForm_Load(object sender, EventArgs e)
         {
@@ -87,6 +96,7 @@ namespace ImpHoleCalculation
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            /*
             Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
             Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
@@ -99,19 +109,19 @@ namespace ImpHoleCalculation
                 worksheet.Name = "Параметры кластера";
 
 
-                for (int j = 0; j < ImpulsesByClusterGridView.Columns.Count; j++)
+                for (int j = 0; j < ImpulseHoleGridView.Columns.Count; j++)
                 {
 
-                    worksheet.Cells[1, j + 1] = ImpulsesByClusterGridView.Columns[j].HeaderText;
+                    worksheet.Cells[1, j + 1] = ImpulseHoleGridView.Columns[j].HeaderText;
                 }
 
                 int cellRowIndex = 2;
                 int cellColumnIndex = 1;
-                for (int i = 0; i < ImpulsesByClusterGridView.Rows.Count - 1; i++)
+                for (int i = 0; i < ImpulseHoleGridView.Rows.Count - 1; i++)
                 {
-                    for (int j = 0; j < ImpulsesByClusterGridView.Columns.Count; j++)
+                    for (int j = 0; j < ImpulseHoleGridView.Columns.Count; j++)
                     {
-                        worksheet.Cells[cellRowIndex, cellColumnIndex] = ImpulsesByClusterGridView.Rows[i].Cells[j].Value.ToString();
+                        worksheet.Cells[cellRowIndex, cellColumnIndex] = ImpulseHoleGridView.Rows[i].Cells[j].Value.ToString();
                         cellColumnIndex++;
                     }
                     cellColumnIndex = 1;
@@ -142,6 +152,7 @@ namespace ImpHoleCalculation
                 workbook = null;
                 excel = null;
             }
+                    */
         }
     }
 }

@@ -22,28 +22,18 @@ namespace ImpHoleCalculation
         String login;
         String password;
         String connectionString;
-        SelectUnitedForm SelectUnitedForm;
-        ClusterForm ClusterForm;
+        HoleForm HoleForm;
 
         List<Cluster> сluster;
 
 
-        public MainForm(SelectUnitedForm SelectUnitedForm, String server, String db, String login, String password)
+        public MainForm(String server, String db, String login, String password)
         {
             this.server = server;
             this.db = db;
             this.login = login;
             this.password = password;
-            if (SelectUnitedForm == null)
-            {
-                this.SelectUnitedForm = new SelectUnitedForm(this, "100", "07.03.2017", "03.07.2017", server, db, login, password);
 
-            }
-            else
-            {
-                this.SelectUnitedForm = SelectUnitedForm;
-                this.SelectUnitedForm.Visible = false;
-            }
             InitializeComponent();
         }
 
@@ -1649,6 +1639,25 @@ namespace ImpHoleCalculation
             checkBoxtype70.Checked = Properties.Settings.Default.type70;
             checkBoxtype80.Checked = Properties.Settings.Default.type80;
             checkBoxtype90.Checked = Properties.Settings.Default.type90;
+        }
+
+        private void HoleListGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                
+                DataGridViewRow row = this.HoleListGridView.Rows[e.RowIndex];
+                
+                String id = row.Cells["Column2"].Value.ToString();
+                //String type = typeAAZ(id, this.connectionString);
+                MessageBox.Show("Выбранная скважина: " + id);
+                List<List<double>> list = sample(id);
+                //SelectUnitedForm.FormImpulse = new FormImpulse(this, SelectUnitedForm, id, type, server, db, login, password);
+                HoleForm = new HoleForm(this, ImpulsesGridView, id, list, server, db, login, password);
+                HoleForm.Show();
+                
+                
+            }
         }
     }
 }

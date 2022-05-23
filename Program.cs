@@ -20,7 +20,7 @@ namespace ImpHoleCalculation
             Application.Run(new AutorizeForm());
             else
             {
-                Application.Run(new MainForm(null, Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.Login, Properties.Settings.Default.Password));
+                Application.Run(new MainForm(Properties.Settings.Default.Server, Properties.Settings.Default.Database, Properties.Settings.Default.Login, Properties.Settings.Default.Password));
             }
         }
     }
