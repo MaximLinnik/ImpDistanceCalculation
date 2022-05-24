@@ -42,22 +42,9 @@ namespace ImpHoleCalculation
         {
             Properties.Settings.Default.DateBef = dateBefore.Text;
             Properties.Settings.Default.DateAft = dateAfter.Text;
-            Properties.Settings.Default.FreqBef = freqBefore.Text;
-            Properties.Settings.Default.FreqAft = freqAfter.Text;
-            Properties.Settings.Default.FreqStep = freqStep.Text;
-            Properties.Settings.Default.type0 = checkBoxtype0.Checked;
-            Properties.Settings.Default.type10 = checkBoxtype10.Checked;
-            Properties.Settings.Default.type20 = checkBoxtype20.Checked;
-            Properties.Settings.Default.type30 = checkBoxtype30.Checked;
-            Properties.Settings.Default.type40 = checkBoxtype40.Checked;
-            Properties.Settings.Default.type50 = checkBoxtype50.Checked;
-            Properties.Settings.Default.type60 = checkBoxtype60.Checked;
-            Properties.Settings.Default.type70 = checkBoxtype70.Checked;
-            Properties.Settings.Default.type80 = checkBoxtype80.Checked;
-            Properties.Settings.Default.type90 = checkBoxtype90.Checked;
             Properties.Settings.Default.Save();
         }
-
+        /*
         List<double> correctType;// проверка на типы событий
         //получение информации с чекбоксов(тип события)
         public void typeCheck()
@@ -75,6 +62,7 @@ namespace ImpHoleCalculation
             if (checkBoxtype90.Checked) correctType.Add(90);
 
         }
+        */
 
         //получение ряда импульсов по номеру ААЗ
         private List<string> getImpulsesHWID_AAZ(string[] aaz)
@@ -250,106 +238,6 @@ namespace ImpHoleCalculation
             return i;
         }
 
-        //получение и запись импульсов по HWID (с добавлением типа сигнала) - по Событиям
-        //получение и запись импульсов по HWID (с добавлением типа сигнала) - по Событиям (все вместе)
-        private int setImpulsesByHWID_AllEvents()
-        {
-            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
-            SqlConnection con = new SqlConnection(connectionString);
-            String query = @"select AE_Events.EventID, AE_Events.EventDateTime, Impulses.ID, Impulses.HWID,  Impulses.Amplitude, Impulses.Duration, Impulses.LeadingEdgeTime,
-                            AE_Events.EventType, 
-                            AE_Events.T0, AE_Events.T1, AE_Events.T2, AE_Events.T3, AE_Events.T4, AE_Events.T5, AE_Events.T6, AE_Events.T7, AE_Events.T8, AE_Events.T9 
-                            from AE_Events,Events, Impulses
-                            where " +
-                            @"  AE_Events.ID_of_Event = Events.ID
-                            AND
-                            (ImpulseID1=Impulses.ID  or ImpulseID2=Impulses.ID or ImpulseID3=Impulses.ID 
-                            or ImpulseID4=Impulses.ID or ImpulseID5=Impulses.ID or ImpulseID6=Impulses.ID
-                            or ImpulseID7=Impulses.ID or ImpulseID8=Impulses.ID or ImpulseID9=Impulses.ID or ImpulseID10=Impulses.ID)";
-
-            DateTime dateB = Convert.ToDateTime(dateBefore.Text);
-            DateTime dateA = Convert.ToDateTime(dateAfter.Text);
-
-            /*
-            String date = @" AND 
-                         (AE_Events.ImportDateTime BETWEEN '" + dateBefore.Text + "' AND '" +
-                  dateAfter.Text + "')";
-                  */
-            String date = @" AND 
-                         (AE_Events.EventDateTime BETWEEN '" + dateB.Ticks + "' AND '" +
-                  dateA.Ticks + "')";
-            if (!dateCheckBox.Checked) //вывести по всей бд
-                query += date;
-
-            con.Open();
-            SqlCommand command = new SqlCommand(query, con);
-            SqlDataReader reader = command.ExecuteReader();
-            int i = 0;
-
-            while (reader.Read())
-            {
-                String type = reader[7].ToString();
-                if (!correctType.Contains(double.Parse(type))) { continue; }
-
-                ImpulsesGridView.Rows.Add();
-                String eventId = reader[0].ToString();
-
-                //тики в дату
-                DateTime dt = new DateTime(long.Parse(reader[1].ToString()));
-                String eventDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
-
-                String id0 = reader[2].ToString();
-                String id = reader[3].ToString();
-                String ampl = reader[4].ToString();
-                String dur = reader[5].ToString();
-                String edge = reader[6].ToString();
-
-                int colCount = ImpulsesGridView.ColumnCount;
-
-                ImpulsesGridView.Rows[i].Cells[0].Value = i + 1;
-                ImpulsesGridView.Rows[i].Cells[1].Value = double.Parse(eventId);
-                ImpulsesGridView.Rows[i].Cells[2].Value = DateTime.Parse(eventDate);
-                ImpulsesGridView.Rows[i].Cells[3].Value = double.Parse(id0);
-                ImpulsesGridView.Rows[i].Cells[4].Value = double.Parse(id);
-                ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(ampl);
-                ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(dur);
-                ImpulsesGridView.Rows[i].Cells[7].Value = double.Parse(edge);
-                ImpulsesGridView.Rows[i].Cells[8].Value = double.Parse(type);
-                ImpulsesGridView.Rows[i].Cells[9].Value = 0;
-                ImpulsesGridView.Rows[i].Cells[10].Value = 0;
-                ImpulsesGridView.Rows[i].Cells[11].Value = 0; // !!!!
-
-                //T
-                ImpulsesGridView.Rows[i].Cells[12].Value = double.Parse(reader[8].ToString());
-                try { ImpulsesGridView.Rows[i].Cells[13].Value = double.Parse(reader[9].ToString()); }
-                catch { ImpulsesGridView.Rows[i].Cells[13].Value = 0; }
-                try { ImpulsesGridView.Rows[i].Cells[14].Value = double.Parse(reader[10].ToString()); }
-                catch { ImpulsesGridView.Rows[i].Cells[14].Value = 0; }
-                try { ImpulsesGridView.Rows[i].Cells[15].Value = double.Parse(reader[11].ToString()); }
-                catch { ImpulsesGridView.Rows[i].Cells[15].Value = 0; }
-                try { ImpulsesGridView.Rows[i].Cells[16].Value = double.Parse(reader[12].ToString()); }
-                catch { ImpulsesGridView.Rows[i].Cells[16].Value = 0; }
-                try { ImpulsesGridView.Rows[i].Cells[17].Value = double.Parse(reader[13].ToString()); }
-                catch { ImpulsesGridView.Rows[i].Cells[17].Value = 0; }
-                try { ImpulsesGridView.Rows[i].Cells[18].Value = double.Parse(reader[14].ToString()); }
-                catch { ImpulsesGridView.Rows[i].Cells[18].Value = 0; }
-                try { ImpulsesGridView.Rows[i].Cells[19].Value = double.Parse(reader[15].ToString()); }
-                catch { ImpulsesGridView.Rows[i].Cells[19].Value = 0; }
-                try { ImpulsesGridView.Rows[i].Cells[20].Value = double.Parse(reader[16].ToString()); }
-                catch { ImpulsesGridView.Rows[i].Cells[20].Value = 0; }
-                try { ImpulsesGridView.Rows[i].Cells[21].Value = double.Parse(reader[17].ToString()); }
-                catch { ImpulsesGridView.Rows[i].Cells[21].Value = 0; }
-
-
-                //ImpulsesGridView.Rows[i].Cells[colCount - 2].Value = int.Parse(type); // тип сигнала
-                //ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = -1; // принадлежность к кластеру
-                i++;
-                progressBar.Value += 1; // увел счетчика прогресс бара
-            }
-            con.Close();
-
-            return i;
-        }
         //получение и запись импульсов по HWID (с добавлением типа сигнала) - по Событиям (все вместе)
         private int setImpulsesByDate()
         {
@@ -492,78 +380,6 @@ namespace ImpHoleCalculation
             
         }
 
-
-  
-
-        //добавление импульсов в основную таблицу
-        public void setImpulses()
-        {
-            int rowCount = ImpulsesGridView.Rows.Count;
-
-            progressBar2.Value = 0;
-            progressBar2.Maximum = rowCount - 1; // максимум для прогресс бара по колву импульсов
-
-            bool check = true;
-            int DiffRowIndex = 1; //индекс строки в основной таблице
-            double currentEvent = 0;
-            int c = 0; //счетчик для основной таблицы
-            //номер, дата и тип события
-            for (int i = 0; i< rowCount-1; i++)
-            {
-                if(currentEvent != double.Parse(ImpulsesGridView.Rows[i].Cells[1].Value.ToString())){
-                    check = true;
-                }
-
-                if (check)
-                {
-                    
-                    int countImpulses = int.Parse(ImpulsesGridView.Rows[i].Cells[11].Value.ToString()) + 1;
-                    currentEvent = double.Parse(ImpulsesGridView.Rows[i].Cells[1].Value.ToString());
-                    for (int j = 1; j < countImpulses; j++)
-                    {
-                        for (int k = j + 1; k < countImpulses; k++)
-                        {
-                            ImpulseHoleGridView.Rows.Add();
-                            
-                            ImpulseHoleGridView.Rows[c].Cells[0].Value = DiffRowIndex;
-                            ImpulseHoleGridView.Rows[c].Cells[1].Value = currentEvent;
-                            DateTime date = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
-                            ImpulseHoleGridView.Rows[c].Cells[2].Value = date;
-                            double type = double.Parse(ImpulsesGridView.Rows[i].Cells[8].Value.ToString());
-                            ImpulseHoleGridView.Rows[c].Cells[3].Value = type;
-                            ImpulseHoleGridView.Rows[c].Cells[4].Value = "И"+j + "-И" + k;
-                            double ampl1 = double.Parse(ImpulsesGridView.Rows[i + j - 1].Cells[5].Value.ToString());
-                            double ampl2 = double.Parse(ImpulsesGridView.Rows[i + k - 1].Cells[5].Value.ToString());
-                            ImpulseHoleGridView.Rows[c].Cells[6].Value = ampl1;
-                            ImpulseHoleGridView.Rows[c].Cells[7].Value = ampl2;
-                            double duration1 = double.Parse(ImpulsesGridView.Rows[i + j - 1].Cells[6].Value.ToString());
-                            double duration2 = double.Parse(ImpulsesGridView.Rows[i + k - 1].Cells[6].Value.ToString());
-                            ImpulseHoleGridView.Rows[c].Cells[8].Value = duration1;
-                            ImpulseHoleGridView.Rows[c].Cells[9].Value = duration2;
-                            double edge1 = double.Parse(ImpulsesGridView.Rows[i + j - 1].Cells[7].Value.ToString());
-                            double edge2 = double.Parse(ImpulsesGridView.Rows[i + k - 1].Cells[7].Value.ToString());
-                            ImpulseHoleGridView.Rows[c].Cells[10].Value = edge1;
-                            ImpulseHoleGridView.Rows[c].Cells[11].Value = edge2;
-
-                            double Imp_T_1 = double.Parse(ImpulsesGridView.Rows[i + j - 1].Cells[9].Value.ToString());
-                            double Imp_T_2 = double.Parse(ImpulsesGridView.Rows[i + k - 1].Cells[9].Value.ToString());
-                            double rvp = Math.Abs(Imp_T_1 - Imp_T_2);
-                            ImpulseHoleGridView.Rows[c].Cells[5].Value = rvp;
-
-                            double koef = duration2 / duration1;
-                            ImpulseHoleGridView.Rows[c].Cells[12].Value = koef;
-
-                            DiffRowIndex++;
-                            c++;
-                        }
-                    }
-                    check = false;
-                }
-                progressBar2.Value += 1; // увел счетчика прогресс бара
-            }
-        }
-
-
         //получение всех импульсов по номерам Событий в таблицу - версия по событиям (сбор скопом)
         private void getAllImpulses()
         {
@@ -602,7 +418,7 @@ namespace ImpHoleCalculation
         {
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             SqlConnection con = new SqlConnection(connectionString);
-            String query = @"select Holes.Name 
+            String query = @"select Holes.Name, Holes.BeginTime, Holes.EndTime, Holes.X, Holes.Y, Holes.Z, Holes.Description  
                             from Holes
                             " +
                             @"  ";
@@ -622,6 +438,14 @@ namespace ImpHoleCalculation
                 HoleListGridView.Rows[i].Cells[0].Value = i + 1;
                 HoleListGridView.Rows[i].Cells[1].Value = double.Parse(reader[0].ToString());
                 HoleListGridView.Rows[i].Cells[2].Value = 0;
+                HoleListGridView.Rows[i].Cells[3].Value = DateTime.Parse(reader[1].ToString());
+                try { HoleListGridView.Rows[i].Cells[4].Value = DateTime.Parse(reader[2].ToString()); }
+                catch { HoleListGridView.Rows[i].Cells[4].Value = null; }
+                HoleListGridView.Rows[i].Cells[5].Value = double.Parse(reader[3].ToString());
+                HoleListGridView.Rows[i].Cells[6].Value = double.Parse(reader[4].ToString());
+                HoleListGridView.Rows[i].Cells[7].Value = double.Parse(reader[5].ToString());
+                HoleListGridView.Rows[i].Cells[8].Value = reader[6].ToString();
+                
                 i++;
 
                 //progressBar.Value += 1; // увел счетчика прогресс бара
@@ -632,13 +456,14 @@ namespace ImpHoleCalculation
         //расчет количества импульсов по скважинамы
         public void numberImpByHoles()
         {
-            int colCountHoles = HoleListGridView.RowCount;
-            int colCountImp = ImpulsesGridView.RowCount;
+            int rowCountHoles = HoleListGridView.RowCount;
+            int rowCountImp = ImpulsesGridView.RowCount;
+            
 
-            for(int i = 0; i < colCountImp-1; i++)
+            for (int i = 0; i < rowCountImp - 1; i++)
             {
                 int impHoleName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
-                for(int j = 0; j < colCountHoles-1; j++)
+                for(int j = 0; j < rowCountHoles - 1; j++)
                 {
                     int holeName = int.Parse(HoleListGridView.Rows[j].Cells[1].Value.ToString());
                     if (impHoleName == holeName)
@@ -673,48 +498,6 @@ namespace ImpHoleCalculation
             }
         }
 
-        //работа прогресс бара
-        public void progressBarSet_Impulses()
-        {
-            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
-            SqlConnection con = new SqlConnection(connectionString);
-            String query = @"select AE_Events.EventID, AE_Events.EventType
-                            from AE_Events,Events, Impulses
-                            where " +
-                            @"  AE_Events.ID_of_Event = Events.ID
-                            AND
-                            (ImpulseID1=Impulses.ID  or ImpulseID2=Impulses.ID or ImpulseID3=Impulses.ID 
-                            or ImpulseID4=Impulses.ID or ImpulseID5=Impulses.ID or ImpulseID6=Impulses.ID
-                            or ImpulseID7=Impulses.ID or ImpulseID8=Impulses.ID or ImpulseID9=Impulses.ID or ImpulseID10=Impulses.ID)";
-
-            DateTime dateB = Convert.ToDateTime(dateBefore.Text);
-            DateTime dateA = Convert.ToDateTime(dateAfter.Text);
-
-            /*
-            String date = @" AND 
-                         (AE_Events.ImportDateTime BETWEEN '" + dateBefore.Text + "' AND '" +
-                  dateAfter.Text + "')";
-                  */
-            String date = @" AND 
-                         (AE_Events.EventDateTime BETWEEN '" + dateB.Ticks + "' AND '" +
-                  dateA.Ticks + "')";
-            if (!dateCheckBox.Checked) //вывести по всей бд
-                query += date;
-
-            con.Open();
-            SqlCommand command = new SqlCommand(query, con);
-            SqlDataReader reader = command.ExecuteReader();
-            int count = 0;
-            while (reader.Read())
-            {
-                String type = reader[1].ToString();
-                if (!correctType.Contains(double.Parse(type))) { continue; }
-                else count++;
-            }
-            //progressBar.Value += 1;
-            progressBar.Maximum= count;
-            con.Close();
-        }
 
 
         //выборка импульсов по выбранному кластеру
@@ -1626,19 +1409,6 @@ namespace ImpHoleCalculation
         {
             dateBefore.Text = Properties.Settings.Default.DateBef;
             dateAfter.Text = Properties.Settings.Default.DateAft;
-            freqBefore.Text = Properties.Settings.Default.FreqBef;
-            freqAfter.Text = Properties.Settings.Default.FreqAft;
-            freqStep.Text = Properties.Settings.Default.FreqStep;
-            checkBoxtype0.Checked = Properties.Settings.Default.type0;
-            checkBoxtype10.Checked = Properties.Settings.Default.type10;
-            checkBoxtype20.Checked = Properties.Settings.Default.type20;
-            checkBoxtype30.Checked = Properties.Settings.Default.type30;
-            checkBoxtype40.Checked = Properties.Settings.Default.type40;
-            checkBoxtype50.Checked = Properties.Settings.Default.type50;
-            checkBoxtype60.Checked = Properties.Settings.Default.type60;
-            checkBoxtype70.Checked = Properties.Settings.Default.type70;
-            checkBoxtype80.Checked = Properties.Settings.Default.type80;
-            checkBoxtype90.Checked = Properties.Settings.Default.type90;
         }
 
         private void HoleListGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)

@@ -62,10 +62,9 @@
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(1025, 9);
+            this.button1.Location = new System.Drawing.Point(219, 64);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(135, 23);
+            this.button1.Size = new System.Drawing.Size(114, 23);
             this.button1.TabIndex = 2;
             this.button1.Text = "Сохранить в Excel";
             this.button1.UseVisualStyleBackColor = true;
@@ -109,14 +108,14 @@
             this.impulseChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.impulseChart.Legends.Add(legend1);
-            this.impulseChart.Location = new System.Drawing.Point(339, 38);
+            this.impulseChart.Location = new System.Drawing.Point(339, 9);
             this.impulseChart.Name = "impulseChart";
             series1.ChartArea = "ChartArea1";
             series1.IsVisibleInLegend = false;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.impulseChart.Series.Add(series1);
-            this.impulseChart.Size = new System.Drawing.Size(821, 413);
+            this.impulseChart.Size = new System.Drawing.Size(821, 442);
             this.impulseChart.TabIndex = 5;
             this.impulseChart.Text = "chart1";
             // 
@@ -155,7 +154,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(219, 49);
+            this.button2.Location = new System.Drawing.Point(219, 35);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 7;
@@ -165,9 +164,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(538, 9);
+            this.button3.Location = new System.Drawing.Point(219, 89);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(153, 23);
+            this.button3.Size = new System.Drawing.Size(114, 23);
             this.button3.TabIndex = 8;
             this.button3.Text = "Сохранить график";
             this.button3.UseVisualStyleBackColor = true;

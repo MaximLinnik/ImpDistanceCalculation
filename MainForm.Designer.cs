@@ -40,9 +40,6 @@
             this.startButtonTest = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.HoleListGridView = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TempHoleGridView = new System.Windows.Forms.DataGridView();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,20 +66,15 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupboxType = new System.Windows.Forms.GroupBox();
-            this.checkBoxtype90 = new System.Windows.Forms.CheckBox();
-            this.checkBoxtype80 = new System.Windows.Forms.CheckBox();
-            this.checkBoxtype70 = new System.Windows.Forms.CheckBox();
-            this.checkBoxtype60 = new System.Windows.Forms.CheckBox();
-            this.checkBoxtype50 = new System.Windows.Forms.CheckBox();
-            this.checkBoxtype40 = new System.Windows.Forms.CheckBox();
-            this.checkBoxtype30 = new System.Windows.Forms.CheckBox();
-            this.checkBoxtype10 = new System.Windows.Forms.CheckBox();
-            this.checkBoxtype20 = new System.Windows.Forms.CheckBox();
-            this.checkBoxtype0 = new System.Windows.Forms.CheckBox();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HoleListGridView)).BeginInit();
@@ -91,7 +83,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.groupboxType.SuspendLayout();
             this.SuspendLayout();
             // 
             // dateBefore
@@ -176,6 +167,7 @@
             this.excelButton.TabIndex = 13;
             this.excelButton.Text = "Сохранить в Excel";
             this.excelButton.UseVisualStyleBackColor = true;
+            this.excelButton.Visible = false;
             this.excelButton.Click += new System.EventHandler(this.ExcelButton_Click);
             // 
             // returnButton
@@ -190,7 +182,7 @@
             // 
             // startButtonTest
             // 
-            this.startButtonTest.Location = new System.Drawing.Point(111, 381);
+            this.startButtonTest.Location = new System.Drawing.Point(54, 224);
             this.startButtonTest.Name = "startButtonTest";
             this.startButtonTest.Size = new System.Drawing.Size(75, 23);
             this.startButtonTest.TabIndex = 24;
@@ -207,38 +199,32 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1001, 509);
+            this.tabPage1.Size = new System.Drawing.Size(1001, 599);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Выборка";
+            this.tabPage1.Text = "Скважины";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // HoleListGridView
             // 
+            this.HoleListGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.HoleListGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.HoleListGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
-            this.Column12});
+            this.Column12,
+            this.Column14,
+            this.Column15,
+            this.Column16,
+            this.Column17,
+            this.Column19,
+            this.Column20});
             this.HoleListGridView.Location = new System.Drawing.Point(6, 6);
             this.HoleListGridView.Name = "HoleListGridView";
-            this.HoleListGridView.Size = new System.Drawing.Size(352, 227);
+            this.HoleListGridView.Size = new System.Drawing.Size(989, 571);
             this.HoleListGridView.TabIndex = 44;
             this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "№";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Имя скважины";
-            this.Column2.Name = "Column2";
-            // 
-            // Column12
-            // 
-            this.Column12.HeaderText = "Количество импульсов";
-            this.Column12.Name = "Column12";
             // 
             // TempHoleGridView
             // 
@@ -252,10 +238,11 @@
             this.Column9,
             this.Column10,
             this.Column11});
-            this.TempHoleGridView.Location = new System.Drawing.Point(364, 6);
+            this.TempHoleGridView.Location = new System.Drawing.Point(631, 583);
             this.TempHoleGridView.Name = "TempHoleGridView";
-            this.TempHoleGridView.Size = new System.Drawing.Size(514, 235);
+            this.TempHoleGridView.Size = new System.Drawing.Size(186, 10);
             this.TempHoleGridView.TabIndex = 4;
+            this.TempHoleGridView.Visible = false;
             // 
             // Column5
             // 
@@ -298,10 +285,11 @@
             this.Column13,
             this.Column34,
             this.Column3});
-            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 258);
+            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 583);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
-            this.ImpulsesGridView.Size = new System.Drawing.Size(608, 245);
+            this.ImpulsesGridView.Size = new System.Drawing.Size(608, 10);
             this.ImpulsesGridView.TabIndex = 3;
+            this.ImpulsesGridView.Visible = false;
             // 
             // Column18
             // 
@@ -338,10 +326,11 @@
             this.Column6,
             this.Column7,
             this.Column23});
-            this.ImpulseHoleGridView.Location = new System.Drawing.Point(918, 6);
+            this.ImpulseHoleGridView.Location = new System.Drawing.Point(836, 583);
             this.ImpulseHoleGridView.Name = "ImpulseHoleGridView";
-            this.ImpulseHoleGridView.Size = new System.Drawing.Size(87, 234);
+            this.ImpulseHoleGridView.Size = new System.Drawing.Size(159, 10);
             this.ImpulseHoleGridView.TabIndex = 2;
+            this.ImpulseHoleGridView.Visible = false;
             // 
             // Column6
             // 
@@ -367,17 +356,18 @@
             this.tabControl1.Location = new System.Drawing.Point(200, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1009, 535);
+            this.tabControl1.Size = new System.Drawing.Size(1009, 625);
             this.tabControl1.TabIndex = 15;
             // 
             // progressBar
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(200, 573);
+            this.progressBar.Location = new System.Drawing.Point(5, 538);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(1005, 17);
+            this.progressBar.Size = new System.Drawing.Size(120, 24);
             this.progressBar.TabIndex = 37;
+            this.progressBar.Visible = false;
             // 
             // labelNumbImpAll
             // 
@@ -445,155 +435,50 @@
             this.groupBox4.Text = "Частота";
             this.groupBox4.Visible = false;
             // 
-            // groupboxType
+            // Column1
             // 
-            this.groupboxType.Controls.Add(this.checkBoxtype90);
-            this.groupboxType.Controls.Add(this.checkBoxtype80);
-            this.groupboxType.Controls.Add(this.checkBoxtype70);
-            this.groupboxType.Controls.Add(this.checkBoxtype60);
-            this.groupboxType.Controls.Add(this.checkBoxtype50);
-            this.groupboxType.Controls.Add(this.checkBoxtype40);
-            this.groupboxType.Controls.Add(this.checkBoxtype30);
-            this.groupboxType.Controls.Add(this.checkBoxtype10);
-            this.groupboxType.Controls.Add(this.checkBoxtype20);
-            this.groupboxType.Controls.Add(this.checkBoxtype0);
-            this.groupboxType.Location = new System.Drawing.Point(9, 230);
-            this.groupboxType.Name = "groupboxType";
-            this.groupboxType.Size = new System.Drawing.Size(177, 145);
-            this.groupboxType.TabIndex = 40;
-            this.groupboxType.TabStop = false;
-            this.groupboxType.Text = "Тип события";
+            this.Column1.HeaderText = "№";
+            this.Column1.Name = "Column1";
             // 
-            // checkBoxtype90
+            // Column2
             // 
-            this.checkBoxtype90.AutoSize = true;
-            this.checkBoxtype90.Location = new System.Drawing.Point(11, 122);
-            this.checkBoxtype90.Name = "checkBoxtype90";
-            this.checkBoxtype90.Size = new System.Drawing.Size(38, 17);
-            this.checkBoxtype90.TabIndex = 8;
-            this.checkBoxtype90.Text = "90";
-            this.checkBoxtype90.UseVisualStyleBackColor = true;
+            this.Column2.HeaderText = "Имя скважины";
+            this.Column2.Name = "Column2";
             // 
-            // checkBoxtype80
+            // Column12
             // 
-            this.checkBoxtype80.AutoSize = true;
-            this.checkBoxtype80.Location = new System.Drawing.Point(133, 89);
-            this.checkBoxtype80.Name = "checkBoxtype80";
-            this.checkBoxtype80.Size = new System.Drawing.Size(38, 17);
-            this.checkBoxtype80.TabIndex = 7;
-            this.checkBoxtype80.Text = "80";
-            this.checkBoxtype80.UseVisualStyleBackColor = true;
+            this.Column12.HeaderText = "Количество импульсов";
+            this.Column12.Name = "Column12";
             // 
-            // checkBoxtype70
+            // Column14
             // 
-            this.checkBoxtype70.AutoSize = true;
-            this.checkBoxtype70.Location = new System.Drawing.Point(66, 89);
-            this.checkBoxtype70.Name = "checkBoxtype70";
-            this.checkBoxtype70.Size = new System.Drawing.Size(38, 17);
-            this.checkBoxtype70.TabIndex = 6;
-            this.checkBoxtype70.Text = "70";
-            this.checkBoxtype70.UseVisualStyleBackColor = true;
+            this.Column14.HeaderText = "Время \"начало\"";
+            this.Column14.Name = "Column14";
             // 
-            // checkBoxtype60
+            // Column15
             // 
-            this.checkBoxtype60.AutoSize = true;
-            this.checkBoxtype60.Location = new System.Drawing.Point(11, 88);
-            this.checkBoxtype60.Name = "checkBoxtype60";
-            this.checkBoxtype60.Size = new System.Drawing.Size(38, 17);
-            this.checkBoxtype60.TabIndex = 5;
-            this.checkBoxtype60.Text = "60";
-            this.checkBoxtype60.UseVisualStyleBackColor = true;
+            this.Column15.HeaderText = "Время \"окончание\"";
+            this.Column15.Name = "Column15";
             // 
-            // checkBoxtype50
+            // Column16
             // 
-            this.checkBoxtype50.AutoSize = true;
-            this.checkBoxtype50.Location = new System.Drawing.Point(133, 54);
-            this.checkBoxtype50.Name = "checkBoxtype50";
-            this.checkBoxtype50.Size = new System.Drawing.Size(38, 17);
-            this.checkBoxtype50.TabIndex = 4;
-            this.checkBoxtype50.Text = "50";
-            this.checkBoxtype50.UseVisualStyleBackColor = true;
+            this.Column16.HeaderText = "X (м)";
+            this.Column16.Name = "Column16";
             // 
-            // checkBoxtype40
+            // Column17
             // 
-            this.checkBoxtype40.AutoSize = true;
-            this.checkBoxtype40.Location = new System.Drawing.Point(66, 54);
-            this.checkBoxtype40.Name = "checkBoxtype40";
-            this.checkBoxtype40.Size = new System.Drawing.Size(38, 17);
-            this.checkBoxtype40.TabIndex = 3;
-            this.checkBoxtype40.Text = "40";
-            this.checkBoxtype40.UseVisualStyleBackColor = true;
+            this.Column17.HeaderText = "Y (м)";
+            this.Column17.Name = "Column17";
             // 
-            // checkBoxtype30
+            // Column19
             // 
-            this.checkBoxtype30.AutoSize = true;
-            this.checkBoxtype30.Location = new System.Drawing.Point(11, 54);
-            this.checkBoxtype30.Name = "checkBoxtype30";
-            this.checkBoxtype30.Size = new System.Drawing.Size(38, 17);
-            this.checkBoxtype30.TabIndex = 2;
-            this.checkBoxtype30.Text = "30";
-            this.checkBoxtype30.UseVisualStyleBackColor = true;
+            this.Column19.HeaderText = "Z (м)";
+            this.Column19.Name = "Column19";
             // 
-            // checkBoxtype10
+            // Column20
             // 
-            this.checkBoxtype10.AutoSize = true;
-            this.checkBoxtype10.Location = new System.Drawing.Point(66, 20);
-            this.checkBoxtype10.Name = "checkBoxtype10";
-            this.checkBoxtype10.Size = new System.Drawing.Size(38, 17);
-            this.checkBoxtype10.TabIndex = 1;
-            this.checkBoxtype10.Text = "10";
-            this.checkBoxtype10.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxtype20
-            // 
-            this.checkBoxtype20.AutoSize = true;
-            this.checkBoxtype20.Location = new System.Drawing.Point(133, 20);
-            this.checkBoxtype20.Name = "checkBoxtype20";
-            this.checkBoxtype20.Size = new System.Drawing.Size(38, 17);
-            this.checkBoxtype20.TabIndex = 1;
-            this.checkBoxtype20.Text = "20";
-            this.checkBoxtype20.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxtype0
-            // 
-            this.checkBoxtype0.AutoSize = true;
-            this.checkBoxtype0.Location = new System.Drawing.Point(11, 20);
-            this.checkBoxtype0.Name = "checkBoxtype0";
-            this.checkBoxtype0.Size = new System.Drawing.Size(32, 17);
-            this.checkBoxtype0.TabIndex = 0;
-            this.checkBoxtype0.Text = "0";
-            this.checkBoxtype0.UseVisualStyleBackColor = true;
-            // 
-            // progressBar2
-            // 
-            this.progressBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar2.Location = new System.Drawing.Point(200, 609);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(1005, 17);
-            this.progressBar2.TabIndex = 41;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(201, 557);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(163, 13);
-            this.label1.TabIndex = 42;
-            this.label1.Text = "Прогресс загрузки импульсов";
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(201, 593);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(105, 13);
-            this.label2.TabIndex = 43;
-            this.label2.Text = "Прогресс подсчета";
+            this.Column20.HeaderText = "Описание";
+            this.Column20.Name = "Column20";
             // 
             // MainForm
             // 
@@ -601,10 +486,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1221, 638);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.progressBar2);
-            this.Controls.Add(this.groupboxType);
             this.Controls.Add(this.labelNumbImpAll);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.groupBox4);
@@ -615,7 +496,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.AAZParametrs);
             this.Name = "MainForm";
-            this.Text = "Выборка импульсов";
+            this.Text = "Выборка скважин";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.AllClustersForm_Load);
@@ -629,8 +510,6 @@
             this.tabControl1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupboxType.ResumeLayout(false);
-            this.groupboxType.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -659,20 +538,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupboxType;
-        private System.Windows.Forms.CheckBox checkBoxtype90;
-        private System.Windows.Forms.CheckBox checkBoxtype80;
-        private System.Windows.Forms.CheckBox checkBoxtype70;
-        private System.Windows.Forms.CheckBox checkBoxtype60;
-        private System.Windows.Forms.CheckBox checkBoxtype50;
-        private System.Windows.Forms.CheckBox checkBoxtype40;
-        private System.Windows.Forms.CheckBox checkBoxtype30;
-        private System.Windows.Forms.CheckBox checkBoxtype10;
-        private System.Windows.Forms.CheckBox checkBoxtype20;
-        private System.Windows.Forms.CheckBox checkBoxtype0;
-        private System.Windows.Forms.ProgressBar progressBar2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
@@ -692,5 +557,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
     }
 }
