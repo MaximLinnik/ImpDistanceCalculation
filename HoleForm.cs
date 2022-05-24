@@ -126,7 +126,7 @@ namespace ImpHoleCalculation
                 }
                 //место для сортировки в последней строчке
                 DateTime lastDate = DateTime.Parse(ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[1].Value.ToString());
-                if(dateImp>= lastDate) ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[2].Value = int.Parse(ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[0].Value.ToString()) + 1;
+                if(dateImp>= lastDate && holeName == int.Parse(id)) ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[2].Value = int.Parse(ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[0].Value.ToString()) + 1;
             }
         }
 
