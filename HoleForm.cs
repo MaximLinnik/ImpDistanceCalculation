@@ -153,7 +153,7 @@ namespace ImpHoleCalculation
         public void start()
         {
             ImpulseHoleGridView.Rows.Clear();
-            labelHole.Text = "Выбранная скважина: " + id;
+            
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             int i = 0;
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(Double));
@@ -197,6 +197,7 @@ namespace ImpHoleCalculation
         private void ClusterForm_Load(object sender, EventArgs e)
         {
             //start();
+            labelHole.Text = "Выбранная скважина: " + id;
         }
 
         private void Button1_Click(object sender, EventArgs e)
