@@ -135,7 +135,10 @@ namespace ImpHoleCalculation
         {
             int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
             Series series = impulseChart.Series[0];
+            impulseChart.ChartAreas[0].AxisX.Minimum = 0;
             impulseChart.ChartAreas[0].AxisX.Maximum = rowCountImpHole-1;
+            impulseChart.ChartAreas[0].AxisX.Interval = 1;
+            //impulseChart.ChartAreas[0].AxisX.IntervalOffset = impulseChart.ChartAreas[0].AxisX.Interval - impulseChart.ChartAreas[0].AxisX.Minimum;
             for (int i = 0; i< rowCountImpHole-1; i++)
             {
                 String dateImp = ImpulseHoleGridView.Rows[i].Cells[1].Value.ToString();
