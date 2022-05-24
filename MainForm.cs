@@ -385,6 +385,7 @@ namespace ImpHoleCalculation
         {
             ImpulsesGridView.Rows.Clear();
             ImpulseHoleGridView.Rows.Clear();
+            HoleListGridView.Rows.Clear();
             setImpulsesByDate();
         }
 
@@ -427,7 +428,7 @@ namespace ImpHoleCalculation
             SqlCommand command = new SqlCommand(query, con);
             SqlDataReader reader = command.ExecuteReader();
             int i = 0;
-
+            
             while (reader.Read())
             {
                 HoleListGridView.Rows.Add();
