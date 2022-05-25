@@ -245,13 +245,13 @@ namespace ImpHoleCalculation
             SqlConnection con = new SqlConnection(connectionString);
             String query = @"select Impulses.ID, Impulses.HWID, Impulses.ImpulseTime
                             from Impulses
-                            where " +
+                             " +
                             @"  ";
 
             DateTime dateB = Convert.ToDateTime(dateBefore.Text);
             DateTime dateA = Convert.ToDateTime(dateAfter.Text);
 
-            String date = @"  
+            String date = @"  where 
                          (Impulses.ImpulseTime BETWEEN '" + dateB.Ticks + "' AND '" +
                   dateA.Ticks + "')";
             if (!dateCheckBox.Checked) //вывести по всей бд
