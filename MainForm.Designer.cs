@@ -63,9 +63,6 @@
             this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImpulseHoleGridView = new System.Windows.Forms.DataGridView();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.labelNumbImpAll = new System.Windows.Forms.Label();
@@ -79,6 +76,13 @@
             this.OneHolecheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.autosaveCheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.daysRadioButton2 = new System.Windows.Forms.RadioButton();
+            this.hoursRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HoleListGridView)).BeginInit();
@@ -88,6 +92,7 @@
             this.tabControl1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // dateBefore
@@ -166,7 +171,7 @@
             // 
             // excelButton
             // 
-            this.excelButton.Location = new System.Drawing.Point(12, 422);
+            this.excelButton.Location = new System.Drawing.Point(109, 471);
             this.excelButton.Name = "excelButton";
             this.excelButton.Size = new System.Drawing.Size(75, 38);
             this.excelButton.TabIndex = 13;
@@ -187,7 +192,7 @@
             // 
             // startButtonTest
             // 
-            this.startButtonTest.Location = new System.Drawing.Point(12, 382);
+            this.startButtonTest.Location = new System.Drawing.Point(12, 479);
             this.startButtonTest.Name = "startButtonTest";
             this.startButtonTest.Size = new System.Drawing.Size(75, 23);
             this.startButtonTest.TabIndex = 24;
@@ -288,9 +293,9 @@
             this.Column9,
             this.Column10,
             this.Column11});
-            this.TempHoleGridView.Location = new System.Drawing.Point(620, 377);
+            this.TempHoleGridView.Location = new System.Drawing.Point(924, 581);
             this.TempHoleGridView.Name = "TempHoleGridView";
-            this.TempHoleGridView.Size = new System.Drawing.Size(352, 172);
+            this.TempHoleGridView.Size = new System.Drawing.Size(74, 18);
             this.TempHoleGridView.TabIndex = 4;
             this.TempHoleGridView.Visible = false;
             // 
@@ -375,26 +380,10 @@
             this.Column6,
             this.Column7,
             this.Column23});
-            this.ImpulseHoleGridView.Location = new System.Drawing.Point(836, 547);
+            this.ImpulseHoleGridView.Location = new System.Drawing.Point(634, 306);
             this.ImpulseHoleGridView.Name = "ImpulseHoleGridView";
-            this.ImpulseHoleGridView.Size = new System.Drawing.Size(159, 46);
+            this.ImpulseHoleGridView.Size = new System.Drawing.Size(361, 183);
             this.ImpulseHoleGridView.TabIndex = 2;
-            this.ImpulseHoleGridView.Visible = false;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "№";
-            this.Column6.Name = "Column6";
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "Дата";
-            this.Column7.Name = "Column7";
-            // 
-            // Column23
-            // 
-            this.Column23.HeaderText = "Количество событий";
-            this.Column23.Name = "Column23";
             // 
             // tabControl1
             // 
@@ -515,15 +504,75 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.groupBox3);
+            this.groupBox2.Controls.Add(this.autosaveCheckBox);
             this.groupBox2.Controls.Add(this.OneHolecheckBox);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.holeComboBox);
             this.groupBox2.Location = new System.Drawing.Point(10, 215);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(182, 100);
+            this.groupBox2.Size = new System.Drawing.Size(182, 226);
             this.groupBox2.TabIndex = 43;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "№";
+            this.Column6.Name = "Column6";
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Дата";
+            this.Column7.Name = "Column7";
+            // 
+            // Column23
+            // 
+            this.Column23.HeaderText = "Количество импульсов";
+            this.Column23.Name = "Column23";
+            // 
+            // autosaveCheckBox
+            // 
+            this.autosaveCheckBox.AutoSize = true;
+            this.autosaveCheckBox.Location = new System.Drawing.Point(16, 102);
+            this.autosaveCheckBox.Name = "autosaveCheckBox";
+            this.autosaveCheckBox.Size = new System.Drawing.Size(119, 30);
+            this.autosaveCheckBox.TabIndex = 45;
+            this.autosaveCheckBox.Text = "сохранить данные\r\n автомотически";
+            this.autosaveCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.daysRadioButton2);
+            this.groupBox3.Controls.Add(this.hoursRadioButton);
+            this.groupBox3.Location = new System.Drawing.Point(12, 138);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(151, 77);
+            this.groupBox3.TabIndex = 46;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Группировка данных";
+            // 
+            // daysRadioButton2
+            // 
+            this.daysRadioButton2.AutoSize = true;
+            this.daysRadioButton2.Location = new System.Drawing.Point(7, 44);
+            this.daysRadioButton2.Name = "daysRadioButton2";
+            this.daysRadioButton2.Size = new System.Drawing.Size(66, 17);
+            this.daysRadioButton2.TabIndex = 1;
+            this.daysRadioButton2.Text = "по дням";
+            this.daysRadioButton2.UseVisualStyleBackColor = true;
+            // 
+            // hoursRadioButton
+            // 
+            this.hoursRadioButton.AutoSize = true;
+            this.hoursRadioButton.Checked = true;
+            this.hoursRadioButton.Location = new System.Drawing.Point(7, 20);
+            this.hoursRadioButton.Name = "hoursRadioButton";
+            this.hoursRadioButton.Size = new System.Drawing.Size(71, 17);
+            this.hoursRadioButton.TabIndex = 0;
+            this.hoursRadioButton.TabStop = true;
+            this.hoursRadioButton.Text = "по часам";
+            this.hoursRadioButton.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -558,6 +607,8 @@
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -586,9 +637,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
         private System.Windows.Forms.DataGridView TempHoleGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
@@ -615,5 +663,12 @@
         private System.Windows.Forms.CheckBox OneHolecheckBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
+        private System.Windows.Forms.CheckBox autosaveCheckBox;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton daysRadioButton2;
+        private System.Windows.Forms.RadioButton hoursRadioButton;
     }
 }

@@ -472,55 +472,103 @@ namespace ImpHoleCalculation
             }
         }
 
-
-
-
-        private void Test_Button_Click_1(object sender, EventArgs e)
+        //вывод импульсов (часы)
+        public void setHoleDateRowHours()
         {
-            /*
-            progressBar.Value = 0;
-            progressBar2.Value = 0;
-            labelNumbImpAll.Text = "";
+            int rowCount = ImpulsesGridView.Rows.Count;
 
-            typeCheck();
-            progressBarSet_Impulses();
-            */
-            if (OneHolecheckBox.Checked) oneHoleParametr = true; // для того, чтобы не удалялись все скважины при запуске
-            else oneHoleParametr = false;
+            DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
 
-            getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
-            HoleList(); // повторный вывоз с целью очистки ненужных скважин, если есть необходимость
+            DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
 
-            
-            getAllImpulses(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
-            sortDate(); // сортировка выбившихся значений по дате (импульсы)
-            //setImpHoleData(); // проставление имен скважин к импульсам (устарело)
-
-            //if(oneHoleParametr) сlearImpulsesByHole();//очистка таблицы импульсов, чтобы она содержала только строки с нужной скважиной (не нужно)
-
-            countImpByHole(); //расчет количества импульсов по скважинам
-            
+            dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, dateAfter.Hour, 0, 0);
 
 
-            //setHoleDateRow();
-
-
-                /*
-                setImpulses();
-                numberOfImpulses();
-                */
-         }
-
-        private void ReturnButton_Click(object sender, EventArgs e)
-        {
-            saveProperties();
-            AutorizeForm form = new AutorizeForm();
-            this.Hide();
-            form.Closed += (s, args) => this.Close();
-            form.Show();
+            int i = 0;
+            while (dateBefore <= dateAfter)
+            {
+                ImpulseHoleGridView.Rows.Add();
+                ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;
+                ImpulseHoleGridView.Rows[i].Cells[1].Value = dateBefore;
+                ImpulseHoleGridView.Rows[i].Cells[2].Value = 0;
+                dateBefore = dateBefore.AddHours(1);
+                i++;
+            }
         }
 
-        private void ExcelButton_Click(object sender, EventArgs e)
+        //вывод импульсов (часы)
+        public void setHoleDateRowDays()
+        {
+            int rowCount = ImpulsesGridView.Rows.Count;
+
+            DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
+
+            DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
+
+            dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, 0, 0, 0);
+
+
+            int i = 0;
+            while (dateBefore <= dateAfter)
+            {
+                ImpulseHoleGridView.Rows.Add();
+                ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;
+                ImpulseHoleGridView.Rows[i].Cells[1].Value = dateBefore;
+                ImpulseHoleGridView.Rows[i].Cells[2].Value = 0;
+                dateBefore = dateBefore.AddDays(1);
+                i++;
+            }
+        }
+
+        //разбиение импульсов по скважине по часам
+        public void countImpulses(int id)
+        {
+            int rowCountImp = ImpulsesGridView.Rows.Count;
+            int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
+            DateTime currentDateBefore, currentDateAfter, dateImp;
+            for (int i = 0; i < rowCountImp - 1; i++)
+            {
+
+                dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
+
+                for (int j = 0; j < rowCountImpHole - 2; j++)
+                {
+                    currentDateBefore = DateTime.Parse(ImpulseHoleGridView.Rows[j].Cells[1].Value.ToString());
+                    currentDateAfter = DateTime.Parse(ImpulseHoleGridView.Rows[j + 1].Cells[1].Value.ToString());
+
+                    if (dateImp >= currentDateBefore && dateImp <= currentDateAfter && holeName == id)
+                    {
+                        ImpulseHoleGridView.Rows[j].Cells[2].Value = int.Parse(ImpulseHoleGridView.Rows[j].Cells[2].Value.ToString()) + 1;
+                    }
+                }
+                //место для сортировки в последней строчке
+                DateTime lastDate = DateTime.Parse(ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[1].Value.ToString());
+                DateTime lastDateAfter;
+                if (hoursRadioButton.Checked) { lastDateAfter = lastDate.AddHours(1); }
+                else { lastDateAfter = lastDate.AddDays(1); }
+                if (dateImp >= lastDate && dateImp <= lastDateAfter && holeName == id)
+                    ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[2].Value = int.Parse(ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[2].Value.ToString()) + 1;
+            }
+        }
+
+        public void setExcelData(int holeName)
+        {
+            ImpulseHoleGridView.Rows.Clear();
+
+            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+            int i = 0;
+            TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(Double));
+            if (hoursRadioButton.Checked)
+                setHoleDateRowHours();
+            else
+                setHoleDateRowDays();
+            countImpulses(holeName);
+        }
+
+        public void excel(int holeName, SaveFileDialog saveDialog)
         {
             Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
@@ -531,7 +579,7 @@ namespace ImpHoleCalculation
 
                 worksheet = workbook.ActiveSheet;
 
-                worksheet.Name = "Список импульсов";
+                worksheet.Name = "Скважина "+ holeName;
 
 
                 for (int j = 0; j < ImpulseHoleGridView.Columns.Count; j++)
@@ -553,19 +601,21 @@ namespace ImpHoleCalculation
                     cellRowIndex++;
                 }
 
+                /*
                 SaveFileDialog saveDialog = new SaveFileDialog();
                 saveDialog.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
                 saveDialog.FilterIndex = 2;
+                */
 
                 worksheet.Cells[1, 1].CurrentRegion.Borders.LineStyle = Excel.XlLineStyle.xlContinuous; //границы
                 worksheet.Rows[1].Font.Bold = true;
                 worksheet.Range["A:AZ"].EntireColumn.AutoFit();
 
-                if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
+                //if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                //{
                     workbook.SaveAs(saveDialog.FileName);
                     MessageBox.Show("Сохранение успешно");
-                }
+                //}
             }
             catch (System.Exception ex)
             {
@@ -577,7 +627,88 @@ namespace ImpHoleCalculation
                 workbook = null;
                 excel = null;
             }
+        }
 
+        private void Test_Button_Click_1(object sender, EventArgs e)
+        {
+            /*
+            progressBar.Value = 0;
+            progressBar2.Value = 0;
+            labelNumbImpAll.Text = "";
+
+            typeCheck();
+            progressBarSet_Impulses();
+            */
+            int holeName = 0;
+            SaveFileDialog saveDialog = null;
+
+            if (OneHolecheckBox.Checked)
+            {
+                oneHoleParametr = true;
+                if (autosaveCheckBox.Checked) // выбор файла для эксель
+                {
+                    
+
+                    saveDialog = new SaveFileDialog();
+                    saveDialog.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
+                    saveDialog.FilterIndex = 2;
+                    if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+
+                    }
+
+                }
+
+                }// для того, чтобы не удалялись все скважины при запуске
+            else oneHoleParametr = false;
+
+            getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
+            HoleList(); // повторный вывоз с целью очистки ненужных скважин, если есть необходимость
+
+            
+            getAllImpulses(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
+            sortDate(); // сортировка выбившихся значений по дате (импульсы)
+            //setImpHoleData(); // проставление имен скважин к импульсам (устарело)
+
+            //if(oneHoleParametr) сlearImpulsesByHole();//очистка таблицы импульсов, чтобы она содержала только строки с нужной скважиной (не нужно)
+
+            countImpByHole(); //расчет количества импульсов по скважинам
+
+            if (autosaveCheckBox.Checked)
+            {
+                holeName = int.Parse(HoleListGridView.Rows[0].Cells[1].Value.ToString());
+                setExcelData(holeName);
+                excel(holeName, saveDialog);
+            }
+
+            //setHoleDateRow();
+
+
+                /*
+                setImpulses();
+                numberOfImpulses();
+                */
+         }
+
+        private void ReturnButton_Click(object sender, EventArgs e)
+        {
+            saveProperties();
+            AutorizeForm form = new AutorizeForm();
+            this.Hide();
+            form.Closed += (s, args) => this.Close();
+            form.Show();
+        }
+
+        private void ExcelButton_Click(object sender, EventArgs e)
+        {
+            int holeName = int.Parse(HoleListGridView.Rows[0].Cells[1].Value.ToString());
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
+            saveDialog.FilterIndex = 2;
+
+            setExcelData(holeName);
+            excel(holeName, saveDialog);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)

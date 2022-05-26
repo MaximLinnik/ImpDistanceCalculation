@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.labelHole = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.ImpulseHoleGridView = new System.Windows.Forms.DataGridView();
@@ -104,17 +104,17 @@
             this.impulseChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.impulseChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.impulseChart.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.impulseChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.impulseChart.Legends.Add(legend2);
             this.impulseChart.Location = new System.Drawing.Point(339, 9);
             this.impulseChart.Name = "impulseChart";
-            series1.ChartArea = "ChartArea1";
-            series1.IsVisibleInLegend = false;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.impulseChart.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.IsVisibleInLegend = false;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.impulseChart.Series.Add(series2);
             this.impulseChart.Size = new System.Drawing.Size(821, 442);
             this.impulseChart.TabIndex = 5;
             this.impulseChart.Text = "chart1";
@@ -128,7 +128,7 @@
             this.groupBox1.Size = new System.Drawing.Size(186, 77);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Группировка";
+            this.groupBox1.Text = "Группировка данных";
             // 
             // daysRadioButton2
             // 
