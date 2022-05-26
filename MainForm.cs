@@ -47,6 +47,8 @@ namespace ImpHoleCalculation
         //получение и запись импульсов 
         private int setImpulsesByDate()
         {
+            int holeName = 0; //имя скважины, если нашлась
+
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             SqlConnection con = new SqlConnection(connectionString);
             String query = @"select Impulses.ID, Impulses.HWID, Impulses.ImpulseTime
@@ -70,23 +72,29 @@ namespace ImpHoleCalculation
 
             while (reader.Read())
             {
-                ImpulsesGridView.Rows.Add();
+                
                 String impID = reader[0].ToString();
                 String hwid = reader[1].ToString();
 
                 //тики в дату
                 DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
-                String eventDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
+                String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
 
+                //оптимизация, чтобы записывалось только если входит в скважину
+                if (oneHoleParametr)
+                {
+                  holeName = checkHoleImp(hwid, dt);
+                }
+                if (holeName == 0) continue;
 
-                
-                int colCount = ImpulsesGridView.ColumnCount;
+                ImpulsesGridView.Rows.Add();
+                //int colCount = ImpulsesGridView.ColumnCount;
                 
                 ImpulsesGridView.Rows[i].Cells[0].Value = i + 1;
                 ImpulsesGridView.Rows[i].Cells[1].Value = double.Parse(impID);
                 ImpulsesGridView.Rows[i].Cells[2].Value = double.Parse(hwid);
-                ImpulsesGridView.Rows[i].Cells[3].Value = DateTime.Parse(eventDate);
-                ImpulsesGridView.Rows[i].Cells[4].Value = 0; // имя скважины
+                ImpulsesGridView.Rows[i].Cells[3].Value = DateTime.Parse(impDate);
+                ImpulsesGridView.Rows[i].Cells[4].Value = holeName; // имя скважины
 
                 /*
                 try {ImpulsesGridView.Rows[i].Cells[13].Value = double.Parse(reader[9].ToString());}
@@ -103,6 +111,35 @@ namespace ImpHoleCalculation
             con.Close();
 
             return i;
+        }
+
+        // проверка на соответсвие скважины на этапе получения результата запроса
+        public int checkHoleImp(String hwid, DateTime dateImp)
+        {
+            int result = 0;
+
+            int rowCountHoleImp = TempHoleGridView.Rows.Count;
+
+            for (int j = 0; j < rowCountHoleImp - 1; j++)
+            {
+                DateTime dateBefore = DateTime.Parse(TempHoleGridView.Rows[j].Cells[4].Value.ToString());
+                DateTime dateAfter = DateTime.Parse(TempHoleGridView.Rows[j].Cells[5].Value.ToString());
+                int hwidInHole = int.Parse(TempHoleGridView.Rows[j].Cells[3].Value.ToString());
+
+                //DateTime dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                //int hwidImp = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
+                int hwidImp = int.Parse(hwid);
+                if (dateBefore <= dateImp && dateImp <= dateAfter && hwidImp == hwidInHole)
+                {
+                    int name = int.Parse(holeComboBox.Text); // имя скважины из комбобокса
+                    int holeName = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
+                    //ImpulsesGridView.Rows[i].Cells[4].Value = TempHoleGridView.Rows[j].Cells[1].Value.ToString();
+                    result = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
+                    break;
+                }
+            }
+
+            return result;
         }
 
 
@@ -204,8 +241,36 @@ namespace ImpHoleCalculation
             setImpulsesByDate();
         }
 
-        //заполнение в вспомогательную таблицу импульсов соответствующие скважины
+        //заполнение в вспомогательную таблицу импульсов соответствующие скважины (старый вариант, но подход. для оптимиз)
         public void setImpHoleData()
+        {
+            int rowCountImp = ImpulsesGridView.RowCount;
+            int rowCountHoleImp = TempHoleGridView.RowCount;
+
+            for (int i = 0; i < rowCountImp - 1; i++)
+            {
+                for (int j = 0; j < rowCountHoleImp - 1; j++)
+                {
+                    DateTime dateBefore = DateTime.Parse(TempHoleGridView.Rows[j].Cells[4].Value.ToString());
+                    DateTime dateAfter = DateTime.Parse(TempHoleGridView.Rows[j].Cells[5].Value.ToString());
+                    int hwidInHole = int.Parse(TempHoleGridView.Rows[j].Cells[3].Value.ToString());
+
+                    DateTime dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                    int hwidImp = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
+                    if (dateBefore <= dateImp && dateImp <= dateAfter && hwidImp == hwidInHole)
+                    {
+                        int name = int.Parse(holeComboBox.Text); // имя скважины из комбобокса
+                        int holeName = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
+                        ImpulsesGridView.Rows[i].Cells[4].Value = TempHoleGridView.Rows[j].Cells[1].Value.ToString();
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        //заполнение в вспомогательную таблицу импульсов соответствующие скважины (отбракованный вариант)
+        public void setImpHoleDataOneHole()
         {
             int rowCountImp = ImpulsesGridView.RowCount;
             int rowCountHoleImp = TempHoleGridView.RowCount;
@@ -427,11 +492,11 @@ namespace ImpHoleCalculation
             HoleList(); // повторный вывоз с целью очистки ненужных скважин, если есть необходимость
 
             
-            getAllImpulses(); /// получение всех импульсов
+            getAllImpulses(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
             sortDate(); // сортировка выбившихся значений по дате (импульсы)
-            setImpHoleData(); // проставление имен скважин к импульсам + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
+            //setImpHoleData(); // проставление имен скважин к импульсам (устарело)
 
-            //if(oneHoleParametr) сlearImpulsesByHole();//очистка таблицы импульсов, чтобы она содержала только строки с нужной скважиной
+            //if(oneHoleParametr) сlearImpulsesByHole();//очистка таблицы импульсов, чтобы она содержала только строки с нужной скважиной (не нужно)
 
             countImpByHole(); //расчет количества импульсов по скважинам
             
