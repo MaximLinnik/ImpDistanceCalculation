@@ -34,15 +34,15 @@
             this.labelHole = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.ImpulseHoleGridView = new System.Windows.Forms.DataGridView();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.impulseChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.daysRadioButton2 = new System.Windows.Forms.RadioButton();
             this.hoursRadioButton = new System.Windows.Forms.RadioButton();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.impulseChart)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -83,6 +83,21 @@
             this.ImpulseHoleGridView.Name = "ImpulseHoleGridView";
             this.ImpulseHoleGridView.Size = new System.Drawing.Size(321, 333);
             this.ImpulseHoleGridView.TabIndex = 4;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "№";
+            this.Column6.Name = "Column6";
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Дата";
+            this.Column7.Name = "Column7";
+            // 
+            // Column23
+            // 
+            this.Column23.HeaderText = "Количество импульсов";
+            this.Column23.Name = "Column23";
             // 
             // impulseChart
             // 
@@ -156,21 +171,6 @@
             this.button3.Text = "Сохранить график";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.Button3_Click);
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "№";
-            this.Column6.Name = "Column6";
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "Дата";
-            this.Column7.Name = "Column7";
-            // 
-            // Column23
-            // 
-            this.Column23.HeaderText = "Количество импульсов";
-            this.Column23.Name = "Column23";
             // 
             // HoleForm
             // 

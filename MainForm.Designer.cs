@@ -75,6 +75,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.holeComboBox = new System.Windows.Forms.ComboBox();
+            this.OneHolecheckBox = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HoleListGridView)).BeginInit();
@@ -83,6 +87,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dateBefore
@@ -161,7 +166,7 @@
             // 
             // excelButton
             // 
-            this.excelButton.Location = new System.Drawing.Point(9, 381);
+            this.excelButton.Location = new System.Drawing.Point(12, 422);
             this.excelButton.Name = "excelButton";
             this.excelButton.Size = new System.Drawing.Size(75, 38);
             this.excelButton.TabIndex = 13;
@@ -182,7 +187,7 @@
             // 
             // startButtonTest
             // 
-            this.startButtonTest.Location = new System.Drawing.Point(54, 224);
+            this.startButtonTest.Location = new System.Drawing.Point(12, 382);
             this.startButtonTest.Name = "startButtonTest";
             this.startButtonTest.Size = new System.Drawing.Size(75, 23);
             this.startButtonTest.TabIndex = 24;
@@ -222,7 +227,7 @@
             this.Column20});
             this.HoleListGridView.Location = new System.Drawing.Point(6, 6);
             this.HoleListGridView.Name = "HoleListGridView";
-            this.HoleListGridView.Size = new System.Drawing.Size(989, 365);
+            this.HoleListGridView.Size = new System.Drawing.Size(620, 365);
             this.HoleListGridView.TabIndex = 44;
             this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
             // 
@@ -283,11 +288,10 @@
             this.Column9,
             this.Column10,
             this.Column11});
-            this.TempHoleGridView.Location = new System.Drawing.Point(631, 583);
+            this.TempHoleGridView.Location = new System.Drawing.Point(620, 377);
             this.TempHoleGridView.Name = "TempHoleGridView";
-            this.TempHoleGridView.Size = new System.Drawing.Size(186, 10);
+            this.TempHoleGridView.Size = new System.Drawing.Size(352, 172);
             this.TempHoleGridView.TabIndex = 4;
-            this.TempHoleGridView.Visible = false;
             // 
             // Column5
             // 
@@ -370,9 +374,9 @@
             this.Column6,
             this.Column7,
             this.Column23});
-            this.ImpulseHoleGridView.Location = new System.Drawing.Point(836, 583);
+            this.ImpulseHoleGridView.Location = new System.Drawing.Point(836, 547);
             this.ImpulseHoleGridView.Name = "ImpulseHoleGridView";
-            this.ImpulseHoleGridView.Size = new System.Drawing.Size(159, 10);
+            this.ImpulseHoleGridView.Size = new System.Drawing.Size(159, 46);
             this.ImpulseHoleGridView.TabIndex = 2;
             this.ImpulseHoleGridView.Visible = false;
             // 
@@ -479,12 +483,54 @@
             this.groupBox4.Text = "Частота";
             this.groupBox4.Visible = false;
             // 
+            // holeComboBox
+            // 
+            this.holeComboBox.FormattingEnabled = true;
+            this.holeComboBox.Location = new System.Drawing.Point(77, 60);
+            this.holeComboBox.Name = "holeComboBox";
+            this.holeComboBox.Size = new System.Drawing.Size(97, 21);
+            this.holeComboBox.TabIndex = 40;
+            // 
+            // OneHolecheckBox
+            // 
+            this.OneHolecheckBox.AutoSize = true;
+            this.OneHolecheckBox.Checked = true;
+            this.OneHolecheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.OneHolecheckBox.Location = new System.Drawing.Point(13, 19);
+            this.OneHolecheckBox.Name = "OneHolecheckBox";
+            this.OneHolecheckBox.Size = new System.Drawing.Size(139, 30);
+            this.OneHolecheckBox.TabIndex = 41;
+            this.OneHolecheckBox.Text = "Подсчитать импульсы\r\n из одной скважины";
+            this.OneHolecheckBox.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 63);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 13);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "Скважина:";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.OneHolecheckBox);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.holeComboBox);
+            this.groupBox2.Location = new System.Drawing.Point(10, 215);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(182, 100);
+            this.groupBox2.TabIndex = 43;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Параметры";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1221, 638);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.labelNumbImpAll);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.groupBox4);
@@ -509,6 +555,8 @@
             this.tabControl1.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -562,5 +610,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
+        private System.Windows.Forms.ComboBox holeComboBox;
+        private System.Windows.Forms.CheckBox OneHolecheckBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

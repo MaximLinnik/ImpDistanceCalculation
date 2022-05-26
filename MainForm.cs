@@ -311,6 +311,13 @@ namespace ImpHoleCalculation
                             AND Holes.ID = SensorHole.HoleID
                             " +
                             @"  ";
+
+            if (OneHolecheckBox.Checked)
+            {
+                String hole = "AND Holes.Name =" + holeComboBox.Text;
+                query += hole;
+            }
+
             con.Open();
             SqlCommand command = new SqlCommand(query, con);
             SqlDataReader reader = command.ExecuteReader();
@@ -454,6 +461,52 @@ namespace ImpHoleCalculation
             con.Close();
         }
 
+        //вывод в combobox списка скважин
+        public void setHoleToBox()
+        {
+            holeComboBox.Items.Clear();
+            int rowCount = HoleListGridView.RowCount;
+            for(int i = 0; i< rowCount -1; i++)
+            {
+                int name = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
+                holeComboBox.Items.Add(name);
+            }
+            holeComboBox.SelectedIndex = 0;
+        }
+
+        //общая загрузка списка скважин при начале работы программы 
+        public void setHoleList()
+        {
+            HoleList();
+            setHoleToBox();
+        }
+
+        //удаление ненужных скважин из таблицы сенсоров-скважин
+        public void removeFromHoleSensor()
+        {
+            int name = int.Parse(holeComboBox.Text);
+            int rowCount = TempHoleGridView.RowCount;
+            //int i = 0;
+            for(int i = 0; i< rowCount - 1; i++)
+            //while (TempHoleGridView.Rows[i].Cells[1].Value.ToString()!= null)
+            {
+                int holeName = int.Parse(TempHoleGridView.Rows[i].Cells[1].Value.ToString());
+                if (holeName!= name)
+                {
+                    TempHoleGridView.Rows.RemoveAt(i);
+                    rowCount--;
+                }
+                //i++;
+            }
+            TempHoleGridView.Refresh();
+        }
+
+        //удаление из таблиц неиспл скважин для оптимизации
+        public void removeHoleFromList()
+        {
+            removeFromHoleSensor();
+        }
+
         //расчет количества импульсов по скважинамы
         public void numberImpByHoles()
         {
@@ -479,7 +532,7 @@ namespace ImpHoleCalculation
         //расчет количества ипульсов по скважинам
         public void countImpByHole()
         {
-            HoleList();
+            //HoleList();
             numberImpByHoles();
         }
 
@@ -565,30 +618,42 @@ namespace ImpHoleCalculation
 
         private void Test_Button_Click_1(object sender, EventArgs e)
         {
-            //progressBar.Value = 0;
-            //progressBar2.Value = 0;
-            //labelNumbImpAll.Text = "";
+            /*
+            progressBar.Value = 0;
+            progressBar2.Value = 0;
+            labelNumbImpAll.Text = "";
 
-            //typeCheck();
-            //progressBarSet_Impulses();
+            typeCheck();
+            progressBarSet_Impulses();
+            */
 
-            getAllHole();
-            getAllImpulses();
+            getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
+            
+            /*
+            if (OneHolecheckBox.Checked)
+            {
+                removeHoleFromList(); // удаление лишних скважин из списка для оптимизации
+            }
+            */
+
+            /*
+            getAllImpulses(); /// получение всех импульсов
             sortDate(); // сортировка выбившихся значений по дате (импульсы)
-            setImpHoleData(); // проставление имен скважин
+            setImpHoleData(); // проставление имен скважин к импульсам
 
             countImpByHole(); //расчет количества импульсов по скважинам
+            */
+
 
             //setHoleDateRow();
 
 
+            /*
 
-
-            //setT2();
-            //setImpulses();
-
-
-            //numberOfImpulses();
+            setT2();
+            setImpulses();
+            numberOfImpulses();
+            */
         }
 
 
@@ -1410,6 +1475,8 @@ namespace ImpHoleCalculation
         {
             dateBefore.Text = Properties.Settings.Default.DateBef;
             dateAfter.Text = Properties.Settings.Default.DateAft;
+            setHoleList(); // вывод заранее списка скважин при загрузке формы
+
         }
 
         private void HoleListGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
