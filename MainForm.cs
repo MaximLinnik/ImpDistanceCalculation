@@ -43,201 +43,8 @@ namespace ImpHoleCalculation
             Properties.Settings.Default.DateAft = dateAfter.Text;
             Properties.Settings.Default.Save();
         }
-        /*
-        List<double> correctType;// проверка на типы событий
-        //получение информации с чекбоксов(тип события)
-        public void typeCheck()
-        {
-            correctType = new List<double>();
-            if(checkBoxtype0.Checked) correctType.Add(0);
-            if (checkBoxtype10.Checked) correctType.Add(10);
-            if (checkBoxtype20.Checked) correctType.Add(20);
-            if (checkBoxtype30.Checked) correctType.Add(30);
-            if (checkBoxtype40.Checked) correctType.Add(40);
-            if (checkBoxtype50.Checked) correctType.Add(50);
-            if (checkBoxtype60.Checked) correctType.Add(60);
-            if (checkBoxtype70.Checked) correctType.Add(70);
-            if (checkBoxtype80.Checked) correctType.Add(80);
-            if (checkBoxtype90.Checked) correctType.Add(90);
 
-        }
-        */
-
-        //получение ряда импульсов по номеру ААЗ
-        private List<string> getImpulsesHWID_AAZ(string[] aaz)
-        {
-            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
-            SqlConnection con = new SqlConnection(connectionString);
-            List<string> HWID = new List<string>();
-            String query = @"select Impulses.HWID
-                             from AAZ, AAZ_Events, AE_Events,Events, Impulses
-                             where  
-                             AAZ.AAZID = " + aaz[0] +
-                              @" AND AAZ.AAZID = AAZ_Events.AAZID
-                             AND AAZ_Events.EventId = AE_Events.EventID
-                             AND AE_Events.ID_of_Event = Events.ID
-                             AND
-                            (ImpulseID1=Impulses.ID  or ImpulseID2=Impulses.ID or ImpulseID3=Impulses.ID 
-                            or ImpulseID4=Impulses.ID or ImpulseID5=Impulses.ID or ImpulseID6=Impulses.ID
-                            or ImpulseID7=Impulses.ID or ImpulseID8=Impulses.ID or ImpulseID9=Impulses.ID)
-                            GROUP BY Impulses.HWID";
-            SqlCommand command = new SqlCommand(query, con);
-            con.Open();
-            String res = "";
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                res = reader[0].ToString();
-                HWID.Add(res);
-            }
-            con.Close();
-            return HWID;
-        }
-
-        //получение ряда импульсов по номеру События
-        private List<string> getImpulsesHWID_Events(string[] eventRow)
-        {
-            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
-            SqlConnection con = new SqlConnection(connectionString);
-            List<string> HWID = new List<string>();
-            String query = @"select Impulses.HWID,  Impulses.InsertTime, AE_Events.EventType
-                             from  AE_Events,Events, Impulses
-                             where  Events.ID = " + eventRow[0] +
-                              @" AND AE_Events.ID_of_Event = Events.ID
-                                AND
-                                (ImpulseID1=Impulses.ID  or ImpulseID2=Impulses.ID or ImpulseID3=Impulses.ID 
-                                or ImpulseID4=Impulses.ID or ImpulseID5=Impulses.ID or ImpulseID6=Impulses.ID
-                                or ImpulseID7=Impulses.ID or ImpulseID8=Impulses.ID or ImpulseID9=Impulses.ID)";
-            SqlCommand command = new SqlCommand(query, con);
-            con.Open();
-            String res = "";
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                res = reader[0].ToString();
-                HWID.Add(res);
-            }
-            con.Close();
-            return HWID;
-        }
-
-        //получение и запись импульсов по HWID (с добавлением типа сигнала) - по ааз
-        private int setImpulsesByHWID_AAZ(string HWID, string AAZID, string type, int i)
-        {
-            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
-            SqlConnection con = new SqlConnection(connectionString);
-            String query = @"select Impulses.ID, Impulses.HWID,  Impulses.Amplitude, Impulses.Duration, Impulses.LeadingEdgeTime, Impulses.Threshold, Impulses.Area, Impulses.MARSE 
-                            from AAZ, AAZ_Events, AE_Events,Events, Impulses
-                            where  
-                            AAZ.AAZID = " + AAZID +
-                            @" AND AAZ.AAZID = AAZ_Events.AAZID
-                            AND AAZ_Events.EventId = AE_Events.EventID
-                            AND AE_Events.ID_of_Event = Events.ID
-                            AND
-                            (ImpulseID1=Impulses.ID  or ImpulseID2=Impulses.ID or ImpulseID3=Impulses.ID 
-                            or ImpulseID4=Impulses.ID or ImpulseID5=Impulses.ID or ImpulseID6=Impulses.ID
-                            or ImpulseID7=Impulses.ID or ImpulseID8=Impulses.ID or ImpulseID9=Impulses.ID)
-                            AND Impulses.HWID = " + HWID +@"";
-
-            String date = @" AND 
-                         (Impulses.InsertTime BETWEEN '"+ dateBefore.Text +"' AND '" +
-                  dateAfter.Text + "')";
-
-            if (!dateCheckBox.Checked) //вывести по всей бд
-                query += date;
-            con.Open();
-            SqlCommand command = new SqlCommand(query, con);
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                ImpulsesGridView.Rows.Add();
-                String id0 = reader[0].ToString();
-                String id = reader[1].ToString();
-                String ampl = reader[2].ToString();
-                String dur = reader[3].ToString();
-                String edge = reader[4].ToString();
-                String threshold = reader[5].ToString();
-                String area = reader[6].ToString();
-                String MARSE = reader[7].ToString();
-                int colCount = ImpulsesGridView.ColumnCount;
-                ImpulsesGridView.Rows[i].Cells[0].Value = i + 1;
-                ImpulsesGridView.Rows[i].Cells[1].Value = double.Parse(id0);
-                ImpulsesGridView.Rows[i].Cells[2].Value = double.Parse(id);
-                ImpulsesGridView.Rows[i].Cells[3].Value = double.Parse(ampl);
-                ImpulsesGridView.Rows[i].Cells[4].Value = double.Parse(dur);
-                ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(edge);
-                ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(threshold);
-                ImpulsesGridView.Rows[i].Cells[7].Value = double.Parse(area);
-                ImpulsesGridView.Rows[i].Cells[8].Value = double.Parse(MARSE);
-
-                ImpulsesGridView.Rows[i].Cells[colCount - 3].Value = -1; // частота
-                ImpulsesGridView.Rows[i].Cells[colCount - 2].Value = int.Parse(type); // тип сигнала
-                ImpulsesGridView.Rows[i].Cells[colCount-1].Value = -1; // принадлежность к кластеру
-                i++;
-            }
-            con.Close();
-            
-            return i;
-        }
-
-        //получение и запись импульсов по HWID (с добавлением типа сигнала) - по Событиям
-        private int setImpulsesByHWID_Events(string HWID, string eventID, string type, int i)
-        {
-            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
-            SqlConnection con = new SqlConnection(connectionString);
-            String query = @"select Impulses.ID, Impulses.HWID,  Impulses.Amplitude, Impulses.Duration, Impulses.LeadingEdgeTime, Impulses.Threshold, Impulses.Area, Impulses.MARSE 
-                            from AE_Events,Events, Impulses
-                            where  
-                            Events.ID =  " + eventID +
-                            @" AND AE_Events.ID_of_Event = Events.ID
-                            AND
-                            (ImpulseID1=Impulses.ID  or ImpulseID2=Impulses.ID or ImpulseID3=Impulses.ID 
-                            or ImpulseID4=Impulses.ID or ImpulseID5=Impulses.ID or ImpulseID6=Impulses.ID
-                            or ImpulseID7=Impulses.ID or ImpulseID8=Impulses.ID or ImpulseID9=Impulses.ID)
-                            AND Impulses.HWID = " + HWID + @"";
-            /*
-            String date = @" AND 
-                         (Impulses.InsertTime BETWEEN '" + dateBefore.Text + "' AND '" +
-                  dateAfter.Text + "')";
-            if (!dateCheckBox.Checked) //вывести по всей бд
-                query += date;
-                */
-            con.Open();
-            SqlCommand command = new SqlCommand(query, con);
-            SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                ImpulsesGridView.Rows.Add();
-                String id0 = reader[0].ToString();
-                String id = reader[1].ToString();
-                String ampl = reader[2].ToString();
-                String dur = reader[3].ToString();
-                String edge = reader[4].ToString();
-                String threshold = reader[5].ToString();
-                String area = reader[6].ToString();
-                String MARSE = reader[7].ToString();
-                int colCount = ImpulsesGridView.ColumnCount;
-                ImpulsesGridView.Rows[i].Cells[0].Value = i + 1;
-                ImpulsesGridView.Rows[i].Cells[1].Value = double.Parse(id0);
-                ImpulsesGridView.Rows[i].Cells[2].Value = double.Parse(id);
-                ImpulsesGridView.Rows[i].Cells[3].Value = double.Parse(ampl);
-                ImpulsesGridView.Rows[i].Cells[4].Value = double.Parse(dur);
-                ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(edge);
-                ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(threshold);
-                ImpulsesGridView.Rows[i].Cells[7].Value = double.Parse(area);
-                ImpulsesGridView.Rows[i].Cells[8].Value = double.Parse(MARSE);
-
-                ImpulsesGridView.Rows[i].Cells[colCount - 3].Value = -1; // частота
-                ImpulsesGridView.Rows[i].Cells[colCount - 2].Value = int.Parse(type); // тип сигнала
-                ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = -1; // принадлежность к кластеру
-                i++;
-            }
-            con.Close();
-
-            return i;
-        }
-
-        //получение и запись импульсов по HWID (с добавлением типа сигнала) - по Событиям (все вместе)
+        //получение и запись импульсов 
         private int setImpulsesByDate()
         {
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
@@ -402,9 +209,11 @@ namespace ImpHoleCalculation
         {
             int rowCountImp = ImpulsesGridView.RowCount;
             int rowCountHoleImp = TempHoleGridView.RowCount;
+            bool checkHole = false; // для проверки случая, когда была выбрана одна скважина, но ипмульсы не попали в нее
 
             for (int i = 0; i< rowCountImp-1; i++)
             {
+                checkHole = false;
                 for (int j = 0; j< rowCountHoleImp-1; j++)
                 {
                     DateTime dateBefore = DateTime.Parse(TempHoleGridView.Rows[j].Cells[4].Value.ToString());
@@ -415,9 +224,29 @@ namespace ImpHoleCalculation
                     int hwidImp = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
                     if (dateBefore<=dateImp && dateImp<= dateAfter && hwidImp == hwidInHole)
                     {
+                        int name = int.Parse(holeComboBox.Text); // имя скважины из комбобокса
+                        int holeName = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
+                        /*
+                        if (oneHoleParametr && name != holeName)// удаление записей, в которых отсутствует нужная скважина
+                        {
+                            ImpulsesGridView.Rows.RemoveAt(i);
+                            i--;
+                            rowCountImp--;
+                        }
+                        else
+                        */
                         ImpulsesGridView.Rows[i].Cells[4].Value = TempHoleGridView.Rows[j].Cells[1].Value.ToString();
+
+                        checkHole = true;
+
                         break;
                     }
+                }
+                if (!checkHole) // импульсы не попали в выбранную скважину
+                {
+                    ImpulsesGridView.Rows.RemoveAt(i);
+                    i--;
+                    rowCountImp--;
                 }
             }
         }
@@ -600,9 +429,9 @@ namespace ImpHoleCalculation
             
             getAllImpulses(); /// получение всех импульсов
             sortDate(); // сортировка выбившихся значений по дате (импульсы)
-            setImpHoleData(); // проставление имен скважин к импульсам
+            setImpHoleData(); // проставление имен скважин к импульсам + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
 
-            if(oneHoleParametr) сlearImpulsesByHole();//очистка таблицы импульсов, чтобы она содержала только строки с нужной скважиной
+            //if(oneHoleParametr) сlearImpulsesByHole();//очистка таблицы импульсов, чтобы она содержала только строки с нужной скважиной
 
             countImpByHole(); //расчет количества импульсов по скважинам
             
@@ -612,8 +441,6 @@ namespace ImpHoleCalculation
 
 
                 /*
-
-                setT2();
                 setImpulses();
                 numberOfImpulses();
                 */

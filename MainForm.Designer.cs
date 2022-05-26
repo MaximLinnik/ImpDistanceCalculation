@@ -292,6 +292,7 @@
             this.TempHoleGridView.Name = "TempHoleGridView";
             this.TempHoleGridView.Size = new System.Drawing.Size(352, 172);
             this.TempHoleGridView.TabIndex = 4;
+            this.TempHoleGridView.Visible = false;
             // 
             // Column5
             // 
