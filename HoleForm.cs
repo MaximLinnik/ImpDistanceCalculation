@@ -126,7 +126,11 @@ namespace ImpHoleCalculation
                 }
                 //место для сортировки в последней строчке
                 DateTime lastDate = DateTime.Parse(ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[1].Value.ToString());
-                if(dateImp>= lastDate && holeName == int.Parse(id)) ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[2].Value = int.Parse(ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[0].Value.ToString()) + 1;
+                DateTime lastDateAfter;
+                if (hoursRadioButton.Checked) { lastDateAfter = lastDate.AddHours(1); }
+                else { lastDateAfter = lastDate.AddDays(1); }
+                if(dateImp>= lastDate && dateImp <= lastDateAfter && holeName == int.Parse(id))
+                    ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[2].Value = int.Parse(ImpulseHoleGridView.Rows[rowCountImpHole - 2].Cells[2].Value.ToString()) + 1;
             }
         }
 
@@ -134,11 +138,11 @@ namespace ImpHoleCalculation
         public void setChart()
         {
             int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
+            impulseChart.Series[0].Points.Clear();
             Series series = impulseChart.Series[0];
             impulseChart.ChartAreas[0].AxisX.Minimum = 0;
-            impulseChart.ChartAreas[0].AxisX.Maximum = rowCountImpHole-1;
+            impulseChart.ChartAreas[0].AxisX.Maximum = rowCountImpHole;
             impulseChart.ChartAreas[0].AxisX.Interval = 1;
-            //impulseChart.ChartAreas[0].AxisX.IntervalOffset = impulseChart.ChartAreas[0].AxisX.Interval - impulseChart.ChartAreas[0].AxisX.Minimum;
             for (int i = 0; i< rowCountImpHole-1; i++)
             {
                 String dateImp = ImpulseHoleGridView.Rows[i].Cells[1].Value.ToString();
