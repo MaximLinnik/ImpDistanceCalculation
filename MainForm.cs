@@ -24,9 +24,8 @@ namespace ImpHoleCalculation
         String connectionString;
         HoleForm HoleForm;
 
-        List<Cluster> сluster;
-
-
+        bool oneHoleParametr; //п-р позволяющий избежать ситуации удаления из списка всех скважин при начале работы
+        
         public MainForm(String server, String db, String login, String password)
         {
             this.server = server;
@@ -303,6 +302,8 @@ namespace ImpHoleCalculation
         //получение всех скважин со всеми индексами
         public void getAllHole()
         {
+            TempHoleGridView.Rows.Clear();
+
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             SqlConnection con = new SqlConnection(connectionString);
             String query = @"select SensorHole.HoleID, Holes.Name, SensorHole.SensorID, Sensors.HWID, SensorHole.BeginTime, SensorHole.EndTime 
@@ -312,7 +313,7 @@ namespace ImpHoleCalculation
                             " +
                             @"  ";
 
-            if (OneHolecheckBox.Checked)
+            if (oneHoleParametr) // булева переменная, проставляемая по чекбоксу
             {
                 String hole = "AND Holes.Name =" + holeComboBox.Text;
                 query += hole;
@@ -424,12 +425,20 @@ namespace ImpHoleCalculation
         //получение списка скважин в таблицу
         public void HoleList()
         {
+            HoleListGridView.Rows.Clear();
+
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             SqlConnection con = new SqlConnection(connectionString);
             String query = @"select Holes.Name, Holes.BeginTime, Holes.EndTime, Holes.X, Holes.Y, Holes.Z, Holes.Description  
                             from Holes
                             " +
                             @"  ";
+
+            if (oneHoleParametr) // булева переменная, проставляемая по чекбоксу
+            {
+                String hole = "where Holes.Name =" + holeComboBox.Text;
+                query += hole;
+            }
 
             con.Open();
             SqlCommand command = new SqlCommand(query, con);
@@ -481,6 +490,7 @@ namespace ImpHoleCalculation
             setHoleToBox();
         }
 
+        /*
         //удаление ненужных скважин из таблицы сенсоров-скважин
         public void removeFromHoleSensor()
         {
@@ -506,6 +516,7 @@ namespace ImpHoleCalculation
         {
             removeFromHoleSensor();
         }
+        */
 
         //расчет количества импульсов по скважинамы
         public void numberImpByHoles()
@@ -626,15 +637,11 @@ namespace ImpHoleCalculation
             typeCheck();
             progressBarSet_Impulses();
             */
+            if (OneHolecheckBox.Checked) oneHoleParametr = true; // для того, чтобы не удалялись все скважины при запуске
+            else oneHoleParametr = false;
 
             getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
-            
-            /*
-            if (OneHolecheckBox.Checked)
-            {
-                removeHoleFromList(); // удаление лишних скважин из списка для оптимизации
-            }
-            */
+            HoleList(); // повторный вывоз с целью очистки ненужных скважин, если есть необходимость
 
             /*
             getAllImpulses(); /// получение всех импульсов
@@ -648,13 +655,13 @@ namespace ImpHoleCalculation
             //setHoleDateRow();
 
 
-            /*
+                /*
 
-            setT2();
-            setImpulses();
-            numberOfImpulses();
-            */
-        }
+                setT2();
+                setImpulses();
+                numberOfImpulses();
+                */
+         }
 
 
         //===========================================================
