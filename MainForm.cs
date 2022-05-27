@@ -81,11 +81,12 @@ namespace ImpHoleCalculation
                 String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
 
                 //оптимизация, чтобы записывалось только если входит в скважину
-                if (oneHoleParametr)
-                {
+                //if (oneHoleParametr)
+                //{
                   holeName = checkHoleImp(hwid, dt);
-                }
-                if (holeName == 0) continue;
+                  if (holeName == 0) continue;
+                //}
+
 
                 ImpulsesGridView.Rows.Add();
                 //int colCount = ImpulsesGridView.ColumnCount;
