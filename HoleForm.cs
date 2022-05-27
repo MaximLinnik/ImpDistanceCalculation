@@ -77,7 +77,7 @@ namespace ImpHoleCalculation
             }
         }
 
-        //вывод импульсов (часы)
+        //вывод импульсов (дни)
         public void setHoleDateRowDays()
         {
             int rowCount = ImpulsesGridView.Rows.Count;
@@ -102,7 +102,7 @@ namespace ImpHoleCalculation
             }
         }
 
-        //разбиение импульсов по скважине по часам
+        //разбиение импульсов по скважине по часам/дням (старый)
         public void countImpulses()
         {
             int rowCountImp = ImpulsesGridView.Rows.Count;
@@ -134,6 +134,56 @@ namespace ImpHoleCalculation
             }
         }
 
+        //разбиение импульсов по скважине по часам (по формуле без перебора)
+        public void countImpulsesHoursFormula()
+        {
+            int rowCountImp = ImpulsesGridView.Rows.Count;
+            int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
+            DateTime dateFirst, dateImp;
+            for (int i = 0; i < rowCountImp - 1; i++)
+            {
+
+                dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
+
+                dateFirst = DateTime.Parse(ImpulseHoleGridView.Rows[0].Cells[1].Value.ToString());
+
+                //DateTime difference = dateImp - dateFirst;
+                /*
+                int year = dateImp.Year - dateFirst.Year;
+                int month = dateImp.Month - dateFirst.Month;
+                int day = dateImp.Day - dateFirst.Day;
+                int hour = dateImp.Hour - dateFirst.Hour;
+                */
+                double difference = (dateImp - dateFirst).TotalHours;
+                difference = Math.Floor(difference);
+                int position = int.Parse(difference.ToString());
+                ImpulseHoleGridView.Rows[position].Cells[2].Value = int.Parse(ImpulseHoleGridView.Rows[position].Cells[2].Value.ToString()) + 1;
+            }
+        }
+
+        //разбиение импульсов по скважине по дням (по формуле без перебора)
+        public void countImpulsesDaysFormula()
+        {
+            int rowCountImp = ImpulsesGridView.Rows.Count;
+            int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
+            DateTime dateFirst, dateImp;
+            for (int i = 0; i < rowCountImp - 1; i++)
+            {
+
+                dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
+
+                dateFirst = DateTime.Parse(ImpulseHoleGridView.Rows[0].Cells[1].Value.ToString());
+
+                double difference = (dateImp - dateFirst).TotalDays;
+                difference = Math.Floor(difference);
+                int position = int.Parse(difference.ToString());
+                ImpulseHoleGridView.Rows[position].Cells[2].Value = int.Parse(ImpulseHoleGridView.Rows[position].Cells[2].Value.ToString()) + 1;
+            }
+        }
+
+
         //график
         public void setChart()
         {
@@ -162,10 +212,19 @@ namespace ImpHoleCalculation
             int i = 0;
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(Double));
             if (hoursRadioButton.Checked)
+            {
                 setHoleDateRowHours();
+                countImpulsesHoursFormula();
+            }
+
             else
+            {
                 setHoleDateRowDays();
-            countImpulses();
+                countImpulsesDaysFormula();
+            }
+
+
+            //countImpulses();
 
             setChart();
 

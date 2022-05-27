@@ -641,6 +641,7 @@ namespace ImpHoleCalculation
             */
             int holeName = 0;
             SaveFileDialog saveDialog = null;
+            SaveFileDialog saveDialog2 = null;
 
             if (OneHolecheckBox.Checked)
             {
@@ -652,10 +653,21 @@ namespace ImpHoleCalculation
                     saveDialog = new SaveFileDialog();
                     saveDialog.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
                     saveDialog.FilterIndex = 2;
+                    
                     if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
 
                     }
+
+                    /*
+                    saveDialog2 = new SaveFileDialog();
+                    saveDialog2.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
+                    saveDialog2.FilterIndex = 2;
+                    if (saveDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+
+                    }
+                    */
 
                 }
 
