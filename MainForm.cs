@@ -39,8 +39,8 @@ namespace ImpHoleCalculation
         //сохр. паметры с формы
         private void saveProperties()
         {
-            Properties.Settings.Default.DateBef = dateBefore.Text;
-            Properties.Settings.Default.DateAft = dateAfter.Text;
+            Properties.Settings.Default.DateBef = dateBeforeText.Text;
+            Properties.Settings.Default.DateAft = dateAfterText.Text;
             Properties.Settings.Default.Save();
         }
 
@@ -56,8 +56,8 @@ namespace ImpHoleCalculation
                              " +
                             @"  ";
 
-            DateTime dateB = Convert.ToDateTime(dateBefore.Text);
-            DateTime dateA = Convert.ToDateTime(dateAfter.Text);
+            DateTime dateB = Convert.ToDateTime(dateBeforeText.Text);
+            DateTime dateA = Convert.ToDateTime(dateAfterText.Text);
 
             String date = @"  where 
                          (Impulses.ImpulseTime BETWEEN '" + dateB.Ticks + "' AND '" +
@@ -479,11 +479,12 @@ namespace ImpHoleCalculation
             dataGridView.Rows.Clear();
             int rowCount = ImpulsesGridView.Rows.Count;
 
-            DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            //DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
             dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
 
-            DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
-
+            //DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
+            DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
             dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, dateAfter.Hour, 0, 0);
 
 
@@ -506,11 +507,12 @@ namespace ImpHoleCalculation
 
             int rowCount = ImpulsesGridView.Rows.Count;
 
-            DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            //DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
             dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
 
-            DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
-
+            //DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
+            DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
             dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, 0, 0, 0);
 
 
@@ -682,7 +684,7 @@ namespace ImpHoleCalculation
                 //if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 //{
                     workbook.SaveAs(saveDialog.FileName);
-                    MessageBox.Show("Сохранение успешно");
+                    //MessageBox.Show("Сохранение успешно");
                 //}
             }
             catch (System.Exception ex)
@@ -765,7 +767,7 @@ namespace ImpHoleCalculation
                 {
                     excel(holeName, ImpulseHoleGridView2, saveDialog2);
                 }
-
+                MessageBox.Show("Сохранение успешно");
             }
 
             //setHoleDateRow();
@@ -805,8 +807,8 @@ namespace ImpHoleCalculation
 
         private void AllClustersForm_Load(object sender, EventArgs e)
         {
-            dateBefore.Text = Properties.Settings.Default.DateBef;
-            dateAfter.Text = Properties.Settings.Default.DateAft;
+            dateBeforeText.Text = Properties.Settings.Default.DateBef;
+            dateAfterText.Text = Properties.Settings.Default.DateAft;
             setHoleList(); // вывод заранее списка скважин при загрузке формы
 
         }
@@ -823,7 +825,7 @@ namespace ImpHoleCalculation
                 MessageBox.Show("Выбранная скважина: " + id);
                 //List<List<double>> list = sample(id);
                 //SelectUnitedForm.FormImpulse = new FormImpulse(this, SelectUnitedForm, id, type, server, db, login, password);
-                HoleForm = new HoleForm(this, ImpulsesGridView, id, server, db, login, password);
+                HoleForm = new HoleForm(this, ImpulsesGridView, DateTime.Parse(dateBeforeText.Text), DateTime.Parse(dateAfterText.Text), id, server, db, login, password);
                 HoleForm.Show();
                 
                 

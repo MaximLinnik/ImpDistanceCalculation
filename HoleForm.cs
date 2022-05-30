@@ -24,8 +24,10 @@ namespace ImpHoleCalculation
 
         MainForm MainForm;
         DataGridView ImpulsesGridView;
+        DateTime dateBeforeHoleForm;
+        DateTime dateAfterHoleForm;
 
-        public HoleForm(MainForm MainForm, DataGridView ImpulsesGridView, String id, String server, String db, String login, String password)
+        public HoleForm(MainForm MainForm, DataGridView ImpulsesGridView, DateTime dateBefore, DateTime dateAfter, String id, String server, String db, String login, String password)
         {
             this.server = server;
             this.db = db;
@@ -33,6 +35,8 @@ namespace ImpHoleCalculation
             this.password = password;
             this.id = id;
             this.ImpulsesGridView = ImpulsesGridView;
+            this.dateBeforeHoleForm = dateBefore;
+            this.dateAfterHoleForm = dateAfter;
             this.MainForm = MainForm;
 
             InitializeComponent();
@@ -55,13 +59,15 @@ namespace ImpHoleCalculation
         //вывод импульсов (часы)
         public void setHoleDateRowHours()
         {
+            
+
             int rowCount = ImpulsesGridView.Rows.Count;
 
-            DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            DateTime dateBefore = dateBeforeHoleForm;
             dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
 
-            DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
-
+            //DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
+            DateTime dateAfter = dateAfterHoleForm;
             dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, dateAfter.Hour, 0, 0);
 
 
@@ -80,13 +86,16 @@ namespace ImpHoleCalculation
         //вывод импульсов (дни)
         public void setHoleDateRowDays()
         {
+            
+
             int rowCount = ImpulsesGridView.Rows.Count;
 
-            DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            //DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
+            DateTime dateBefore = dateBeforeHoleForm;
             dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
 
-            DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
-
+            //DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
+            DateTime dateAfter = dateAfterHoleForm;
             dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, 0, 0, 0);
 
 

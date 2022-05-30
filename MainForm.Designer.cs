@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dateBefore = new System.Windows.Forms.DateTimePicker();
-            this.dateAfter = new System.Windows.Forms.DateTimePicker();
+            this.dateBeforeText = new System.Windows.Forms.DateTimePicker();
+            this.dateAfterText = new System.Windows.Forms.DateTimePicker();
             this.AAZParametrs = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dateCheckBox = new System.Windows.Forms.CheckBox();
@@ -39,6 +39,10 @@
             this.returnButton = new System.Windows.Forms.Button();
             this.startButtonTest = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ImpulseHoleGridView2 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HoleListGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,61 +71,49 @@
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.labelNumbImpAll = new System.Windows.Forms.Label();
-            this.freqAfter = new System.Windows.Forms.TextBox();
-            this.freqBefore = new System.Windows.Forms.TextBox();
-            this.freqStep = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.holeComboBox = new System.Windows.Forms.ComboBox();
             this.OneHolecheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.doubleExcelCheckBox = new System.Windows.Forms.CheckBox();
             this.daysRadioButton = new System.Windows.Forms.RadioButton();
             this.autosaveCheckBox = new System.Windows.Forms.CheckBox();
             this.hoursRadioButton = new System.Windows.Forms.RadioButton();
-            this.ImpulseHoleGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.doubleExcelCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HoleListGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TempHoleGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulsesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).BeginInit();
             this.tabControl1.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView2)).BeginInit();
             this.SuspendLayout();
             // 
-            // dateBefore
+            // dateBeforeText
             // 
-            this.dateBefore.CustomFormat = "yyyy-MM-dd HH:mm:ss ";
-            this.dateBefore.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateBefore.Location = new System.Drawing.Point(45, 38);
-            this.dateBefore.Name = "dateBefore";
-            this.dateBefore.ShowUpDown = true;
-            this.dateBefore.Size = new System.Drawing.Size(132, 20);
-            this.dateBefore.TabIndex = 5;
-            this.dateBefore.Value = new System.DateTime(2011, 11, 21, 0, 0, 0, 0);
+            this.dateBeforeText.CustomFormat = "yyyy-MM-dd HH:mm:ss ";
+            this.dateBeforeText.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateBeforeText.Location = new System.Drawing.Point(45, 38);
+            this.dateBeforeText.Name = "dateBeforeText";
+            this.dateBeforeText.ShowUpDown = true;
+            this.dateBeforeText.Size = new System.Drawing.Size(132, 20);
+            this.dateBeforeText.TabIndex = 5;
+            this.dateBeforeText.Value = new System.DateTime(2011, 11, 21, 0, 0, 0, 0);
             // 
-            // dateAfter
+            // dateAfterText
             // 
-            this.dateAfter.CustomFormat = "yyyy-MM-dd HH:mm:ss ";
-            this.dateAfter.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateAfter.Location = new System.Drawing.Point(45, 64);
-            this.dateAfter.Name = "dateAfter";
-            this.dateAfter.ShowUpDown = true;
-            this.dateAfter.Size = new System.Drawing.Size(132, 20);
-            this.dateAfter.TabIndex = 6;
-            this.dateAfter.Value = new System.DateTime(2011, 11, 22, 0, 0, 0, 0);
+            this.dateAfterText.CustomFormat = "yyyy-MM-dd HH:mm:ss ";
+            this.dateAfterText.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateAfterText.Location = new System.Drawing.Point(45, 64);
+            this.dateAfterText.Name = "dateAfterText";
+            this.dateAfterText.ShowUpDown = true;
+            this.dateAfterText.Size = new System.Drawing.Size(132, 20);
+            this.dateAfterText.TabIndex = 6;
+            this.dateAfterText.Value = new System.DateTime(2011, 11, 22, 0, 0, 0, 0);
             // 
             // AAZParametrs
             // 
@@ -138,8 +130,8 @@
             this.groupBox1.Controls.Add(this.dateCheckBox);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.dateBefore);
-            this.groupBox1.Controls.Add(this.dateAfter);
+            this.groupBox1.Controls.Add(this.dateBeforeText);
+            this.groupBox1.Controls.Add(this.dateAfterText);
             this.groupBox1.Location = new System.Drawing.Point(9, 109);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(183, 100);
@@ -221,6 +213,37 @@
             this.tabPage1.Text = "Скважины";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // ImpulseHoleGridView2
+            // 
+            this.ImpulseHoleGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ImpulseHoleGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ImpulseHoleGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3});
+            this.ImpulseHoleGridView2.Location = new System.Drawing.Point(763, 573);
+            this.ImpulseHoleGridView2.Name = "ImpulseHoleGridView2";
+            this.ImpulseHoleGridView2.Size = new System.Drawing.Size(98, 23);
+            this.ImpulseHoleGridView2.TabIndex = 45;
+            this.ImpulseHoleGridView2.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "№";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Дата";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Количество импульсов";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
             // HoleListGridView
             // 
             this.HoleListGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -239,7 +262,7 @@
             this.Column20});
             this.HoleListGridView.Location = new System.Drawing.Point(6, 6);
             this.HoleListGridView.Name = "HoleListGridView";
-            this.HoleListGridView.Size = new System.Drawing.Size(620, 365);
+            this.HoleListGridView.Size = new System.Drawing.Size(989, 561);
             this.HoleListGridView.TabIndex = 44;
             this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
             // 
@@ -300,10 +323,11 @@
             this.Column9,
             this.Column10,
             this.Column11});
-            this.TempHoleGridView.Location = new System.Drawing.Point(677, 295);
+            this.TempHoleGridView.Location = new System.Drawing.Point(634, 575);
             this.TempHoleGridView.Name = "TempHoleGridView";
-            this.TempHoleGridView.Size = new System.Drawing.Size(321, 123);
+            this.TempHoleGridView.Size = new System.Drawing.Size(48, 17);
             this.TempHoleGridView.TabIndex = 4;
+            this.TempHoleGridView.Visible = false;
             // 
             // Column5
             // 
@@ -346,10 +370,11 @@
             this.Column13,
             this.Column34,
             this.Column3});
-            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 377);
+            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 583);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
-            this.ImpulsesGridView.Size = new System.Drawing.Size(608, 216);
+            this.ImpulsesGridView.Size = new System.Drawing.Size(608, 10);
             this.ImpulsesGridView.TabIndex = 3;
+            this.ImpulsesGridView.Visible = false;
             // 
             // Column18
             // 
@@ -386,9 +411,9 @@
             this.Column6,
             this.Column7,
             this.Column23});
-            this.ImpulseHoleGridView.Location = new System.Drawing.Point(799, 527);
+            this.ImpulseHoleGridView.Location = new System.Drawing.Point(688, 573);
             this.ImpulseHoleGridView.Name = "ImpulseHoleGridView";
-            this.ImpulseHoleGridView.Size = new System.Drawing.Size(69, 54);
+            this.ImpulseHoleGridView.Size = new System.Drawing.Size(69, 23);
             this.ImpulseHoleGridView.TabIndex = 2;
             this.ImpulseHoleGridView.Visible = false;
             // 
@@ -419,16 +444,6 @@
             this.tabControl1.Size = new System.Drawing.Size(1009, 625);
             this.tabControl1.TabIndex = 15;
             // 
-            // progressBar
-            // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(5, 538);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(120, 24);
-            this.progressBar.TabIndex = 37;
-            this.progressBar.Visible = false;
-            // 
             // labelNumbImpAll
             // 
             this.labelNumbImpAll.AutoSize = true;
@@ -437,63 +452,6 @@
             this.labelNumbImpAll.Size = new System.Drawing.Size(115, 13);
             this.labelNumbImpAll.TabIndex = 39;
             this.labelNumbImpAll.Text = "                                    ";
-            // 
-            // freqAfter
-            // 
-            this.freqAfter.Location = new System.Drawing.Point(93, 16);
-            this.freqAfter.Name = "freqAfter";
-            this.freqAfter.Size = new System.Drawing.Size(60, 20);
-            this.freqAfter.TabIndex = 26;
-            this.freqAfter.Text = "2";
-            // 
-            // freqBefore
-            // 
-            this.freqBefore.Location = new System.Drawing.Point(17, 16);
-            this.freqBefore.Name = "freqBefore";
-            this.freqBefore.Size = new System.Drawing.Size(60, 20);
-            this.freqBefore.TabIndex = 25;
-            this.freqBefore.Text = "1";
-            // 
-            // freqStep
-            // 
-            this.freqStep.Location = new System.Drawing.Point(57, 42);
-            this.freqStep.Name = "freqStep";
-            this.freqStep.Size = new System.Drawing.Size(30, 20);
-            this.freqStep.TabIndex = 27;
-            this.freqStep.Text = "0.1";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(77, 19);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(10, 13);
-            this.label6.TabIndex = 24;
-            this.label6.Text = "-";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(14, 45);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(36, 13);
-            this.label9.TabIndex = 24;
-            this.label9.Text = "Шаг:  ";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label9);
-            this.groupBox4.Controls.Add(this.label6);
-            this.groupBox4.Controls.Add(this.freqStep);
-            this.groupBox4.Controls.Add(this.freqBefore);
-            this.groupBox4.Controls.Add(this.freqAfter);
-            this.groupBox4.Location = new System.Drawing.Point(5, 565);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(191, 72);
-            this.groupBox4.TabIndex = 33;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Частота";
-            this.groupBox4.Visible = false;
             // 
             // holeComboBox
             // 
@@ -550,6 +508,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Группировка данных";
             // 
+            // doubleExcelCheckBox
+            // 
+            this.doubleExcelCheckBox.AutoSize = true;
+            this.doubleExcelCheckBox.Location = new System.Drawing.Point(1, 59);
+            this.doubleExcelCheckBox.Name = "doubleExcelCheckBox";
+            this.doubleExcelCheckBox.Size = new System.Drawing.Size(134, 17);
+            this.doubleExcelCheckBox.TabIndex = 46;
+            this.doubleExcelCheckBox.Text = "сохранить оба файла";
+            this.doubleExcelCheckBox.UseVisualStyleBackColor = true;
+            // 
             // daysRadioButton
             // 
             this.daysRadioButton.AutoSize = true;
@@ -582,47 +550,6 @@
             this.hoursRadioButton.Text = "по часам";
             this.hoursRadioButton.UseVisualStyleBackColor = true;
             // 
-            // ImpulseHoleGridView2
-            // 
-            this.ImpulseHoleGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ImpulseHoleGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ImpulseHoleGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3});
-            this.ImpulseHoleGridView2.Location = new System.Drawing.Point(874, 527);
-            this.ImpulseHoleGridView2.Name = "ImpulseHoleGridView2";
-            this.ImpulseHoleGridView2.Size = new System.Drawing.Size(98, 69);
-            this.ImpulseHoleGridView2.TabIndex = 45;
-            this.ImpulseHoleGridView2.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "№";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Дата";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Количество импульсов";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // doubleExcelCheckBox
-            // 
-            this.doubleExcelCheckBox.AutoSize = true;
-            this.doubleExcelCheckBox.Location = new System.Drawing.Point(1, 59);
-            this.doubleExcelCheckBox.Name = "doubleExcelCheckBox";
-            this.doubleExcelCheckBox.Size = new System.Drawing.Size(134, 17);
-            this.doubleExcelCheckBox.TabIndex = 46;
-            this.doubleExcelCheckBox.Text = "сохранить оба файла";
-            this.doubleExcelCheckBox.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -631,8 +558,6 @@
             this.ClientSize = new System.Drawing.Size(1221, 638);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.labelNumbImpAll);
-            this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.excelButton);
             this.Controls.Add(this.startButtonTest);
             this.Controls.Add(this.tabControl1);
@@ -647,26 +572,24 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.HoleListGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TempHoleGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulsesGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).EndInit();
             this.tabControl1.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        public System.Windows.Forms.DateTimePicker dateBefore;
-        public System.Windows.Forms.DateTimePicker dateAfter;
+        public System.Windows.Forms.DateTimePicker dateBeforeText;
+        public System.Windows.Forms.DateTimePicker dateAfterText;
         private System.Windows.Forms.Button AAZParametrs;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label4;
@@ -679,14 +602,7 @@
         private System.Windows.Forms.DataGridView ImpulseHoleGridView;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.CheckBox dateCheckBox;
-        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label labelNumbImpAll;
-        private System.Windows.Forms.TextBox freqAfter;
-        private System.Windows.Forms.TextBox freqBefore;
-        private System.Windows.Forms.TextBox freqStep;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.DataGridView TempHoleGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
