@@ -114,6 +114,72 @@ namespace ImpHoleCalculation
             return i;
         }
 
+        //получение и запись импульсов (несколько отдельных запросов (по месяцам))
+        private int setImpulsesSeparateQuery()
+        {
+            int holeName = 0; //имя скважины, если нашлась
+            int i = 0;
+            DateTime dateB = Convert.ToDateTime(dateBeforeText.Text);
+            DateTime dateA = Convert.ToDateTime(dateAfterText.Text);
+            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+            while (dateB < dateA)
+            {
+                DateTime intermediateDate = dateB.AddMonths(1); //промежуточная дата для правой границы запроса
+                if(intermediateDate > dateA)
+                {
+                    intermediateDate = dateA;
+                }
+
+                SqlConnection con = new SqlConnection(connectionString);
+                String query = @"select Impulses.ID, Impulses.HWID, Impulses.ImpulseTime
+                            from Impulses
+                             " +
+                                @"  ";
+
+
+
+                String date = @"  where 
+                         (Impulses.ImpulseTime BETWEEN '" + dateB.Ticks + "' AND '" +
+                      intermediateDate.Ticks + "')";
+                if (!dateCheckBox.Checked) //вывести по всей бд
+                    query += date;
+
+                con.Open();
+                SqlCommand command = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    String impID = reader[0].ToString();
+                    String hwid = reader[1].ToString();
+
+                    //тики в дату
+                    DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
+                    String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
+
+                    //оптимизация, чтобы записывалось только если входит в скважину
+                    holeName = checkHoleImp(hwid, dt);
+                    if (holeName == 0) continue;
+
+                    ImpulsesGridView.Rows.Add();
+                    //int colCount = ImpulsesGridView.ColumnCount;
+
+                    ImpulsesGridView.Rows[i].Cells[0].Value = i + 1;
+                    ImpulsesGridView.Rows[i].Cells[1].Value = double.Parse(impID);
+                    ImpulsesGridView.Rows[i].Cells[2].Value = double.Parse(hwid);
+                    ImpulsesGridView.Rows[i].Cells[3].Value = DateTime.Parse(impDate);
+                    ImpulsesGridView.Rows[i].Cells[4].Value = holeName; // имя скважины
+                    i++;
+                }
+                con.Close();
+
+                dateB = dateB.AddMonths(1); //разбиение запросов по месяцам
+            }
+            return i;
+
+        }
+
         // проверка на соответсвие скважины на этапе получения результата запроса
         public int checkHoleImp(String hwid, DateTime dateImp)
         {
@@ -239,7 +305,15 @@ namespace ImpHoleCalculation
             ImpulsesGridView.Rows.Clear();
             ImpulseHoleGridView.Rows.Clear();
             //HoleListGridView.Rows.Clear();
-            setImpulsesByDate();
+            if (oneQueryRadioButton.Checked)
+            {
+                setImpulsesByDate();
+            }
+            else if(sepQueryRadioButton.Checked)
+            {
+                setImpulsesSeparateQuery();
+            }
+            
         }
 
         //заполнение в вспомогательную таблицу импульсов соответствующие скважины (старый вариант, но подход. для оптимиз)
@@ -431,7 +505,7 @@ namespace ImpHoleCalculation
         }
         */
 
-        //расчет количества импульсов по скважинамы
+        //расчет количества импульсов по скважинам
         public void numberImpByHoles()
         {
             int rowCountHoles = HoleListGridView.RowCount;
