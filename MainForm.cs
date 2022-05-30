@@ -130,7 +130,7 @@ namespace ImpHoleCalculation
                 //DateTime dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
                 //int hwidImp = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
                 int hwidImp = int.Parse(hwid);
-                if (dateBefore <= dateImp && dateImp <= dateAfter && hwidImp == hwidInHole)
+                if (hwidImp == hwidInHole && dateBefore <= dateImp && dateImp <= dateAfter)
                 {
                     int name = int.Parse(holeComboBox.Text); // имя скважины из комбобокса
                     int holeName = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
