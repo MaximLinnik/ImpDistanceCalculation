@@ -41,6 +41,33 @@ namespace ImpHoleCalculation
         {
             Properties.Settings.Default.DateBef = dateBeforeText.Text;
             Properties.Settings.Default.DateAft = dateAfterText.Text;
+            if (OneHolecheckBox.Checked) Properties.Settings.Default.OneHoleCheck = true;//выбр одна скважина
+            else Properties.Settings.Default.OneHoleCheck = false;
+            if (autosaveCheckBox.Checked) Properties.Settings.Default.AutoSaveExcel = true;//автосохр в эксель
+            else Properties.Settings.Default.AutoSaveExcel = false;
+            if (doubleExcelCheckBox.Checked) Properties.Settings.Default.AutoSaveExcelBothFiles = true; //сохр обоих файлов
+            else Properties.Settings.Default.AutoSaveExcelBothFiles = false;
+            if(hoursRadioButton.Checked) // выбор типа выборки при автосохранении файла
+            {
+                Properties.Settings.Default.SaveByHours = true;
+                Properties.Settings.Default.SaveByDays = false;
+            }
+            else
+            {
+                Properties.Settings.Default.SaveByHours = false;
+                Properties.Settings.Default.SaveByDays = true;
+            }
+            if (oneQueryRadioButton.Checked)//выбор типа запроса
+            {
+                Properties.Settings.Default.OneQuery = true;
+                Properties.Settings.Default.SepQueryMonth = false;
+            }
+            else
+            {
+                Properties.Settings.Default.OneQuery = false;
+                Properties.Settings.Default.SepQueryMonth = true;
+            }
+
             Properties.Settings.Default.Save();
         }
 
@@ -883,6 +910,14 @@ namespace ImpHoleCalculation
         {
             dateBeforeText.Text = Properties.Settings.Default.DateBef;
             dateAfterText.Text = Properties.Settings.Default.DateAft;
+            OneHolecheckBox.Checked = Properties.Settings.Default.OneHoleCheck;// выбрана одна скважина
+            autosaveCheckBox.Checked = Properties.Settings.Default.AutoSaveExcel; //автосохр в эксель
+            doubleExcelCheckBox.Checked = Properties.Settings.Default.AutoSaveExcelBothFiles; //сохр обоих файлов
+            hoursRadioButton.Checked = Properties.Settings.Default.SaveByHours;// выбор типа выборки при автосохранении файла
+            daysRadioButton.Checked = Properties.Settings.Default.SaveByDays;
+            oneQueryRadioButton.Checked = Properties.Settings.Default.OneQuery; //выбор типа запроса
+            sepQueryRadioButton.Checked = Properties.Settings.Default.SepQueryMonth;
+
             setHoleList(); // вывод заранее списка скважин при загрузке формы
 
         }

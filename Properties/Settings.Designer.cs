@@ -106,5 +106,89 @@ namespace ImpHoleCalculation.Properties {
                 this["DateAft"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool OneHoleCheck {
+            get {
+                return ((bool)(this["OneHoleCheck"]));
+            }
+            set {
+                this["OneHoleCheck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoSaveExcel {
+            get {
+                return ((bool)(this["AutoSaveExcel"]));
+            }
+            set {
+                this["AutoSaveExcel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoSaveExcelBothFiles {
+            get {
+                return ((bool)(this["AutoSaveExcelBothFiles"]));
+            }
+            set {
+                this["AutoSaveExcelBothFiles"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SaveByHours {
+            get {
+                return ((bool)(this["SaveByHours"]));
+            }
+            set {
+                this["SaveByHours"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SaveByDays {
+            get {
+                return ((bool)(this["SaveByDays"]));
+            }
+            set {
+                this["SaveByDays"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool OneQuery {
+            get {
+                return ((bool)(this["OneQuery"]));
+            }
+            set {
+                this["OneQuery"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SepQueryMonth {
+            get {
+                return ((bool)(this["SepQueryMonth"]));
+            }
+            set {
+                this["SepQueryMonth"] = value;
+            }
+        }
     }
 }
