@@ -72,7 +72,7 @@ namespace ImpHoleCalculation
 
 
             int i = 0;
-            while (dateBefore <= dateAfter)
+            while (dateBefore < dateAfter)
             {
                 ImpulseHoleGridView.Rows.Add();
                 ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;
@@ -100,7 +100,7 @@ namespace ImpHoleCalculation
 
 
             int i = 0;
-            while (dateBefore <= dateAfter)
+            while (dateBefore < dateAfter)
             {
                 ImpulseHoleGridView.Rows.Add();
                 ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;

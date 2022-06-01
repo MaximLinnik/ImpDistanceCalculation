@@ -590,7 +590,7 @@ namespace ImpHoleCalculation
 
 
             int i = 0;
-            while (dateBefore <= dateAfter)
+            while (dateBefore < dateAfter)
             {
                 dataGridView.Rows.Add();
                 dataGridView.Rows[i].Cells[0].Value = i + 1;
@@ -618,7 +618,7 @@ namespace ImpHoleCalculation
 
 
             int i = 0;
-            while (dateBefore <= dateAfter)
+            while (dateBefore < dateAfter)
             {
                 dataGridView.Rows.Add();
                 dataGridView.Rows[i].Cells[0].Value = i + 1;
