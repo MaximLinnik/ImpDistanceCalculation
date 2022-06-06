@@ -44,15 +44,6 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HoleListGridView = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TempHoleGridView = new System.Windows.Forms.DataGridView();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -86,6 +77,9 @@
             this.hoursRadioButton = new System.Windows.Forms.RadioButton();
             this.autoFolderCheckBox = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView2)).BeginInit();
@@ -260,63 +254,12 @@
             this.HoleListGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
-            this.Column12,
-            this.Column14,
-            this.Column15,
-            this.Column16,
-            this.Column17,
-            this.Column19,
-            this.Column20});
+            this.Column12});
             this.HoleListGridView.Location = new System.Drawing.Point(6, 6);
             this.HoleListGridView.Name = "HoleListGridView";
             this.HoleListGridView.Size = new System.Drawing.Size(989, 561);
             this.HoleListGridView.TabIndex = 44;
             this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "№";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Имя скважины";
-            this.Column2.Name = "Column2";
-            // 
-            // Column12
-            // 
-            this.Column12.HeaderText = "Количество импульсов";
-            this.Column12.Name = "Column12";
-            // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "Время \"начало\"";
-            this.Column14.Name = "Column14";
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "Время \"окончание\"";
-            this.Column15.Name = "Column15";
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "X (м)";
-            this.Column16.Name = "Column16";
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "Y (м)";
-            this.Column17.Name = "Column17";
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "Z (м)";
-            this.Column19.Name = "Column19";
-            // 
-            // Column20
-            // 
-            this.Column20.HeaderText = "Описание";
-            this.Column20.Name = "Column20";
             // 
             // TempHoleGridView
             // 
@@ -458,7 +401,8 @@
             this.labelNumbImpAll.Name = "labelNumbImpAll";
             this.labelNumbImpAll.Size = new System.Drawing.Size(130, 13);
             this.labelNumbImpAll.TabIndex = 39;
-            this.labelNumbImpAll.Text = "            SD                        ";
+            this.labelNumbImpAll.Text = "Количество импульсов: ";
+            this.labelNumbImpAll.Visible = false;
             // 
             // holeComboBox
             // 
@@ -612,7 +556,23 @@
             this.button1.TabIndex = 44;
             this.button1.Text = "Тест";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "№";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Имя скважины";
+            this.Column2.Name = "Column2";
+            // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "Количество импульсов";
+            this.Column12.Name = "Column12";
             // 
             // MainForm
             // 
@@ -683,15 +643,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column34;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridView HoleListGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
         private System.Windows.Forms.ComboBox holeComboBox;
         private System.Windows.Forms.CheckBox OneHolecheckBox;
         private System.Windows.Forms.Label label1;
@@ -713,5 +664,8 @@
         private System.Windows.Forms.RadioButton oneQueryRadioButton;
         private System.Windows.Forms.CheckBox autoFolderCheckBox;
         public System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
     }
 }

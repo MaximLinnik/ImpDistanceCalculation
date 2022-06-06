@@ -479,10 +479,17 @@ namespace ImpHoleCalculation
 
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             SqlConnection con = new SqlConnection(connectionString);
+            /*
             String query = @"select Holes.Name, Holes.BeginTime, Holes.EndTime, Holes.X, Holes.Y, Holes.Z, Holes.Description  
                             from Holes
                             " +
                             @"  ";
+                            */
+
+            String query = @"select Holes.Name
+                            from Holes
+                            " +
+                @"  ";
 
             if (oneHoleParametr) // булева переменная, проставляемая по чекбоксу
             {
@@ -505,6 +512,7 @@ namespace ImpHoleCalculation
                 HoleListGridView.Rows[i].Cells[0].Value = i + 1;
                 HoleListGridView.Rows[i].Cells[1].Value = double.Parse(reader[0].ToString());
                 HoleListGridView.Rows[i].Cells[2].Value = 0;
+                /*
                 HoleListGridView.Rows[i].Cells[3].Value = DateTime.Parse(reader[1].ToString());
                 try { HoleListGridView.Rows[i].Cells[4].Value = DateTime.Parse(reader[2].ToString()); }
                 catch { HoleListGridView.Rows[i].Cells[4].Value = null; }
@@ -512,6 +520,7 @@ namespace ImpHoleCalculation
                 HoleListGridView.Rows[i].Cells[6].Value = double.Parse(reader[4].ToString());
                 HoleListGridView.Rows[i].Cells[7].Value = double.Parse(reader[5].ToString());
                 HoleListGridView.Rows[i].Cells[8].Value = reader[6].ToString();
+                */
                 
                 i++;
 
