@@ -44,6 +44,9 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HoleListGridView = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TempHoleGridView = new System.Windows.Forms.DataGridView();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,15 +74,13 @@
             this.sepQueryRadioButton = new System.Windows.Forms.RadioButton();
             this.oneQueryRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.autoFolderCheckBox = new System.Windows.Forms.CheckBox();
             this.doubleExcelCheckBox = new System.Windows.Forms.CheckBox();
             this.daysRadioButton = new System.Windows.Forms.RadioButton();
             this.autosaveCheckBox = new System.Windows.Forms.CheckBox();
             this.hoursRadioButton = new System.Windows.Forms.RadioButton();
-            this.autoFolderCheckBox = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView2)).BeginInit();
@@ -209,7 +210,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1001, 599);
+            this.tabPage1.Size = new System.Drawing.Size(1001, 559);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Скважины";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -226,7 +227,7 @@
             this.dataGridViewTextBoxColumn3});
             this.ImpulseHoleGridView2.Location = new System.Drawing.Point(763, 573);
             this.ImpulseHoleGridView2.Name = "ImpulseHoleGridView2";
-            this.ImpulseHoleGridView2.Size = new System.Drawing.Size(98, 23);
+            this.ImpulseHoleGridView2.Size = new System.Drawing.Size(98, 0);
             this.ImpulseHoleGridView2.TabIndex = 45;
             this.ImpulseHoleGridView2.Visible = false;
             // 
@@ -257,9 +258,24 @@
             this.Column12});
             this.HoleListGridView.Location = new System.Drawing.Point(6, 6);
             this.HoleListGridView.Name = "HoleListGridView";
-            this.HoleListGridView.Size = new System.Drawing.Size(989, 561);
+            this.HoleListGridView.Size = new System.Drawing.Size(989, 521);
             this.HoleListGridView.TabIndex = 44;
             this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "№";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Имя скважины";
+            this.Column2.Name = "Column2";
+            // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "Количество импульсов";
+            this.Column12.Name = "Column12";
             // 
             // TempHoleGridView
             // 
@@ -273,7 +289,7 @@
             this.Column9,
             this.Column10,
             this.Column11});
-            this.TempHoleGridView.Location = new System.Drawing.Point(634, 575);
+            this.TempHoleGridView.Location = new System.Drawing.Point(634, 535);
             this.TempHoleGridView.Name = "TempHoleGridView";
             this.TempHoleGridView.Size = new System.Drawing.Size(48, 17);
             this.TempHoleGridView.TabIndex = 4;
@@ -320,7 +336,7 @@
             this.Column13,
             this.Column34,
             this.Column3});
-            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 583);
+            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 543);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
             this.ImpulsesGridView.Size = new System.Drawing.Size(608, 10);
             this.ImpulsesGridView.TabIndex = 3;
@@ -363,7 +379,7 @@
             this.Column23});
             this.ImpulseHoleGridView.Location = new System.Drawing.Point(688, 573);
             this.ImpulseHoleGridView.Name = "ImpulseHoleGridView";
-            this.ImpulseHoleGridView.Size = new System.Drawing.Size(69, 23);
+            this.ImpulseHoleGridView.Size = new System.Drawing.Size(69, 0);
             this.ImpulseHoleGridView.TabIndex = 2;
             this.ImpulseHoleGridView.Visible = false;
             // 
@@ -391,7 +407,7 @@
             this.tabControl1.Location = new System.Drawing.Point(200, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1009, 625);
+            this.tabControl1.Size = new System.Drawing.Size(1009, 585);
             this.tabControl1.TabIndex = 15;
             // 
             // labelNumbImpAll
@@ -494,6 +510,18 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Группировка данных";
             // 
+            // autoFolderCheckBox
+            // 
+            this.autoFolderCheckBox.AutoSize = true;
+            this.autoFolderCheckBox.Checked = true;
+            this.autoFolderCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.autoFolderCheckBox.Location = new System.Drawing.Point(0, 72);
+            this.autoFolderCheckBox.Name = "autoFolderCheckBox";
+            this.autoFolderCheckBox.Size = new System.Drawing.Size(138, 17);
+            this.autoFolderCheckBox.TabIndex = 47;
+            this.autoFolderCheckBox.Text = "сохранить в эту папку";
+            this.autoFolderCheckBox.UseVisualStyleBackColor = true;
+            // 
             // doubleExcelCheckBox
             // 
             this.doubleExcelCheckBox.AutoSize = true;
@@ -536,18 +564,6 @@
             this.hoursRadioButton.Text = "по часам";
             this.hoursRadioButton.UseVisualStyleBackColor = true;
             // 
-            // autoFolderCheckBox
-            // 
-            this.autoFolderCheckBox.AutoSize = true;
-            this.autoFolderCheckBox.Checked = true;
-            this.autoFolderCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.autoFolderCheckBox.Location = new System.Drawing.Point(0, 72);
-            this.autoFolderCheckBox.Name = "autoFolderCheckBox";
-            this.autoFolderCheckBox.Size = new System.Drawing.Size(138, 17);
-            this.autoFolderCheckBox.TabIndex = 47;
-            this.autoFolderCheckBox.Text = "сохранить в эту папку";
-            this.autoFolderCheckBox.UseVisualStyleBackColor = true;
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(17, 594);
@@ -559,20 +575,14 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // Column1
+            // progressBar1
             // 
-            this.Column1.HeaderText = "№";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Имя скважины";
-            this.Column2.Name = "Column2";
-            // 
-            // Column12
-            // 
-            this.Column12.HeaderText = "Количество импульсов";
-            this.Column12.Name = "Column12";
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(204, 603);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(995, 23);
+            this.progressBar1.TabIndex = 45;
             // 
             // MainForm
             // 
@@ -580,6 +590,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1221, 638);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.labelNumbImpAll);
@@ -667,5 +678,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

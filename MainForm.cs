@@ -146,8 +146,9 @@ namespace ImpHoleCalculation
                 //оптимизация, чтобы записывалось только если входит в скважину
                 //if (oneHoleParametr)
                 //{
-                  holeName = checkHoleImp(hwid, dt);
-                  if (holeName == 0) continue;
+                progressBar1.Value += 1; // увел счетчика прогресс бара
+                holeName = checkHoleImp(hwid, dt);
+                if (holeName == 0) continue;
                 //}
 
 
@@ -221,6 +222,7 @@ namespace ImpHoleCalculation
                     DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
                     String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
 
+                    progressBar1.Value += 1; // увел счетчика прогресс бара
                     //оптимизация, чтобы записывалось только если входит в скважину
                     holeName = checkHoleImp(hwid, dt);
                     if (holeName == 0) continue;
@@ -845,16 +847,60 @@ namespace ImpHoleCalculation
             }
         }
 
+        //получение количества импульсов по прогреесс бару
+        public void setMaxImp()
+        {
+            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+            SqlConnection con = new SqlConnection(connectionString);
+            String query = @"select COUNT(Impulses.ID)
+                            from Impulses
+                             " +
+                            @"  ";
+
+            DateTime dateB = Convert.ToDateTime(dateBeforeText.Text);
+            DateTime dateA = Convert.ToDateTime(dateAfterText.Text);
+
+            String date = @"  where 
+                         (Impulses.ImpulseTime BETWEEN '" + dateB.Ticks + "' AND '" +
+                  dateA.Ticks + "')";
+            if (!dateCheckBox.Checked) //вывести по всей бд
+                query += date;
+
+            con.Open();
+            SqlCommand command = new SqlCommand(query, con);
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                try
+                {
+                    progressBar1.Maximum = int.Parse(reader[0].ToString());
+                }
+                catch
+                {
+                    progressBar1.Maximum = 0;
+                }
+                
+
+            }
+
+            con.Close();
+        }
+
         private void Test_Button_Click_1(object sender, EventArgs e)
         {
             /*
-            progressBar.Value = 0;
+            
             progressBar2.Value = 0;
             labelNumbImpAll.Text = "";
 
             typeCheck();
             progressBarSet_Impulses();
             */
+
+            progressBar1.Value = 0;
+            setMaxImp(); //установление максимума прогресс бара через количество импульсов  
+
             int holeName = 0;
             SaveFileDialog saveDialog = null;
             SaveFileDialog saveDialog2 = null;
