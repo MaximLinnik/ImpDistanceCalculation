@@ -67,8 +67,44 @@ namespace ImpHoleCalculation
                 Properties.Settings.Default.OneQuery = false;
                 Properties.Settings.Default.SepQueryMonth = true;
             }
+            //сохранение в ту же папку, где exe
+            if (autoFolderCheckBox.Checked) Properties.Settings.Default.AutoSaveFolder = true;
+            else Properties.Settings.Default.AutoSaveFolder = false;
 
             Properties.Settings.Default.Save();
+        }
+
+        //получение имени файлов, если выбрано автосохранение в папку (по часам)
+        public string folderSaveHours()
+        {
+            string res = "";
+
+            string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
+            res = System.IO.Path.GetDirectoryName(strExeFilePath); //папка
+            DateTime dateB = DateTime.Parse(dateBeforeText.Text);
+            DateTime dateA = DateTime.Parse(dateAfterText.Text);
+            string before = dateB.Date.ToString("yyyy-MM-dd");
+            string after = dateA.Date.ToString("yyyy-MM-dd");
+
+            res = res + "\\" + holeComboBox.Text + "_" + before + "_" + after  + "_hours"+".xlsx";
+            return res;
+        }
+
+        //получение имени файлов, если выбрано автосохранение в папку (по дням)
+        public string folderSaveDays()
+        {
+            string res = "";
+
+            string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
+            res = System.IO.Path.GetDirectoryName(strExeFilePath); //папка
+            DateTime dateB = DateTime.Parse(dateBeforeText.Text);
+            DateTime dateA = DateTime.Parse(dateAfterText.Text);
+            string before = dateB.Date.ToString("yyyy-MM-dd");
+            string after = dateA.Date.ToString("yyyy-MM-dd");
+
+            res = res + "\\" + holeComboBox.Text + "_" + before + "_" + after+ "_days" + ".xlsx";
+            
+            return res;
         }
 
         //получение и запись импульсов 
@@ -739,7 +775,7 @@ namespace ImpHoleCalculation
             //countImpulses(holeName);
         }
 
-        public void excel(int holeName, DataGridView dataGridView, SaveFileDialog saveDialog)
+        public void excel(int holeName, DataGridView dataGridView, String filename)
         {
             Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
@@ -784,7 +820,7 @@ namespace ImpHoleCalculation
 
                 //if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 //{
-                    workbook.SaveAs(saveDialog.FileName);
+                    workbook.SaveAs(filename);
                     //MessageBox.Show("Сохранение успешно");
                 //}
             }
@@ -814,37 +850,50 @@ namespace ImpHoleCalculation
             SaveFileDialog saveDialog = null;
             SaveFileDialog saveDialog2 = null;
 
+            String filenameHours = "";
+            String filenameDays = "";
+
             if (OneHolecheckBox.Checked)
             {
                 oneHoleParametr = true;
                 if (autosaveCheckBox.Checked) // выбор файла для эксель
                 {
-                    
-
-                    saveDialog = new SaveFileDialog();
-                    saveDialog.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
-                    saveDialog.FilterIndex = 2;
-                    
-                    if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    if (autoFolderCheckBox.Checked)
                     {
+                        filenameHours = folderSaveHours();
+                    }
+                    else
+                    {
+                        saveDialog = new SaveFileDialog();
+                        saveDialog.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
+                        saveDialog.FilterIndex = 2;
 
+                        if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            filenameHours = saveDialog.FileName;
+                        }
                     }
 
                     if (doubleExcelCheckBox.Checked)
                     {
-                        saveDialog2 = new SaveFileDialog();
-                        saveDialog2.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
-                        saveDialog2.FilterIndex = 2;
-                        if (saveDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        if (autoFolderCheckBox.Checked)
                         {
-
+                            filenameDays = folderSaveDays();
+                        }
+                        else
+                        {
+                            saveDialog2 = new SaveFileDialog();
+                            saveDialog2.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
+                            saveDialog2.FilterIndex = 2;
+                            if (saveDialog2.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                            {
+                                filenameDays = saveDialog2.FileName;
+                            }
                         }
                     }
-
                 }
-
-                }// для того, чтобы не удалялись все скважины при запуске
-            else oneHoleParametr = false;
+            }
+            else oneHoleParametr = false; // для того, чтобы не удалялись все скважины при запуске
 
             getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
             HoleList(); // повторный вывоз с целью очистки ненужных скважин, если есть необходимость
@@ -862,23 +911,24 @@ namespace ImpHoleCalculation
             {
                 holeName = int.Parse(HoleListGridView.Rows[0].Cells[1].Value.ToString());
                 setExcelData(holeName);
-                excel(holeName, ImpulseHoleGridView, saveDialog);
+                excel(holeName, ImpulseHoleGridView, filenameHours);
 
                 if (doubleExcelCheckBox.Checked)
                 {
-                    excel(holeName, ImpulseHoleGridView2, saveDialog2);
+                    excel(holeName, ImpulseHoleGridView2, filenameDays);
                 }
-                MessageBox.Show("Сохранение успешно");
+               
             }
+            MessageBox.Show("Работа завершена");
 
             //setHoleDateRow();
 
 
-                /*
-                setImpulses();
-                numberOfImpulses();
-                */
-         }
+            /*
+            setImpulses();
+            numberOfImpulses();
+            */
+        }
 
         private void ReturnButton_Click(object sender, EventArgs e)
         {
@@ -898,7 +948,7 @@ namespace ImpHoleCalculation
             saveDialog.FilterIndex = 2;
 
             setExcelData(holeName);
-            excel(holeName, ImpulseHoleGridView, saveDialog);
+            excel(holeName, ImpulseHoleGridView, saveDialog.FileName);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -917,6 +967,7 @@ namespace ImpHoleCalculation
             daysRadioButton.Checked = Properties.Settings.Default.SaveByDays;
             oneQueryRadioButton.Checked = Properties.Settings.Default.OneQuery; //выбор типа запроса
             sepQueryRadioButton.Checked = Properties.Settings.Default.SepQueryMonth;
+            autoFolderCheckBox.Checked = Properties.Settings.Default.AutoSaveFolder; //сохранение в ту же папку, где exe
 
             setHoleList(); // вывод заранее списка скважин при загрузке формы
 
@@ -939,6 +990,18 @@ namespace ImpHoleCalculation
                 
                 
             }
+        }
+
+        //тест
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            /*
+            String path = "__";
+            string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
+            path = System.IO.Path.GetDirectoryName(strExeFilePath); //папка
+            MessageBox.Show("Тест: " + path);
+            */
+            MessageBox.Show("Тест: " + folderSaveHours());
         }
     }
 }

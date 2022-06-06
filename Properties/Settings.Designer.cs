@@ -190,5 +190,17 @@ namespace ImpHoleCalculation.Properties {
                 this["SepQueryMonth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoSaveFolder {
+            get {
+                return ((bool)(this["AutoSaveFolder"]));
+            }
+            set {
+                this["AutoSaveFolder"] = value;
+            }
+        }
     }
 }

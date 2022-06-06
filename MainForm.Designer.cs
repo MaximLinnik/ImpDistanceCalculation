@@ -76,14 +76,16 @@
             this.OneHolecheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.sepQueryRadioButton = new System.Windows.Forms.RadioButton();
+            this.oneQueryRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.doubleExcelCheckBox = new System.Windows.Forms.CheckBox();
             this.daysRadioButton = new System.Windows.Forms.RadioButton();
             this.autosaveCheckBox = new System.Windows.Forms.CheckBox();
             this.hoursRadioButton = new System.Windows.Forms.RadioButton();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.oneQueryRadioButton = new System.Windows.Forms.RadioButton();
-            this.sepQueryRadioButton = new System.Windows.Forms.RadioButton();
+            this.autoFolderCheckBox = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView2)).BeginInit();
@@ -93,8 +95,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // dateBeforeText
@@ -174,7 +176,7 @@
             // 
             // excelButton
             // 
-            this.excelButton.Location = new System.Drawing.Point(103, 570);
+            this.excelButton.Location = new System.Drawing.Point(103, 554);
             this.excelButton.Name = "excelButton";
             this.excelButton.Size = new System.Drawing.Size(75, 38);
             this.excelButton.TabIndex = 13;
@@ -195,7 +197,7 @@
             // 
             // startButtonTest
             // 
-            this.startButtonTest.Location = new System.Drawing.Point(6, 578);
+            this.startButtonTest.Location = new System.Drawing.Point(12, 554);
             this.startButtonTest.Name = "startButtonTest";
             this.startButtonTest.Size = new System.Drawing.Size(75, 23);
             this.startButtonTest.TabIndex = 24;
@@ -452,11 +454,11 @@
             // labelNumbImpAll
             // 
             this.labelNumbImpAll.AutoSize = true;
-            this.labelNumbImpAll.Location = new System.Drawing.Point(2, 565);
+            this.labelNumbImpAll.Location = new System.Drawing.Point(3, 620);
             this.labelNumbImpAll.Name = "labelNumbImpAll";
-            this.labelNumbImpAll.Size = new System.Drawing.Size(115, 13);
+            this.labelNumbImpAll.Size = new System.Drawing.Size(130, 13);
             this.labelNumbImpAll.TabIndex = 39;
-            this.labelNumbImpAll.Text = "                                    ";
+            this.labelNumbImpAll.Text = "            SD                        ";
             // 
             // holeComboBox
             // 
@@ -501,8 +503,42 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры";
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.sepQueryRadioButton);
+            this.groupBox4.Controls.Add(this.oneQueryRadioButton);
+            this.groupBox4.Location = new System.Drawing.Point(12, 251);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(156, 76);
+            this.groupBox4.TabIndex = 47;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "способ запросов";
+            // 
+            // sepQueryRadioButton
+            // 
+            this.sepQueryRadioButton.AutoSize = true;
+            this.sepQueryRadioButton.Checked = true;
+            this.sepQueryRadioButton.Location = new System.Drawing.Point(7, 43);
+            this.sepQueryRadioButton.Name = "sepQueryRadioButton";
+            this.sepQueryRadioButton.Size = new System.Drawing.Size(143, 17);
+            this.sepQueryRadioButton.TabIndex = 1;
+            this.sepQueryRadioButton.TabStop = true;
+            this.sepQueryRadioButton.Text = "разбиение по месяцам";
+            this.sepQueryRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // oneQueryRadioButton
+            // 
+            this.oneQueryRadioButton.AutoSize = true;
+            this.oneQueryRadioButton.Location = new System.Drawing.Point(7, 20);
+            this.oneQueryRadioButton.Name = "oneQueryRadioButton";
+            this.oneQueryRadioButton.Size = new System.Drawing.Size(88, 17);
+            this.oneQueryRadioButton.TabIndex = 0;
+            this.oneQueryRadioButton.Text = "один запрос";
+            this.oneQueryRadioButton.UseVisualStyleBackColor = true;
+            // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.autoFolderCheckBox);
             this.groupBox3.Controls.Add(this.doubleExcelCheckBox);
             this.groupBox3.Controls.Add(this.daysRadioButton);
             this.groupBox3.Controls.Add(this.autosaveCheckBox);
@@ -517,7 +553,7 @@
             // doubleExcelCheckBox
             // 
             this.doubleExcelCheckBox.AutoSize = true;
-            this.doubleExcelCheckBox.Location = new System.Drawing.Point(1, 59);
+            this.doubleExcelCheckBox.Location = new System.Drawing.Point(0, 49);
             this.doubleExcelCheckBox.Name = "doubleExcelCheckBox";
             this.doubleExcelCheckBox.Size = new System.Drawing.Size(134, 17);
             this.doubleExcelCheckBox.TabIndex = 46;
@@ -537,7 +573,7 @@
             // autosaveCheckBox
             // 
             this.autosaveCheckBox.AutoSize = true;
-            this.autosaveCheckBox.Location = new System.Drawing.Point(1, 24);
+            this.autosaveCheckBox.Location = new System.Drawing.Point(0, 19);
             this.autosaveCheckBox.Name = "autosaveCheckBox";
             this.autosaveCheckBox.Size = new System.Drawing.Size(119, 30);
             this.autosaveCheckBox.TabIndex = 45;
@@ -556,38 +592,27 @@
             this.hoursRadioButton.Text = "по часам";
             this.hoursRadioButton.UseVisualStyleBackColor = true;
             // 
-            // groupBox4
+            // autoFolderCheckBox
             // 
-            this.groupBox4.Controls.Add(this.sepQueryRadioButton);
-            this.groupBox4.Controls.Add(this.oneQueryRadioButton);
-            this.groupBox4.Location = new System.Drawing.Point(12, 251);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(156, 76);
-            this.groupBox4.TabIndex = 47;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "способ запросов";
+            this.autoFolderCheckBox.AutoSize = true;
+            this.autoFolderCheckBox.Checked = true;
+            this.autoFolderCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.autoFolderCheckBox.Location = new System.Drawing.Point(0, 72);
+            this.autoFolderCheckBox.Name = "autoFolderCheckBox";
+            this.autoFolderCheckBox.Size = new System.Drawing.Size(138, 17);
+            this.autoFolderCheckBox.TabIndex = 47;
+            this.autoFolderCheckBox.Text = "сохранить в эту папку";
+            this.autoFolderCheckBox.UseVisualStyleBackColor = true;
             // 
-            // oneQueryRadioButton
+            // button1
             // 
-            this.oneQueryRadioButton.AutoSize = true;
-            this.oneQueryRadioButton.Location = new System.Drawing.Point(7, 20);
-            this.oneQueryRadioButton.Name = "oneQueryRadioButton";
-            this.oneQueryRadioButton.Size = new System.Drawing.Size(88, 17);
-            this.oneQueryRadioButton.TabIndex = 0;
-            this.oneQueryRadioButton.Text = "один запрос";
-            this.oneQueryRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // sepQueryRadioButton
-            // 
-            this.sepQueryRadioButton.AutoSize = true;
-            this.sepQueryRadioButton.Checked = true;
-            this.sepQueryRadioButton.Location = new System.Drawing.Point(7, 43);
-            this.sepQueryRadioButton.Name = "sepQueryRadioButton";
-            this.sepQueryRadioButton.Size = new System.Drawing.Size(143, 17);
-            this.sepQueryRadioButton.TabIndex = 1;
-            this.sepQueryRadioButton.TabStop = true;
-            this.sepQueryRadioButton.Text = "разбиение по месяцам";
-            this.sepQueryRadioButton.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(17, 594);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 44;
+            this.button1.Text = "Тест";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // MainForm
             // 
@@ -595,6 +620,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1221, 638);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.labelNumbImpAll);
             this.Controls.Add(this.excelButton);
@@ -619,10 +645,10 @@
             this.tabControl1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -685,5 +711,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.RadioButton sepQueryRadioButton;
         private System.Windows.Forms.RadioButton oneQueryRadioButton;
+        private System.Windows.Forms.CheckBox autoFolderCheckBox;
+        public System.Windows.Forms.Button button1;
     }
 }
