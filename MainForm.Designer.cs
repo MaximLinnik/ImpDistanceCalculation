@@ -420,6 +420,7 @@
             this.labelNumbImpAll.Size = new System.Drawing.Size(130, 13);
             this.labelNumbImpAll.TabIndex = 39;
             this.labelNumbImpAll.Text = "Количество импульсов: ";
+            this.labelNumbImpAll.Visible = false;
             // 
             // holeComboBox
             // 
@@ -573,6 +574,7 @@
             this.button1.TabIndex = 44;
             this.button1.Text = "Тест";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // progressBar1
@@ -600,6 +602,7 @@
             this.persentageLabel.Size = new System.Drawing.Size(15, 13);
             this.persentageLabel.TabIndex = 46;
             this.persentageLabel.Text = "%";
+            this.persentageLabel.Visible = false;
             // 
             // MainForm
             // 

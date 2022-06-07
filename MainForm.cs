@@ -100,12 +100,13 @@ namespace ImpHoleCalculation
             /*
             
             progressBar2.Value = 0;
-            labelNumbImpAll.Text = "";
 
             typeCheck();
             progressBarSet_Impulses();
             */
-            labelNumbImpAll.Text = "";
+
+            //labelNumbImpAll.Text = "";
+
             progressBar1.Value = 0;
             int count = setMaxImp(); //установление максимума прогресс бара через количество импульсов  
             progressBar1.Maximum = count;
@@ -252,7 +253,7 @@ namespace ImpHoleCalculation
             con.Open();
             SqlCommand command = new SqlCommand(query, con);
             SqlDataReader reader = command.ExecuteReader();
-            int i = 0;
+            int i = 0, counter = 0;
 
             while (reader.Read())
             {
@@ -268,7 +269,14 @@ namespace ImpHoleCalculation
                 //if (oneHoleParametr)
                 //{
                 progressBar1.Value += 1; // увел счетчика прогресс бара
-                                         //backgroundWorker.ReportProgress(0);
+                
+                /*
+                counter++;
+                
+                double percentage = (double)counter / progressBar1.Maximum;
+                labelNumbImpAll.Text = percentage.ToString();
+                labelNumbImpAll.Refresh();
+                */
 
                 holeName = checkHoleImp(hwid, dt);
                 if (holeName == 0) continue;
@@ -305,7 +313,7 @@ namespace ImpHoleCalculation
         private int setImpulsesSeparateQuery()
         {
             int holeName = 0; //имя скважины, если нашлась
-            int i = 0;
+            int i = 0, counter = 0;
             DateTime dateB = Convert.ToDateTime(dateBeforeText.Text);
             DateTime dateA = Convert.ToDateTime(dateAfterText.Text);
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
@@ -346,6 +354,14 @@ namespace ImpHoleCalculation
                     String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
 
                     progressBar1.Value += 1; // увел счетчика прогресс бара
+
+                    /*
+                    counter++;
+                
+                    double percentage = (double)counter / progressBar1.Maximum;
+                    labelNumbImpAll.Text = percentage.ToString();
+                    labelNumbImpAll.Refresh();
+                    */
                     //оптимизация, чтобы записывалось только если входит в скважину
                     holeName = checkHoleImp(hwid, dt);
                     if (holeName == 0) continue;
@@ -1018,6 +1034,7 @@ namespace ImpHoleCalculation
 
         private void Test_Button_Click_1(object sender, EventArgs e)
         {
+            
             start();
         }
 
