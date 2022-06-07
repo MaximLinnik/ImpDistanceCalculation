@@ -81,6 +81,8 @@
             this.hoursRadioButton = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.persentageLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView2)).BeginInit();
@@ -418,7 +420,6 @@
             this.labelNumbImpAll.Size = new System.Drawing.Size(130, 13);
             this.labelNumbImpAll.TabIndex = 39;
             this.labelNumbImpAll.Text = "Количество импульсов: ";
-            this.labelNumbImpAll.Visible = false;
             // 
             // holeComboBox
             // 
@@ -572,7 +573,6 @@
             this.button1.TabIndex = 44;
             this.button1.Text = "Тест";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // progressBar1
@@ -584,12 +584,30 @@
             this.progressBar1.Size = new System.Drawing.Size(995, 23);
             this.progressBar1.TabIndex = 45;
             // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.WorkerReportsProgress = true;
+            this.backgroundWorker.WorkerSupportsCancellation = true;
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
+            // 
+            // persentageLabel
+            // 
+            this.persentageLabel.AutoSize = true;
+            this.persentageLabel.Location = new System.Drawing.Point(158, 607);
+            this.persentageLabel.Name = "persentageLabel";
+            this.persentageLabel.Size = new System.Drawing.Size(15, 13);
+            this.persentageLabel.TabIndex = 46;
+            this.persentageLabel.Text = "%";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1221, 638);
+            this.Controls.Add(this.persentageLabel);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
@@ -679,5 +697,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.Label persentageLabel;
     }
 }
