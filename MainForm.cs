@@ -768,11 +768,11 @@ namespace ImpHoleCalculation
 
             //DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
             DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
-            dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
+            //dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
 
             //DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
             DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
-            dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, dateAfter.Hour, 0, 0);
+            //dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, dateAfter.Hour, 0, 0);
 
 
             int i = 0;
@@ -780,7 +780,7 @@ namespace ImpHoleCalculation
             {
                 dataGridView.Rows.Add();
                 dataGridView.Rows[i].Cells[0].Value = i + 1;
-                dataGridView.Rows[i].Cells[1].Value = dateBefore;
+                dataGridView.Rows[i].Cells[1].Value = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
                 dataGridView.Rows[i].Cells[2].Value = 0;
                 dateBefore = dateBefore.AddHours(1);
                 i++;
@@ -796,11 +796,11 @@ namespace ImpHoleCalculation
 
             //DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
             DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
-            dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
+            //dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
 
             //DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
             DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
-            dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, 0, 0, 0);
+            //dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, 0, 0, 0);
 
 
             int i = 0;
@@ -808,7 +808,7 @@ namespace ImpHoleCalculation
             {
                 dataGridView.Rows.Add();
                 dataGridView.Rows[i].Cells[0].Value = i + 1;
-                dataGridView.Rows[i].Cells[1].Value = dateBefore;
+                dataGridView.Rows[i].Cells[1].Value = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0); ;
                 dataGridView.Rows[i].Cells[2].Value = 0;
                 dateBefore = dateBefore.AddDays(1);
                 i++;

@@ -227,9 +227,9 @@
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            this.ImpulseHoleGridView2.Location = new System.Drawing.Point(763, 573);
+            this.ImpulseHoleGridView2.Location = new System.Drawing.Point(569, 548);
             this.ImpulseHoleGridView2.Name = "ImpulseHoleGridView2";
-            this.ImpulseHoleGridView2.Size = new System.Drawing.Size(98, 0);
+            this.ImpulseHoleGridView2.Size = new System.Drawing.Size(254, 15);
             this.ImpulseHoleGridView2.TabIndex = 45;
             this.ImpulseHoleGridView2.Visible = false;
             // 
@@ -260,7 +260,7 @@
             this.Column12});
             this.HoleListGridView.Location = new System.Drawing.Point(6, 6);
             this.HoleListGridView.Name = "HoleListGridView";
-            this.HoleListGridView.Size = new System.Drawing.Size(989, 521);
+            this.HoleListGridView.Size = new System.Drawing.Size(989, 531);
             this.HoleListGridView.TabIndex = 44;
             this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
             // 
@@ -291,9 +291,9 @@
             this.Column9,
             this.Column10,
             this.Column11});
-            this.TempHoleGridView.Location = new System.Drawing.Point(634, 535);
+            this.TempHoleGridView.Location = new System.Drawing.Point(502, 548);
             this.TempHoleGridView.Name = "TempHoleGridView";
-            this.TempHoleGridView.Size = new System.Drawing.Size(48, 17);
+            this.TempHoleGridView.Size = new System.Drawing.Size(61, 10);
             this.TempHoleGridView.TabIndex = 4;
             this.TempHoleGridView.Visible = false;
             // 
@@ -340,7 +340,7 @@
             this.Column3});
             this.ImpulsesGridView.Location = new System.Drawing.Point(6, 543);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
-            this.ImpulsesGridView.Size = new System.Drawing.Size(608, 10);
+            this.ImpulsesGridView.Size = new System.Drawing.Size(490, 10);
             this.ImpulsesGridView.TabIndex = 3;
             this.ImpulsesGridView.Visible = false;
             // 
@@ -379,9 +379,9 @@
             this.Column6,
             this.Column7,
             this.Column23});
-            this.ImpulseHoleGridView.Location = new System.Drawing.Point(688, 573);
+            this.ImpulseHoleGridView.Location = new System.Drawing.Point(829, 543);
             this.ImpulseHoleGridView.Name = "ImpulseHoleGridView";
-            this.ImpulseHoleGridView.Size = new System.Drawing.Size(69, 0);
+            this.ImpulseHoleGridView.Size = new System.Drawing.Size(111, 15);
             this.ImpulseHoleGridView.TabIndex = 2;
             this.ImpulseHoleGridView.Visible = false;
             // 
@@ -602,7 +602,6 @@
             this.persentageLabel.Size = new System.Drawing.Size(15, 13);
             this.persentageLabel.TabIndex = 46;
             this.persentageLabel.Text = "%";
-            this.persentageLabel.Visible = false;
             // 
             // MainForm
             // 

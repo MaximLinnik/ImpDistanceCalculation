@@ -64,11 +64,11 @@ namespace ImpHoleCalculation
             int rowCount = ImpulsesGridView.Rows.Count;
 
             DateTime dateBefore = dateBeforeHoleForm;
-            dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
+            //dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
 
             //DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
             DateTime dateAfter = dateAfterHoleForm;
-            dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, dateAfter.Hour, 0, 0);
+            //dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, dateAfter.Hour, 0, 0);
 
 
             int i = 0;
@@ -76,11 +76,21 @@ namespace ImpHoleCalculation
             {
                 ImpulseHoleGridView.Rows.Add();
                 ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;
-                ImpulseHoleGridView.Rows[i].Cells[1].Value = dateBefore;
+                ImpulseHoleGridView.Rows[i].Cells[1].Value = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
                 ImpulseHoleGridView.Rows[i].Cells[2].Value = 0;
                 dateBefore = dateBefore.AddHours(1);
                 i++;
             }
+
+            /*
+            if (ImpulseHoleGridView.Rows.Count == 0)
+            {
+                ImpulseHoleGridView.Rows.Add();
+                ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;
+                ImpulseHoleGridView.Rows[i].Cells[1].Value = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateAfter.Hour, 0, 0); ;
+                ImpulseHoleGridView.Rows[i].Cells[2].Value = 0;
+            }
+            */
         }
 
         //вывод импульсов (дни)
@@ -92,11 +102,11 @@ namespace ImpHoleCalculation
 
             //DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
             DateTime dateBefore = dateBeforeHoleForm;
-            dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
+            //dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
 
             //DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
             DateTime dateAfter = dateAfterHoleForm;
-            dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, 0, 0, 0);
+            //dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, 0, 0, 0);
 
 
             int i = 0;
@@ -104,11 +114,21 @@ namespace ImpHoleCalculation
             {
                 ImpulseHoleGridView.Rows.Add();
                 ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;
-                ImpulseHoleGridView.Rows[i].Cells[1].Value = dateBefore;
+                ImpulseHoleGridView.Rows[i].Cells[1].Value = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
                 ImpulseHoleGridView.Rows[i].Cells[2].Value = 0;
                 dateBefore = dateBefore.AddDays(1);
                 i++;
             }
+
+            /*
+            if (ImpulseHoleGridView.Rows[0].Cells[0].Value == null)
+            {
+                ImpulseHoleGridView.Rows.Add();
+                ImpulseHoleGridView.Rows[i].Cells[0].Value = i + 1;
+                ImpulseHoleGridView.Rows[i].Cells[1].Value = dateBefore;
+                ImpulseHoleGridView.Rows[i].Cells[2].Value = 0;
+            }
+            */
         }
 
         //разбиение импульсов по скважине по часам/дням (старый)
