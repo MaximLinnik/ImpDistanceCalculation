@@ -101,8 +101,6 @@ namespace ImpHoleCalculation
             /*
             
             progressBar2.Value = 0;
-
-            typeCheck();
             progressBarSet_Impulses();
             */
 
@@ -125,11 +123,8 @@ namespace ImpHoleCalculation
                 oneHoleParametr = true;
                 if (autosaveCheckBox.Checked) // выбор файла для эксель
                 {
-                    if (autoFolderCheckBox.Checked)
-                    {
-                        filenameHours = folderSaveHours();
-                    }
-                    else
+
+                    if (!autoFolderCheckBox.Checked)
                     {
                         saveDialog = new SaveFileDialog();
                         saveDialog.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
@@ -143,11 +138,7 @@ namespace ImpHoleCalculation
 
                     if (doubleExcelCheckBox.Checked)
                     {
-                        if (autoFolderCheckBox.Checked)
-                        {
-                            filenameDays = folderSaveDays();
-                        }
-                        else
+                        if (!autoFolderCheckBox.Checked)
                         {
                             saveDialog2 = new SaveFileDialog();
                             saveDialog2.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
@@ -174,17 +165,51 @@ namespace ImpHoleCalculation
 
             countImpByHole(); //расчет количества импульсов по скважинам
 
-            if (autosaveCheckBox.Checked)
+            if (autoFolderCheckBox.Checked)
             {
-                holeName = int.Parse(HoleListGridView.Rows[0].Cells[1].Value.ToString());
-                setExcelData(holeName);
-                excel(holeName, ImpulseHoleGridView, filenameHours);
+
+                createDirectories(); //предварительное создание папок
+                int rowCount = HoleListGridView.Rows.Count;
+
+                //здесь под проход по дням, чтобы сохранять последовательно
+
+                for (int i = 0; i < rowCount - 1; i++)
+                {
+                    DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
+                    DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
+                    holeName = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
+                    if (HoleListGridView.Rows[i].Cells[2].Value.ToString() == "0") continue; // пропуск пустой скважины
+                    while (dateBefore < dateAfter)
+                    {
+                        DateTime rightBorder = dateBefore.AddDays(1);
+                        rightBorder = new DateTime(rightBorder.Year, rightBorder.Month, rightBorder.Day, 0, 0, 0);
+                        setExcelData(holeName, dateBefore, rightBorder);
+                        filenameHours = folderSaveHours(dateBefore, holeName);
+
+                        excel(holeName, ImpulseHoleGridView, filenameHours);
+
+                        if (doubleExcelCheckBox.Checked)
+                        {
+                            filenameDays = folderSaveDays(dateBefore, holeName);
+                            excel(holeName, ImpulseHoleGridView2, filenameDays);
+                        }
+                        dateBefore = rightBorder;
+                    }
+                }
+            }
+            else if (!autoFolderCheckBox.Checked && autosaveCheckBox.Checked && OneHolecheckBox.Checked)// выбор файла для эксель
+            {
+                DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
+                DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
+                int hole = int.Parse(HoleListGridView.Rows[0].Cells[1].Value.ToString());
+                setExcelData(hole, dateBefore, dateAfter);
+                excel(hole, ImpulseHoleGridView, filenameHours);
 
                 if (doubleExcelCheckBox.Checked)
                 {
+                    setExcelData(hole, dateBefore, dateAfter);
                     excel(holeName, ImpulseHoleGridView2, filenameDays);
                 }
-
             }
             MessageBox.Show("Работа завершена");
 
@@ -214,48 +239,51 @@ namespace ImpHoleCalculation
                     Directory.CreateDirectory(yearDirectory);
                 }
 
-                String monthDirectory = yearDirectory + "//" + dateBefore.Month.ToString();
+                String monthDirectory = yearDirectory + "\\" + dateBefore.Month.ToString();
                 if (!Directory.Exists(monthDirectory))//папки с месяцами
                 {
                     Directory.CreateDirectory(monthDirectory);
                 }
 
                 dateBefore = dateBefore.AddMonths(1);
+                dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, 1);
             }
 
 
         }
 
         //получение имени файлов, если выбрано автосохранение в папку (по часам)
-        public string folderSaveHours()
+        public string folderSaveHours(DateTime dateB, int hole)
         {
             string res = "";
 
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
             res = System.IO.Path.GetDirectoryName(strExeFilePath); //папка
-            DateTime dateB = DateTime.Parse(dateBeforeText.Text);
-            DateTime dateA = DateTime.Parse(dateAfterText.Text);
+            //DateTime dateB = DateTime.Parse(dateBeforeText.Text);
+            //DateTime dateA = DateTime.Parse(dateAfterText.Text);
             string before = dateB.Date.ToString("yyyy-MM-dd");
-            string after = dateA.Date.ToString("yyyy-MM-dd");
+            //string after = dateA.Date.ToString("yyyy-MM-dd");
 
-            res = res + "\\" + holeComboBox.Text + "_" + before + "_" + after + "_hours" + ".xlsx";
+            //res = res + "\\" + holeComboBox.Text + "_" + before + "_" + after + "_hours" + ".xlsx";
+            //res = res + "\\" + dateB.Year+"\\"+dateB.Month + "\\" + holeComboBox.Text + "_" + before + "_" + after + "_hours" + ".xlsx";
+            res = res + "\\" + dateB.Year + "\\" + dateB.Month + "\\" + hole + "_" + before + "_hours" + ".xlsx";
             return res;
         }
 
         //получение имени файлов, если выбрано автосохранение в папку (по дням)
-        public string folderSaveDays()
+        public string folderSaveDays(DateTime dateB, int hole)
         {
             string res = "";
 
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
             res = System.IO.Path.GetDirectoryName(strExeFilePath); //папка
-            DateTime dateB = DateTime.Parse(dateBeforeText.Text);
-            DateTime dateA = DateTime.Parse(dateAfterText.Text);
+            //DateTime dateB = DateTime.Parse(dateBeforeText.Text);
+            //DateTime dateA = DateTime.Parse(dateAfterText.Text);
             string before = dateB.Date.ToString("yyyy-MM-dd");
-            string after = dateA.Date.ToString("yyyy-MM-dd");
+            //string after = dateA.Date.ToString("yyyy-MM-dd");
 
-            res = res + "\\" + holeComboBox.Text + "_" + before + "_" + after + "_days" + ".xlsx";
-
+            //res = res + "\\" + dateB.Year + "\\" + dateB.Month + "\\" + holeComboBox.Text + "_" + before + "_" + after + "_days" + ".xlsx";
+            res = res + "\\" + dateB.Year + "\\" + dateB.Month + "\\" + hole + "_" + before + "_days" + ".xlsx";
             return res;
         }
 
@@ -791,17 +819,17 @@ namespace ImpHoleCalculation
         }
 
         //вывод импульсов (часы)
-        public void setHoleDateRowHours(DataGridView dataGridView)
+        public void setHoleDateRowHours(DataGridView dataGridView, DateTime dateBefore, DateTime dateAfter)
         {
             dataGridView.Rows.Clear();
             int rowCount = ImpulsesGridView.Rows.Count;
 
             //DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
-            DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
+            //DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
             //dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, dateBefore.Hour, 0, 0);
 
             //DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
-            DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
+            //DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
             //dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, dateAfter.Hour, 0, 0);
 
 
@@ -818,18 +846,18 @@ namespace ImpHoleCalculation
         }
 
         //вывод импульсов (часы)
-        public void setHoleDateRowDays(DataGridView dataGridView)
+        public void setHoleDateRowDays(DataGridView dataGridView, DateTime dateBefore, DateTime dateAfter)
         {
             dataGridView.Rows.Clear();
 
             int rowCount = ImpulsesGridView.Rows.Count;
 
             //DateTime dateBefore = DateTime.Parse(ImpulsesGridView.Rows[0].Cells[3].Value.ToString());
-            DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
+            //DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
             //dateBefore = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
 
             //DateTime dateAfter = DateTime.Parse(ImpulsesGridView.Rows[rowCount - 2].Cells[3].Value.ToString());
-            DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
+            //DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
             //dateAfter = new DateTime(dateAfter.Year, dateAfter.Month, dateAfter.Day, 0, 0, 0);
 
 
@@ -878,55 +906,102 @@ namespace ImpHoleCalculation
         }
 
         //разбиение импульсов по скважине по часам (по формуле без перебора)
-        public void countImpulsesHoursFormula(DataGridView dataGridView)
+        public void countImpulsesHoursFormula(DataGridView dataGridView, int hole, DateTime dateBefore, DateTime dateAfter)
         {
             int rowCountImp = ImpulsesGridView.Rows.Count;
             int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
-            DateTime dateFirst, dateImp;
+            DateTime dateFirst = dateBefore, dateImp;
+            bool checkDate = false;
+            
+            
+            //поиск первой даты для скважины
             for (int i = 0; i < rowCountImp - 1; i++)
             {
-
-                dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
                 int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
+                dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                if (holeName == hole && dateBefore < dateImp)
+                {
+                    dateFirst = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                    checkDate = true;
+                    break;
+                }
+            }
 
-                dateFirst = DateTime.Parse(dataGridView.Rows[0].Cells[1].Value.ToString());
+            for (int i = 0; i < rowCountImp - 1; i++)
+            {
+                
+                dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                
+                if (dateImp < dateFirst) continue;
+                if (dateImp > dateAfter) break;
+
+                //dateFirst = DateTime.Parse(dataGridView.Rows[0].Cells[1].Value.ToString());
+
+
 
                 //DateTime difference = dateImp - dateFirst;
                 /*
                 int year = dateImp.Year - dateFirst.Year;
                 int month = dateImp.Month - dateFirst.Month;
-                int day = dateImp.Day - dateFirst.Day;
+                int day = dateImp.Day - dateFirst.Day;s
                 int hour = dateImp.Hour - dateFirst.Hour;
                 */
-                double difference = (dateImp - dateFirst).TotalHours;
-                difference = Math.Floor(difference);
-                int position = int.Parse(difference.ToString());
-                dataGridView.Rows[position].Cells[2].Value = int.Parse(dataGridView.Rows[position].Cells[2].Value.ToString()) + 1;
+
+                int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
+                if (holeName == hole && checkDate)
+                {
+                    double difference = (dateImp - dateFirst).TotalHours;
+                    difference = Math.Floor(difference);
+                    int position = int.Parse(difference.ToString());
+                    dataGridView.Rows[position].Cells[2].Value = int.Parse(dataGridView.Rows[position].Cells[2].Value.ToString()) + 1;
+                }
             }
         }
 
         //разбиение импульсов по скважине по дням (по формуле без перебора)
-        public void countImpulsesDaysFormula(DataGridView dataGridView)
+        public void countImpulsesDaysFormula(DataGridView dataGridView, int hole, DateTime dateBefore, DateTime dateAfter)
         {
             int rowCountImp = ImpulsesGridView.Rows.Count;
             int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
-            DateTime dateFirst, dateImp;
+            DateTime dateFirst = dateBefore, dateImp;
+            bool checkDate = false;
+
+            //поиск первой даты для скважины
+            for (int i = 0; i < rowCountImp - 1; i++)
+            {
+                int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
+                dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                if (holeName == hole && dateBefore < dateImp)
+                {
+                    dateFirst = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                    checkDate = true;
+                    break;
+                }
+            }
             for (int i = 0; i < rowCountImp - 1; i++)
             {
 
                 dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
                 int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
 
-                dateFirst = DateTime.Parse(dataGridView.Rows[0].Cells[1].Value.ToString());
+                if (dateImp < dateFirst) continue;
+                if (dateImp > dateAfter) break;
 
-                double difference = (dateImp - dateFirst).TotalDays;
-                difference = Math.Floor(difference);
-                int position = int.Parse(difference.ToString());
-                dataGridView.Rows[position].Cells[2].Value = int.Parse(dataGridView.Rows[position].Cells[2].Value.ToString()) + 1;
+                //dateFirst = DateTime.Parse(dataGridView.Rows[0].Cells[1].Value.ToString());
+                if (holeName == hole && checkDate)
+                {
+                    double difference = (dateImp - dateFirst).TotalDays;
+                    difference = Math.Floor(difference);
+                    int position = int.Parse(difference.ToString());
+                    dataGridView.Rows[position].Cells[2].Value = int.Parse(dataGridView.Rows[position].Cells[2].Value.ToString()) + 1;
+                }
+                
+
+                
             }
         }
 
-        public void setExcelData(int holeName)
+        public void setExcelData(int hole, DateTime dateLeft, DateTime dateRight)
         {
             ImpulseHoleGridView.Rows.Clear();
 
@@ -935,21 +1010,21 @@ namespace ImpHoleCalculation
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(Double));
             if (hoursRadioButton.Checked && !doubleExcelCheckBox.Checked)
             {
-                setHoleDateRowHours(ImpulseHoleGridView);
-                countImpulsesHoursFormula(ImpulseHoleGridView);
+                setHoleDateRowHours(ImpulseHoleGridView, dateLeft, dateRight);
+                countImpulsesHoursFormula(ImpulseHoleGridView, hole, dateLeft, dateRight);
             }
 
             else if (daysRadioButton.Checked && !doubleExcelCheckBox.Checked)
             {
-                setHoleDateRowDays(ImpulseHoleGridView2);
-                countImpulsesDaysFormula(ImpulseHoleGridView2);
+                setHoleDateRowDays(ImpulseHoleGridView2, dateLeft, dateRight);
+                countImpulsesDaysFormula(ImpulseHoleGridView2, hole, dateLeft, dateRight);
             }
             else if (doubleExcelCheckBox.Checked)
             {
-                setHoleDateRowHours(ImpulseHoleGridView);
-                countImpulsesHoursFormula(ImpulseHoleGridView);
-                setHoleDateRowDays(ImpulseHoleGridView2);
-                countImpulsesDaysFormula(ImpulseHoleGridView2);
+                setHoleDateRowHours(ImpulseHoleGridView, dateLeft, dateRight);
+                countImpulsesHoursFormula(ImpulseHoleGridView, hole, dateLeft, dateRight);
+                setHoleDateRowDays(ImpulseHoleGridView2, dateLeft, dateRight);
+                countImpulsesDaysFormula(ImpulseHoleGridView2, hole, dateLeft, dateRight);
             }
 
             //countImpulses(holeName);
@@ -1063,7 +1138,6 @@ namespace ImpHoleCalculation
 
         private void Test_Button_Click_1(object sender, EventArgs e)
         {
-            
             start();
         }
 
@@ -1078,6 +1152,7 @@ namespace ImpHoleCalculation
 
         private void ExcelButton_Click(object sender, EventArgs e)
         {
+            /*
             int holeName = int.Parse(HoleListGridView.Rows[0].Cells[1].Value.ToString());
 
             SaveFileDialog saveDialog = new SaveFileDialog();
@@ -1086,6 +1161,7 @@ namespace ImpHoleCalculation
 
             setExcelData(holeName);
             excel(holeName, ImpulseHoleGridView, saveDialog.FileName);
+            */
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)

@@ -260,7 +260,7 @@
             this.Column12});
             this.HoleListGridView.Location = new System.Drawing.Point(6, 6);
             this.HoleListGridView.Name = "HoleListGridView";
-            this.HoleListGridView.Size = new System.Drawing.Size(989, 531);
+            this.HoleListGridView.Size = new System.Drawing.Size(989, 388);
             this.HoleListGridView.TabIndex = 44;
             this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
             // 
@@ -338,9 +338,9 @@
             this.Column13,
             this.Column34,
             this.Column3});
-            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 543);
+            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 414);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
-            this.ImpulsesGridView.Size = new System.Drawing.Size(490, 10);
+            this.ImpulsesGridView.Size = new System.Drawing.Size(490, 139);
             this.ImpulsesGridView.TabIndex = 3;
             this.ImpulsesGridView.Visible = false;
             // 
