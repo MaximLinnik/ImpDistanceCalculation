@@ -156,33 +156,41 @@ namespace ImpHoleCalculation
             getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
             HoleList(); // повторный вывоз с целью очистки ненужных скважин, если есть необходимость
 
-            getAllImpulses(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
+            if (!autoFolderCheckBox.Checked)
+            {
+                getAllImpulses(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
+                sortDate(); // сортировка выбившихся значений по дате (импульсы)
+                countImpByHole(); //расчет количества импульсов по скважинам
+            }
 
-            sortDate(); // сортировка выбившихся значений по дате (импульсы)
+
+
             //setImpHoleData(); // проставление имен скважин к импульсам (устарело)
 
             //if(oneHoleParametr) сlearImpulsesByHole();//очистка таблицы импульсов, чтобы она содержала только строки с нужной скважиной (не нужно)
 
-            countImpByHole(); //расчет количества импульсов по скважинам
+
 
             if (autoFolderCheckBox.Checked)
             {
 
                 createDirectories(); //предварительное создание папок
                 int rowCount = HoleListGridView.Rows.Count;
-
-                //здесь под проход по дням, чтобы сохранять последовательно
-
-                for (int i = 0; i < rowCount - 1; i++)
+                DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
+                DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
+                while (dateBefore < dateAfter)
                 {
-                    DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
-                    DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
-                    holeName = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
-                    if (HoleListGridView.Rows[i].Cells[2].Value.ToString() == "0") continue; // пропуск пустой скважины
-                    while (dateBefore < dateAfter)
+                    ImpulsesGridView.Rows.Clear();
+                    DateTime rightBorder = dateBefore.AddDays(1);
+                    rightBorder = new DateTime(rightBorder.Year, rightBorder.Month, rightBorder.Day, 0, 0, 0);
+                    getAllImpulsesByDay(dateBefore, rightBorder); // получение импульсов по дню
+                    sortDate(); // сортировка выбившихся значений по дате (импульсы)
+                    countImpByHole(); //расчет количества импульсов по скважинам
+                    for (int i = 0; i < rowCount - 1; i++)
                     {
-                        DateTime rightBorder = dateBefore.AddDays(1);
-                        rightBorder = new DateTime(rightBorder.Year, rightBorder.Month, rightBorder.Day, 0, 0, 0);
+                        holeName = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
+                        if (HoleListGridView.Rows[i].Cells[2].Value.ToString() == "0") continue; // пропуск пустой скважины
+
                         setExcelData(holeName, dateBefore, rightBorder);
                         filenameHours = folderSaveHours(dateBefore, holeName);
 
@@ -193,9 +201,13 @@ namespace ImpHoleCalculation
                             filenameDays = folderSaveDays(dateBefore, holeName);
                             excel(holeName, ImpulseHoleGridView2, filenameDays);
                         }
-                        dateBefore = rightBorder;
                     }
+                    dateBefore = rightBorder;
                 }
+
+                    
+
+                
             }
             else if (!autoFolderCheckBox.Checked && autosaveCheckBox.Checked && OneHolecheckBox.Checked)// выбор файла для эксель
             {
@@ -440,6 +452,68 @@ namespace ImpHoleCalculation
             }
             return i;
 
+        }
+
+        private int getAllImpulsesByDay(DateTime dateB, DateTime dateA)
+        {
+            int holeName = 0; //имя скважины, если нашлась
+            int i = 0, counter = 0;
+            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+
+                SqlConnection con = new SqlConnection(connectionString);
+                String query = @"select Impulses.ID, Impulses.HWID, Impulses.ImpulseTime
+                            from Impulses
+                             " +
+                                @"  ";
+
+
+
+                String date = @"  where 
+                         (Impulses.ImpulseTime BETWEEN '" + dateB.Ticks + "' AND '" +
+                      dateA.Ticks + "')";
+                if (!dateCheckBox.Checked) //вывести по всей бд
+                    query += date;
+
+                con.Open();
+                SqlCommand command = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    String impID = reader[0].ToString();
+                    String hwid = reader[1].ToString();
+
+                    //тики в дату
+                    DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
+                    String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
+
+                    //progressBar1.Value += 1; // увел счетчика прогресс бара
+
+                    /*
+                    counter++;
+                
+                    double percentage = (double)counter / progressBar1.Maximum;
+                    labelNumbImpAll.Text = percentage.ToString();
+                    labelNumbImpAll.Refresh();
+                    */
+                    //оптимизация, чтобы записывалось только если входит в скважину
+                    holeName = checkHoleImp(hwid, dt);
+                    if (holeName == 0) continue;
+
+                    ImpulsesGridView.Rows.Add();
+                    //int colCount = ImpulsesGridView.ColumnCount;
+
+                    ImpulsesGridView.Rows[i].Cells[0].Value = i + 1;
+                    ImpulsesGridView.Rows[i].Cells[1].Value = double.Parse(impID);
+                    ImpulsesGridView.Rows[i].Cells[2].Value = double.Parse(hwid);
+                    ImpulsesGridView.Rows[i].Cells[3].Value = DateTime.Parse(impDate);
+                    ImpulsesGridView.Rows[i].Cells[4].Value = holeName; // имя скважины
+                    i++;
+                }
+                con.Close();
+
+            return i;
         }
 
         // проверка на соответсвие скважины на этапе получения результата запроса
