@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Threading;
+using System.IO;
 
 namespace ImpHoleCalculation
 {
@@ -194,6 +195,35 @@ namespace ImpHoleCalculation
             setImpulses();
             numberOfImpulses();
             */
+        }
+
+        //создание папок, если они не существуют (по годам и месяцам)
+        public void createDirectories()
+        {
+            DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
+            DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
+
+            while (dateBefore < dateAfter)
+            {
+                
+                String strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
+                
+                String yearDirectory = System.IO.Path.GetDirectoryName(strExeFilePath)+"\\"+dateBefore.Year.ToString();
+                if (!Directory.Exists(yearDirectory))//папки с годами
+                {
+                    Directory.CreateDirectory(yearDirectory);
+                }
+
+                String monthDirectory = yearDirectory + "//" + dateBefore.Month.ToString();
+                if (!Directory.Exists(monthDirectory))//папки с месяцами
+                {
+                    Directory.CreateDirectory(monthDirectory);
+                }
+
+                dateBefore = dateBefore.AddMonths(1);
+            }
+
+
         }
 
         //получение имени файлов, если выбрано автосохранение в папку (по часам)
@@ -1031,7 +1061,6 @@ namespace ImpHoleCalculation
             return count;
         }
 
-
         private void Test_Button_Click_1(object sender, EventArgs e)
         {
             
@@ -1112,10 +1141,14 @@ namespace ImpHoleCalculation
 
             //MessageBox.Show("Тест: " + folderSaveHours());
 
+            /*
             progressBar1.Maximum = 100;
             progressBar1.Step = 1;
             progressBar1.Value = 0;
             backgroundWorker.RunWorkerAsync();
+            */
+
+            createDirectories();
         }
     }
 }
