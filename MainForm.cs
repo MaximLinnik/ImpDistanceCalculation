@@ -163,9 +163,11 @@ namespace ImpHoleCalculation
             if (!autoFolderCheckBox.Checked)
             {
                 getAllImpulses(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
-                sortDate(); // сортировка выбившихся значений по дате (импульсы)
+                sortDate(ImpulsesGridView); // сортировка выбившихся значений по дате (импульсы)
                 int hole = int.Parse(holeComboBox.Text);
-                filtrationDrilling(hole, null);
+                if(ImpulsesGridView.Rows.Count != 1)
+                    filtrationDrilling(hole, null);
+                
                 countImpByHole(); //расчет количества импульсов по скважинам
             }
 
@@ -194,7 +196,7 @@ namespace ImpHoleCalculation
                     DateTime rightBorder = dateBefore.AddDays(1);
                     rightBorder = new DateTime(rightBorder.Year, rightBorder.Month, rightBorder.Day, 0, 0, 0);
                     getAllImpulsesByDay(dateBefore, rightBorder); // получение импульсов по дню
-                    sortDate(); // сортировка выбившихся значений по дате (импульсы)
+                    sortDate(ImpulsesGridView); // сортировка выбившихся значений по дате (импульсы)
                     countImpByHole(); //расчет количества импульсов по скважинам
                     HoleListGridView.Refresh();// обновлеие промежуточного итого по количеству имп
                     //плюсовать!!!
@@ -649,7 +651,10 @@ namespace ImpHoleCalculation
         public DataGridViewRow filtrationDrilling(int holeName, DataGridViewRow lastRowByHole)
         {
             DataGridViewRow row = filtrationDrillingFirstStep(holeName, lastRowByHole);
-            //filtrationDrillingSecondStep(holeName, lastRowByHole);
+            filtrationDrillingSecondStep(holeName);
+            sortDate(filtrationDataGridView);
+            removeDublicates(filtrationDataGridView);
+            sortDate(filtrationDataGridView);
             return row;
         }
 
@@ -740,6 +745,43 @@ namespace ImpHoleCalculation
             return row;
         }
 
+
+
+        // второй этап фильтрации бурения - добавление не попавших импульсов по окресностям
+        public void filtrationDrillingSecondStep(int holeName)
+        {
+            DataGridViewRow row = null, firstImp = null, secondImp = null;
+            int rowCountFilterImp = filtrationDataGridView.Rows.Count;
+            int rowCountImp = ImpulsesGridView.Rows.Count;
+            //взять первый опорный из фильтр табл и чекать по 3 сек. Если одинаковый, не записывать, также убрать дубли
+            for (int i = 0; i < rowCountFilterImp - 1; i++)
+            {
+                int holeFilter = int.Parse(filtrationDataGridView.Rows[i].Cells[4].Value.ToString());
+                DateTime dateFilter = DateTime.Parse(filtrationDataGridView.Rows[i].Cells[3].Value.ToString());
+                if (holeFilter == holeName)
+                {
+                    for (int j = 0; j < rowCountImp - 1; j++)
+                    {
+                        int idFiler = int.Parse(filtrationDataGridView.Rows[i].Cells[1].Value.ToString());
+                        int idImp = int.Parse(ImpulsesGridView.Rows[j].Cells[1].Value.ToString());
+                        if (idFiler!= idImp)
+                        {
+                            int holeImp = int.Parse(ImpulsesGridView.Rows[j].Cells[4].Value.ToString());
+                            DateTime dateImp = DateTime.Parse(ImpulsesGridView.Rows[j].Cells[3].Value.ToString());
+                            double difference = Math.Abs((dateFilter - dateImp).TotalSeconds);
+                            if (holeFilter == holeName && difference < 3)
+                            {
+                                addToFiltrationGrid(ImpulsesGridView.Rows[j]);
+                                
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+        //добавл отфильтр имп в вспомог табл
         public void addToFiltrationGrid(DataGridViewRow row)
         {
             int index = filtrationDataGridView.Rows.Add();
@@ -752,18 +794,26 @@ namespace ImpHoleCalculation
             filtrationDataGridView.Rows[index].Cells[6].Value = row.Cells[6].Value; // длительность
         }
 
-        // второй этап фильтрации бурения - добавление не попавших импульсов по окресностям
-        public DataGridViewRow filtrationDrillingSecondStep(int holeName, DataGridViewRow lastRowByHole)
+        //удаление дубликатов (после фильтрации)
+        public void removeDublicates(DataGridView dataGridView)
         {
-            DataGridViewRow row = null, firstImp = null, secondImp = null;
-            int rowCount = ImpulsesGridView.Rows.Count;
-
-            //взять первый опорный из фильтр табл и чекать по 3 сек. Если одинаковый, не записывать, также убрать дубли
-
-            return row;
+            string dublicate = dataGridView.Rows[0].Cells[1].Value.ToString();
+            int rowCount = dataGridView.Rows.Count;
+            for(int i = 1; i< rowCount-1; i++)// ? rowCount
+            {
+                if(dataGridView.Rows[i].Cells[1].Value.ToString() == dublicate)
+                {
+                    dataGridView.Rows.RemoveAt(i);
+                    rowCount--;
+                }
+                else
+                {
+                    dublicate = dataGridView.Rows[i].Cells[1].Value.ToString();
+                }
+            }
         }
 
-            //получение всех скважин со всеми индексами
+        //получение всех скважин со всеми индексами
         public void getAllHole()
         {
             TempHoleGridView.Rows.Clear();
@@ -814,14 +864,14 @@ namespace ImpHoleCalculation
             con.Close();
         }
 
-        public void sortDate()
+        public void sortDate(DataGridView dataGridView)
         {
-            ImpulsesGridView.Sort(ImpulsesGridView.Columns[3], ListSortDirection.Ascending);
+            dataGridView.Sort(dataGridView.Columns[3], ListSortDirection.Ascending);
 
-            int rowCount = ImpulsesGridView.Rows.Count;
-            for (int i = 1; i < rowCount - 1; i++)
+            int rowCount = dataGridView.Rows.Count;
+            for (int i = 1; i < rowCount; i++)
             {
-                ImpulsesGridView.Rows[i - 1].Cells[0].Value = i;
+                dataGridView.Rows[i - 1].Cells[0].Value = i;
             }
 
         }
