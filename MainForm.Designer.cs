@@ -83,6 +83,13 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.persentageLabel = new System.Windows.Forms.Label();
+            this.filtrationGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImpulseHoleGridView2)).BeginInit();
@@ -94,6 +101,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.filtrationGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // dateBeforeText
@@ -204,6 +212,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.filtrationGridView);
             this.tabPage1.Controls.Add(this.ImpulseHoleGridView2);
             this.tabPage1.Controls.Add(this.HoleListGridView);
             this.tabPage1.Controls.Add(this.TempHoleGridView);
@@ -337,12 +346,12 @@
             this.Column24,
             this.Column13,
             this.Column34,
-            this.Column3});
+            this.Column3,
+            this.Column14});
             this.ImpulsesGridView.Location = new System.Drawing.Point(6, 414);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
             this.ImpulsesGridView.Size = new System.Drawing.Size(490, 139);
             this.ImpulsesGridView.TabIndex = 3;
-            this.ImpulsesGridView.Visible = false;
             // 
             // Column18
             // 
@@ -584,6 +593,7 @@
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(995, 23);
             this.progressBar1.TabIndex = 45;
+            this.progressBar1.Visible = false;
             // 
             // backgroundWorker
             // 
@@ -601,6 +611,52 @@
             this.persentageLabel.Size = new System.Drawing.Size(15, 13);
             this.persentageLabel.TabIndex = 46;
             this.persentageLabel.Text = "%";
+            // 
+            // filtrationGridView
+            // 
+            this.filtrationGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.filtrationGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.filtrationGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8});
+            this.filtrationGridView.Location = new System.Drawing.Point(820, 398);
+            this.filtrationGridView.Name = "filtrationGridView";
+            this.filtrationGridView.Size = new System.Drawing.Size(178, 139);
+            this.filtrationGridView.TabIndex = 46;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "№";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "HWID";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "Дата (импульс)";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "Имя скважины";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "Длительность";
+            this.Column14.Name = "Column14";
             // 
             // MainForm
             // 
@@ -639,6 +695,7 @@
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.filtrationGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -700,5 +757,12 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.Label persentageLabel;
+        private System.Windows.Forms.DataGridView filtrationGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
     }
 }
