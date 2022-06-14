@@ -742,6 +742,7 @@ namespace ImpHoleCalculation
             {
                 row = secondImp;
             }
+            if (row == null) row = lastRowByHole; // для случая, когда в текущей итерации было ничего не найдено
             return row;
         }
 
