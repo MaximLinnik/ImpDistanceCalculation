@@ -95,16 +95,10 @@ namespace ImpHoleCalculation
             Properties.Settings.Default.Save();
         }
 
-        //общая работа всей формы
+        //общая работа всей формы (скважины)
         public void start()
         {
-            /*
-            
-            progressBar2.Value = 0;
-            progressBarSet_Impulses();
-            */
 
-            //labelNumbImpAll.Text = "";
             /*
             labelNumbImpAll.Text = "";
             progressBar1.Value = 0;
@@ -125,6 +119,7 @@ namespace ImpHoleCalculation
             if (OneHolecheckBox.Checked)
             {
                 oneHoleParametr = true;
+                /*
                 if (autosaveCheckBox.Checked) // выбор файла для эксель
                 {
 
@@ -139,7 +134,7 @@ namespace ImpHoleCalculation
                             filenameHours = saveDialog.FileName;
                         }
                     }
-
+                  
                     if (doubleExcelCheckBox.Checked)
                     {
                         if (!autoFolderCheckBox.Checked)
@@ -153,7 +148,8 @@ namespace ImpHoleCalculation
                             }
                         }
                     }
-                }
+                    
+                }*/
             }
             else oneHoleParametr = false; // для того, чтобы не удалялись все скважины при запуске
 
@@ -171,13 +167,9 @@ namespace ImpHoleCalculation
                 countImpByHole(); //расчет количества импульсов по скважинам
             }
 
-
-
             //setImpHoleData(); // проставление имен скважин к импульсам (устарело)
 
             //if(oneHoleParametr) сlearImpulsesByHole();//очистка таблицы импульсов, чтобы она содержала только строки с нужной скважиной (не нужно)
-
-
 
             if (autoFolderCheckBox.Checked)
             {
@@ -188,13 +180,22 @@ namespace ImpHoleCalculation
                 DataGridViewRow lastRow = null;
                 DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
                 DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
+                DateTime rightBorder;
 
                 while (dateBefore < dateAfter)
                 {
                     ImpulsesGridView.Rows.Clear();
-                    
-                    DateTime rightBorder = dateBefore.AddDays(1);
-                    rightBorder = new DateTime(rightBorder.Year, rightBorder.Month, rightBorder.Day, 0, 0, 0);
+
+                    rightBorder = dateBefore.AddDays(1);
+                    if (rightBorder > dateAfter)// когда присутствуют часы/минуты в дате
+                    {
+                        rightBorder = dateAfter;
+                    }
+                    else
+                    {
+                        rightBorder = new DateTime(rightBorder.Year, rightBorder.Month, rightBorder.Day, 0, 0, 0);
+                    }
+
                     getAllImpulsesByDay(dateBefore, rightBorder); // получение импульсов по дню
                     sortDate(ImpulsesGridView); // сортировка выбившихся значений по дате (импульсы)
                     countImpByHole(); //расчет количества импульсов по скважинам
@@ -214,11 +215,11 @@ namespace ImpHoleCalculation
 
                         excel(holeName, ImpulseHoleGridView, filenameHours);
 
-                        if (doubleExcelCheckBox.Checked)
-                        {
+                        //if (doubleExcelCheckBox.Checked)
+                        //{
                             filenameDays = folderSaveDays(dateBefore, holeName);
                             excel(holeName, ImpulseHoleGridView2, filenameDays);
-                        }
+                        //}
                     }
                     dateBefore = rightBorder;
                 }
@@ -227,6 +228,7 @@ namespace ImpHoleCalculation
 
                 
             }
+            /*
             else if (!autoFolderCheckBox.Checked && autosaveCheckBox.Checked && OneHolecheckBox.Checked)// выбор файла для эксель
             {
                 DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
@@ -241,6 +243,8 @@ namespace ImpHoleCalculation
                     excel(holeName, ImpulseHoleGridView2, filenameDays);
                 }
             }
+            */
+
             MessageBox.Show("Работа завершена");
 
             //setHoleDateRow();
@@ -250,6 +254,12 @@ namespace ImpHoleCalculation
             setImpulses();
             numberOfImpulses();
             */
+        }
+
+        //общая работа всей формы (датчики (hwid))
+        public void startHWID()
+        {
+
         }
 
         //создание папок, если они не существуют (по годам и месяцам)
@@ -1351,6 +1361,7 @@ namespace ImpHoleCalculation
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             int i = 0;
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(Double));
+            /*
             if (hoursRadioButton.Checked && !doubleExcelCheckBox.Checked)
             {
                 setHoleDateRowHours(ImpulseHoleGridView, dateLeft, dateRight);
@@ -1362,13 +1373,14 @@ namespace ImpHoleCalculation
                 setHoleDateRowDays(ImpulseHoleGridView2, dateLeft, dateRight);
                 countImpulsesDaysFormula(ImpulseHoleGridView2, hole, dateLeft, dateRight);
             }
-            else if (doubleExcelCheckBox.Checked)
-            {
+            */
+            //else if (doubleExcelCheckBox.Checked)
+            //{
                 setHoleDateRowHours(ImpulseHoleGridView, dateLeft, dateRight);
                 countImpulsesHoursFormula(ImpulseHoleGridView, hole, dateLeft, dateRight);
                 setHoleDateRowDays(ImpulseHoleGridView2, dateLeft, dateRight);
                 countImpulsesDaysFormula(ImpulseHoleGridView2, hole, dateLeft, dateRight);
-            }
+            //}
 
             //countImpulses(holeName);
         }
@@ -1481,7 +1493,15 @@ namespace ImpHoleCalculation
 
         private void Test_Button_Click_1(object sender, EventArgs e)
         {
-            start();
+            if (holeRadioButton.Checked)
+            {
+                start();
+            }
+            else
+            {
+                startHWID();
+            }
+            
         }
 
         private void ReturnButton_Click(object sender, EventArgs e)
