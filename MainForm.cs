@@ -172,15 +172,28 @@ namespace ImpHoleCalculation
             {
                 getAllImpulses(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
                 sortDate(ImpulsesGridView); // сортировка выбившихся значений по дате (импульсы)
+                countImpByHole(); //расчет количества импульсов по скважинам
+
                 if (OneRowCheckBox.Checked)
                 {
                     int hole = int.Parse(listComboBox.Text);
                     if (ImpulsesGridView.Rows.Count != 1)
+                    {
                         filtrationDrillingHole(hole, null);
+                    }
+
                 }
                 else
                 {
                     //когда выбрано много скважин
+                    int rowCount = HoleListGridView.Rows.Count;
+                    for(int i = 0; i< rowCount-1; i++)
+                    {
+                        int hole = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
+                        int count = int.Parse(HoleListGridView.Rows[i].Cells[2].Value.ToString());
+                        if (count!=0)
+                            filtrationDrillingHole(hole, null);
+                    }
                 }
 
                 
@@ -970,6 +983,7 @@ namespace ImpHoleCalculation
         {
             DataGridViewRow row = filtrationDrillingFirstStepHole(holeName, lastRowByHole);
             filtrationDrillingSecondStepHole(holeName);
+            
             sortDate(filtrationDataGridView);
 
             if (filtrationDataGridView.Rows.Count != 1)
@@ -977,7 +991,7 @@ namespace ImpHoleCalculation
                 removeDublicates(filtrationDataGridView);
                 sortDate(filtrationDataGridView);
             }
-
+            //sortDate(ImpulsesGridView);
             return row;
         }
 
@@ -1063,7 +1077,9 @@ namespace ImpHoleCalculation
                             firstApprove = true;
 
                             int colCount = ImpulsesGridView.Columns.Count;
-                            ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 1; // чек того, что импульс фильтрован
+                            //ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 1; // чек того, что импульс фильтрован
+                            ImpulsesGridView.Rows.RemoveAt(i);
+                            rowCount--;
                         }
                         else if (firstApprove)
                         {
@@ -1073,7 +1089,9 @@ namespace ImpHoleCalculation
                             secondImp = null;
 
                             int colCount = ImpulsesGridView.Columns.Count;
-                            ImpulsesGridView.Rows[checkFirst].Cells[colCount - 1].Value = 1; // чек того, что импульс фильтрован
+                            //ImpulsesGridView.Rows[checkFirst].Cells[colCount - 1].Value = 1; // чек того, что импульс фильтрован
+                            ImpulsesGridView.Rows.RemoveAt(checkFirst);
+                            rowCount--;
                         }
                         else
                         {
@@ -1200,15 +1218,16 @@ namespace ImpHoleCalculation
             {
                 int holeFilter = int.Parse(filtrationDataGridView.Rows[i].Cells[4].Value.ToString());
                 DateTime dateFilter = DateTime.Parse(filtrationDataGridView.Rows[i].Cells[3].Value.ToString());
-                int colCount = ImpulsesGridView.ColumnCount;
-                int check = int.Parse(ImpulsesGridView.Rows[i].Cells[colCount - 1].Value.ToString());
-                if (holeFilter == holeName && check == 0)
+
+                if (holeFilter == holeName)
                 {
                     for (int j = 0; j < rowCountImp - 1; j++)
                     {
                         int idFiler = int.Parse(filtrationDataGridView.Rows[i].Cells[1].Value.ToString());
                         int idImp = int.Parse(ImpulsesGridView.Rows[j].Cells[1].Value.ToString());
-                        if (idFiler!= idImp)
+                        int colCount = ImpulsesGridView.ColumnCount;
+                        int check = int.Parse(ImpulsesGridView.Rows[j].Cells[colCount - 1].Value.ToString());
+                        if (check == 0 && idFiler != idImp)
                         {
                             int holeImp = int.Parse(ImpulsesGridView.Rows[j].Cells[4].Value.ToString());
                             DateTime dateImp = DateTime.Parse(ImpulsesGridView.Rows[j].Cells[3].Value.ToString());
@@ -1216,7 +1235,8 @@ namespace ImpHoleCalculation
                             if (holeFilter == holeName && difference < 3)
                             {
                                 addToFiltrationGrid(ImpulsesGridView.Rows[j]);
-                                
+                                ImpulsesGridView.Rows.RemoveAt(j);
+                                rowCountImp--;
                             }
                         }
 
@@ -2155,7 +2175,7 @@ namespace ImpHoleCalculation
             oneRowParametr = false;
             if (holeRadioButton.Checked)
             {
-                setList();
+                //setList();
                 startHole();
             }
             else

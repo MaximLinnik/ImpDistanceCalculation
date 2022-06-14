@@ -47,6 +47,7 @@
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImpulseHoleGridView2 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,6 +71,7 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImpulseHoleGridView = new System.Windows.Forms.DataGridView();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -80,6 +82,7 @@
             this.OneRowCheckBox = new System.Windows.Forms.CheckBox();
             this.labelTypeCalc = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.filtrationCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.sepQueryRadioButton = new System.Windows.Forms.RadioButton();
             this.oneQueryRadioButton = new System.Windows.Forms.RadioButton();
@@ -97,7 +100,6 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.persentageLabel = new System.Windows.Forms.Label();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filtrationDataGridView)).BeginInit();
@@ -211,7 +213,7 @@
             // 
             // startButtonTest
             // 
-            this.startButtonTest.Location = new System.Drawing.Point(12, 554);
+            this.startButtonTest.Location = new System.Drawing.Point(9, 574);
             this.startButtonTest.Name = "startButtonTest";
             this.startButtonTest.Size = new System.Drawing.Size(75, 23);
             this.startButtonTest.TabIndex = 24;
@@ -247,7 +249,8 @@
             this.dataGridViewTextBoxColumn7,
             this.dataGridViewTextBoxColumn8,
             this.dataGridViewTextBoxColumn9,
-            this.dataGridViewTextBoxColumn10});
+            this.dataGridViewTextBoxColumn10,
+            this.Column17});
             this.filtrationDataGridView.Location = new System.Drawing.Point(727, 404);
             this.filtrationDataGridView.Name = "filtrationDataGridView";
             this.filtrationDataGridView.Size = new System.Drawing.Size(268, 139);
@@ -287,6 +290,11 @@
             // 
             this.dataGridViewTextBoxColumn10.HeaderText = "Длительность";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            // 
+            // Column17
+            // 
+            this.Column17.HeaderText = "Фильтрация";
+            this.Column17.Name = "Column17";
             // 
             // ImpulseHoleGridView2
             // 
@@ -452,6 +460,11 @@
             this.Column14.HeaderText = "Длительность";
             this.Column14.Name = "Column14";
             // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "Фильтрация";
+            this.Column16.Name = "Column16";
+            // 
             // ImpulseHoleGridView
             // 
             this.ImpulseHoleGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -507,6 +520,7 @@
             // 
             // listComboBox
             // 
+            this.listComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listComboBox.FormattingEnabled = true;
             this.listComboBox.Location = new System.Drawing.Point(77, 60);
             this.listComboBox.Name = "listComboBox";
@@ -536,6 +550,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.filtrationCheckBox);
             this.groupBox2.Controls.Add(this.groupBox4);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.OneRowCheckBox);
@@ -543,16 +558,26 @@
             this.groupBox2.Controls.Add(this.listComboBox);
             this.groupBox2.Location = new System.Drawing.Point(10, 215);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(182, 333);
+            this.groupBox2.Size = new System.Drawing.Size(182, 353);
             this.groupBox2.TabIndex = 43;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры";
+            // 
+            // filtrationCheckBox
+            // 
+            this.filtrationCheckBox.AutoSize = true;
+            this.filtrationCheckBox.Location = new System.Drawing.Point(12, 262);
+            this.filtrationCheckBox.Name = "filtrationCheckBox";
+            this.filtrationCheckBox.Size = new System.Drawing.Size(148, 17);
+            this.filtrationCheckBox.TabIndex = 50;
+            this.filtrationCheckBox.Text = "Выполнять фильтрацию";
+            this.filtrationCheckBox.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.sepQueryRadioButton);
             this.groupBox4.Controls.Add(this.oneQueryRadioButton);
-            this.groupBox4.Location = new System.Drawing.Point(12, 265);
+            this.groupBox4.Location = new System.Drawing.Point(7, 285);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(156, 62);
             this.groupBox4.TabIndex = 47;
@@ -696,7 +721,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(103, 554);
+            this.button1.Location = new System.Drawing.Point(97, 574);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 44;
@@ -731,11 +756,6 @@
             this.persentageLabel.TabIndex = 46;
             this.persentageLabel.Text = "%";
             this.persentageLabel.Visible = false;
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "Фильтрация";
-            this.Column16.Name = "Column16";
             // 
             // MainForm
             // 
@@ -838,13 +858,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.Label persentageLabel;
         private System.Windows.Forms.DataGridView filtrationDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column24;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
@@ -857,5 +870,14 @@
         private System.Windows.Forms.RadioButton hwidRadioButton;
         private System.Windows.Forms.RadioButton holeRadioButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
+        private System.Windows.Forms.CheckBox filtrationCheckBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
     }
 }
