@@ -76,14 +76,18 @@
             this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.labelNumbImpAll = new System.Windows.Forms.Label();
-            this.holeComboBox = new System.Windows.Forms.ComboBox();
+            this.listComboBox = new System.Windows.Forms.ComboBox();
             this.OneHolecheckBox = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelTypeCalc = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.sepQueryRadioButton = new System.Windows.Forms.RadioButton();
             this.oneQueryRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.listButton = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.hwidRadioButton = new System.Windows.Forms.RadioButton();
+            this.holeRadioButton = new System.Windows.Forms.RadioButton();
             this.autoFolderCheckBox = new System.Windows.Forms.CheckBox();
             this.doubleExcelCheckBox = new System.Windows.Forms.CheckBox();
             this.daysRadioButton = new System.Windows.Forms.RadioButton();
@@ -93,10 +97,6 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.persentageLabel = new System.Windows.Forms.Label();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.holeRadioButton = new System.Windows.Forms.RadioButton();
-            this.hwidRadioButton = new System.Windows.Forms.RadioButton();
-            this.listButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filtrationDataGridView)).BeginInit();
@@ -503,13 +503,13 @@
             this.labelNumbImpAll.Text = "Количество импульсов: ";
             this.labelNumbImpAll.Visible = false;
             // 
-            // holeComboBox
+            // listComboBox
             // 
-            this.holeComboBox.FormattingEnabled = true;
-            this.holeComboBox.Location = new System.Drawing.Point(77, 60);
-            this.holeComboBox.Name = "holeComboBox";
-            this.holeComboBox.Size = new System.Drawing.Size(97, 21);
-            this.holeComboBox.TabIndex = 40;
+            this.listComboBox.FormattingEnabled = true;
+            this.listComboBox.Location = new System.Drawing.Point(77, 60);
+            this.listComboBox.Name = "listComboBox";
+            this.listComboBox.Size = new System.Drawing.Size(97, 21);
+            this.listComboBox.TabIndex = 40;
             // 
             // OneHolecheckBox
             // 
@@ -523,22 +523,22 @@
             this.OneHolecheckBox.Text = "Подсчитать импульсы\r\n из одной скважины";
             this.OneHolecheckBox.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // labelTypeCalc
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 63);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 13);
-            this.label1.TabIndex = 42;
-            this.label1.Text = "Скважина:";
+            this.labelTypeCalc.AutoSize = true;
+            this.labelTypeCalc.Location = new System.Drawing.Point(10, 63);
+            this.labelTypeCalc.Name = "labelTypeCalc";
+            this.labelTypeCalc.Size = new System.Drawing.Size(61, 13);
+            this.labelTypeCalc.TabIndex = 42;
+            this.labelTypeCalc.Text = "Скважина:";
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.groupBox4);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.OneHolecheckBox);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.holeComboBox);
+            this.groupBox2.Controls.Add(this.labelTypeCalc);
+            this.groupBox2.Controls.Add(this.listComboBox);
             this.groupBox2.Location = new System.Drawing.Point(10, 215);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(182, 333);
@@ -590,6 +590,49 @@
             this.groupBox3.TabIndex = 46;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Группировка данных";
+            // 
+            // listButton
+            // 
+            this.listButton.Location = new System.Drawing.Point(7, 99);
+            this.listButton.Name = "listButton";
+            this.listButton.Size = new System.Drawing.Size(123, 23);
+            this.listButton.TabIndex = 49;
+            this.listButton.Text = "Показать список";
+            this.listButton.UseVisualStyleBackColor = true;
+            this.listButton.Click += new System.EventHandler(this.ListButton_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.hwidRadioButton);
+            this.groupBox5.Controls.Add(this.holeRadioButton);
+            this.groupBox5.Location = new System.Drawing.Point(7, 19);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(138, 74);
+            this.groupBox5.TabIndex = 48;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Тип";
+            // 
+            // hwidRadioButton
+            // 
+            this.hwidRadioButton.AutoSize = true;
+            this.hwidRadioButton.Location = new System.Drawing.Point(7, 43);
+            this.hwidRadioButton.Name = "hwidRadioButton";
+            this.hwidRadioButton.Size = new System.Drawing.Size(107, 17);
+            this.hwidRadioButton.TabIndex = 1;
+            this.hwidRadioButton.Text = "Датчики (HWID)";
+            this.hwidRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // holeRadioButton
+            // 
+            this.holeRadioButton.AutoSize = true;
+            this.holeRadioButton.Checked = true;
+            this.holeRadioButton.Location = new System.Drawing.Point(7, 20);
+            this.holeRadioButton.Name = "holeRadioButton";
+            this.holeRadioButton.Size = new System.Drawing.Size(109, 17);
+            this.holeRadioButton.TabIndex = 0;
+            this.holeRadioButton.TabStop = true;
+            this.holeRadioButton.Text = "Скважины (Hole)";
+            this.holeRadioButton.UseVisualStyleBackColor = true;
             // 
             // autoFolderCheckBox
             // 
@@ -685,48 +728,7 @@
             this.persentageLabel.Size = new System.Drawing.Size(15, 13);
             this.persentageLabel.TabIndex = 46;
             this.persentageLabel.Text = "%";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.hwidRadioButton);
-            this.groupBox5.Controls.Add(this.holeRadioButton);
-            this.groupBox5.Location = new System.Drawing.Point(7, 19);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(138, 74);
-            this.groupBox5.TabIndex = 48;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Тип";
-            // 
-            // holeRadioButton
-            // 
-            this.holeRadioButton.AutoSize = true;
-            this.holeRadioButton.Checked = true;
-            this.holeRadioButton.Location = new System.Drawing.Point(7, 20);
-            this.holeRadioButton.Name = "holeRadioButton";
-            this.holeRadioButton.Size = new System.Drawing.Size(109, 17);
-            this.holeRadioButton.TabIndex = 0;
-            this.holeRadioButton.TabStop = true;
-            this.holeRadioButton.Text = "Скважины (Hole)";
-            this.holeRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // hwidRadioButton
-            // 
-            this.hwidRadioButton.AutoSize = true;
-            this.hwidRadioButton.Location = new System.Drawing.Point(7, 43);
-            this.hwidRadioButton.Name = "hwidRadioButton";
-            this.hwidRadioButton.Size = new System.Drawing.Size(107, 17);
-            this.hwidRadioButton.TabIndex = 1;
-            this.hwidRadioButton.Text = "Датчики (HWID)";
-            this.hwidRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // listButton
-            // 
-            this.listButton.Location = new System.Drawing.Point(7, 99);
-            this.listButton.Name = "listButton";
-            this.listButton.Size = new System.Drawing.Size(123, 23);
-            this.listButton.TabIndex = 49;
-            this.listButton.Text = "Показать список";
-            this.listButton.UseVisualStyleBackColor = true;
+            this.persentageLabel.Visible = false;
             // 
             // MainForm
             // 
@@ -801,9 +803,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridView HoleListGridView;
-        private System.Windows.Forms.ComboBox holeComboBox;
+        private System.Windows.Forms.ComboBox listComboBox;
         private System.Windows.Forms.CheckBox OneHolecheckBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTypeCalc;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;

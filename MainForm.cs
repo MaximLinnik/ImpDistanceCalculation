@@ -40,7 +40,7 @@ namespace ImpHoleCalculation
         //бэкграунд воркер для прогресс бара
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            start();
+            startHole();
         }
 
         private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -91,12 +91,24 @@ namespace ImpHoleCalculation
             //сохранение в ту же папку, где exe
             if (autoFolderCheckBox.Checked) Properties.Settings.Default.AutoSaveFolder = true;
             else Properties.Settings.Default.AutoSaveFolder = false;
+            
+            // выбор типа вычислений скважины/hwid
+            if (holeRadioButton.Checked)
+            {
+                Properties.Settings.Default.SetHole = true;
+                Properties.Settings.Default.SetHWID = false;
+            }
+            else
+            {
+                Properties.Settings.Default.SetHole = false;
+                Properties.Settings.Default.SetHWID = true;
+            }
 
             Properties.Settings.Default.Save();
         }
 
         //общая работа всей формы (скважины)
-        public void start()
+        public void startHole()
         {
 
             /*
@@ -154,13 +166,13 @@ namespace ImpHoleCalculation
             else oneHoleParametr = false; // для того, чтобы не удалялись все скважины при запуске
 
             getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
-            HoleList(); // повторный вывоз с целью очистки ненужных скважин, если есть необходимость
+            holeList(); // повторный вывоз с целью очистки ненужных скважин, если есть необходимость
 
             if (!autoFolderCheckBox.Checked)
             {
                 getAllImpulses(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
                 sortDate(ImpulsesGridView); // сортировка выбившихся значений по дате (импульсы)
-                int hole = int.Parse(holeComboBox.Text);
+                int hole = int.Parse(listComboBox.Text);
                 if(ImpulsesGridView.Rows.Count != 1)
                     filtrationDrilling(hole, null);
                 
@@ -260,6 +272,85 @@ namespace ImpHoleCalculation
         public void startHWID()
         {
 
+            int holeName = 0;
+            SaveFileDialog saveDialog = null;
+            SaveFileDialog saveDialog2 = null;
+
+            String filenameHours = "";
+            String filenameDays = "";
+
+            if (OneHolecheckBox.Checked)
+            {
+                oneHoleParametr = true;
+
+            }
+            else oneHoleParametr = false; // для того, чтобы не удалялись все скважины при запуске
+
+            getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
+            holeList(); // повторный вывоз с целью очистки ненужных скважин, если есть необходимость
+
+            if (!autoFolderCheckBox.Checked)
+            {
+                getAllImpulses(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
+                sortDate(ImpulsesGridView); // сортировка выбившихся значений по дате (импульсы)
+                int hole = int.Parse(listComboBox.Text);
+                if (ImpulsesGridView.Rows.Count != 1)
+                    filtrationDrilling(hole, null);
+
+                countImpByHole(); //расчет количества импульсов по скважинам
+            }
+
+            if (autoFolderCheckBox.Checked)
+            {
+                filtrationDataGridView.Rows.Clear();
+
+                createDirectories(); //предварительное создание папок
+                int rowCount = HoleListGridView.Rows.Count;
+                DataGridViewRow lastRow = null;
+                DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
+                DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
+                DateTime rightBorder;
+
+                while (dateBefore < dateAfter)
+                {
+                    ImpulsesGridView.Rows.Clear();
+
+                    rightBorder = dateBefore.AddDays(1);
+                    if (rightBorder > dateAfter)// когда присутствуют часы/минуты в дате
+                    {
+                        rightBorder = dateAfter;
+                    }
+                    else
+                    {
+                        rightBorder = new DateTime(rightBorder.Year, rightBorder.Month, rightBorder.Day, 0, 0, 0);
+                    }
+
+                    getAllImpulsesByDay(dateBefore, rightBorder); // получение импульсов по дню
+                    sortDate(ImpulsesGridView); // сортировка выбившихся значений по дате (импульсы)
+                    countImpByHole(); //расчет количества импульсов по скважинам
+                    HoleListGridView.Refresh();// обновлеие промежуточного итого по количеству имп
+                    //плюсовать!!!
+
+                    for (int i = 0; i < rowCount - 1; i++)
+                    {
+                        holeName = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
+                        if (HoleListGridView.Rows[i].Cells[2].Value.ToString() == "0") continue; // пропуск пустой скважины
+
+                        //lastRow = filtrationDrilling(holeName, lastRow); //фильтрация
+
+
+                        setExcelData(holeName, dateBefore, rightBorder);
+                        filenameHours = folderSaveHours(dateBefore, holeName);
+                        excel(holeName, ImpulseHoleGridView, filenameHours);
+                        filenameDays = folderSaveDays(dateBefore, holeName);
+                        excel(holeName, ImpulseHoleGridView2, filenameDays);
+                    }
+                    dateBefore = rightBorder;
+                }
+            }
+
+
+            MessageBox.Show("Работа завершена");
         }
 
         //создание папок, если они не существуют (по годам и месяцам)
@@ -577,7 +668,7 @@ namespace ImpHoleCalculation
                 int hwidImp = int.Parse(hwid);
                 if (hwidImp == hwidInHole && dateBefore <= dateImp && dateImp <= dateAfter)
                 {
-                    int name = int.Parse(holeComboBox.Text); // имя скважины из комбобокса
+                    int name = int.Parse(listComboBox.Text); // имя скважины из комбобокса
                     int holeName = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
                     //ImpulsesGridView.Rows[i].Cells[4].Value = TempHoleGridView.Rows[j].Cells[1].Value.ToString();
                     result = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
@@ -840,7 +931,7 @@ namespace ImpHoleCalculation
 
             if (oneHoleParametr) // булева переменная, проставляемая по чекбоксу
             {
-                String hole = "AND Holes.Name =" + holeComboBox.Text;
+                String hole = "AND Holes.Name =" + listComboBox.Text;
                 query += hole;
             }
 
@@ -949,7 +1040,7 @@ namespace ImpHoleCalculation
                     int hwidImp = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
                     if (dateBefore <= dateImp && dateImp <= dateAfter && hwidImp == hwidInHole)
                     {
-                        int name = int.Parse(holeComboBox.Text); // имя скважины из комбобокса
+                        int name = int.Parse(listComboBox.Text); // имя скважины из комбобокса
                         int holeName = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
                         ImpulsesGridView.Rows[i].Cells[4].Value = TempHoleGridView.Rows[j].Cells[1].Value.ToString();
 
@@ -979,7 +1070,7 @@ namespace ImpHoleCalculation
                     int hwidImp = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
                     if (dateBefore <= dateImp && dateImp <= dateAfter && hwidImp == hwidInHole)
                     {
-                        int name = int.Parse(holeComboBox.Text); // имя скважины из комбобокса
+                        int name = int.Parse(listComboBox.Text); // имя скважины из комбобокса
                         int holeName = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
                         /*
                         if (oneHoleParametr && name != holeName)// удаление записей, в которых отсутствует нужная скважина
@@ -1010,7 +1101,7 @@ namespace ImpHoleCalculation
         public void сlearImpulsesByHole()
         {
             int rowCount = ImpulsesGridView.Rows.Count;
-            int name = int.Parse(holeComboBox.Text);
+            int name = int.Parse(listComboBox.Text);
             for (int i = 0; i < rowCount - 1; i++)
             {
                 int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
@@ -1025,7 +1116,7 @@ namespace ImpHoleCalculation
         }
 
         //получение списка скважин в таблицу
-        public void HoleList()
+        public void holeList()
         {
             HoleListGridView.Rows.Clear();
 
@@ -1045,7 +1136,7 @@ namespace ImpHoleCalculation
 
             if (oneHoleParametr) // булева переменная, проставляемая по чекбоксу
             {
-                String hole = "where Holes.Name =" + holeComboBox.Text;
+                String hole = "where Holes.Name =" + listComboBox.Text;
                 query += hole;
             }
 
@@ -1081,24 +1172,76 @@ namespace ImpHoleCalculation
             con.Close();
         }
 
-        //вывод в combobox списка скважин
-        public void setHoleToBox()
+        //получение списка HWID в таблицу
+        public void HWIDList()
         {
-            holeComboBox.Items.Clear();
+            HoleListGridView.Rows.Clear();
+
+            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+            SqlConnection con = new SqlConnection(connectionString);
+
+            String query = @"select Sensors.HWID 
+                            from Sensors 
+                            " +
+                @"  ";
+
+            if (oneHoleParametr) // булева переменная, проставляемая по чекбоксу
+            {
+                String hwid = "where Sensors.HWID =" + listComboBox.Text;
+                query += hwid;
+            }
+
+            con.Open();
+            SqlCommand command = new SqlCommand(query, con);
+            SqlDataReader reader = command.ExecuteReader();
+            int i = 0;
+
+            while (reader.Read())
+            {
+                HoleListGridView.Rows.Add();
+
+
+                int colCount = HoleListGridView.ColumnCount;
+
+                HoleListGridView.Rows[i].Cells[0].Value = i + 1;
+                HoleListGridView.Rows[i].Cells[1].Value = double.Parse(reader[0].ToString());
+                HoleListGridView.Rows[i].Cells[2].Value = 0;
+
+                i++;
+
+                //progressBar.Value += 1; // увел счетчика прогресс бара
+            }
+            con.Close();
+        }
+
+        //вывод в combobox списка скважин/hwid
+        public void setToBox()
+        {
+            listComboBox.Items.Clear();
             int rowCount = HoleListGridView.RowCount;
             for (int i = 0; i < rowCount - 1; i++)
             {
                 int name = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
-                holeComboBox.Items.Add(name);
+                listComboBox.Items.Add(name);
             }
-            holeComboBox.SelectedIndex = 0;
+            listComboBox.SelectedIndex = 0;
         }
 
         //общая загрузка списка скважин при начале работы программы 
         public void setHoleList()
         {
-            HoleList();
-            setHoleToBox();
+            if (holeRadioButton.Checked)
+            {
+                holeList();
+                setToBox();
+                labelTypeCalc.Text = "Скважина:";
+            }
+            else
+            {
+                HWIDList();
+                setToBox();
+                labelTypeCalc.Text = "Датчик:";
+            }
         }
 
         /*
@@ -1495,13 +1638,13 @@ namespace ImpHoleCalculation
         {
             if (holeRadioButton.Checked)
             {
-                start();
+                startHole();
             }
             else
             {
                 startHWID();
             }
-            
+
         }
 
         private void ReturnButton_Click(object sender, EventArgs e)
@@ -1544,6 +1687,8 @@ namespace ImpHoleCalculation
             oneQueryRadioButton.Checked = Properties.Settings.Default.OneQuery; //выбор типа запроса
             sepQueryRadioButton.Checked = Properties.Settings.Default.SepQueryMonth;
             autoFolderCheckBox.Checked = Properties.Settings.Default.AutoSaveFolder; //сохранение в ту же папку, где exe
+            holeRadioButton.Checked = Properties.Settings.Default.SetHole; // выбор типа вычислений скважины/hwid
+            hwidRadioButton.Checked = Properties.Settings.Default.SetHWID;
 
             setHoleList(); // вывод заранее списка скважин при загрузке формы
 
@@ -1588,6 +1733,22 @@ namespace ImpHoleCalculation
             */
 
             createDirectories();
+        }
+
+        private void ListButton_Click(object sender, EventArgs e)
+        {
+            if (holeRadioButton.Checked)
+            {
+                holeList();
+                setToBox();
+                labelTypeCalc.Text = "Скважина:";
+            }
+            else
+            {
+                HWIDList();
+                setToBox();
+                labelTypeCalc.Text = "Датчик:";
+            }
         }
     }
 }

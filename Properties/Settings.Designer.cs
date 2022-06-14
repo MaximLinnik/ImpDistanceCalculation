@@ -202,5 +202,29 @@ namespace ImpHoleCalculation.Properties {
                 this["AutoSaveFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SetHole {
+            get {
+                return ((bool)(this["SetHole"]));
+            }
+            set {
+                this["SetHole"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SetHWID {
+            get {
+                return ((bool)(this["SetHWID"]));
+            }
+            set {
+                this["SetHWID"] = value;
+            }
+        }
     }
 }
