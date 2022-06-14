@@ -77,7 +77,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.labelNumbImpAll = new System.Windows.Forms.Label();
             this.listComboBox = new System.Windows.Forms.ComboBox();
-            this.OneHolecheckBox = new System.Windows.Forms.CheckBox();
+            this.OneRowCheckBox = new System.Windows.Forms.CheckBox();
             this.labelTypeCalc = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -189,7 +189,7 @@
             // 
             // excelButton
             // 
-            this.excelButton.Location = new System.Drawing.Point(-3, 598);
+            this.excelButton.Location = new System.Drawing.Point(15, 611);
             this.excelButton.Name = "excelButton";
             this.excelButton.Size = new System.Drawing.Size(30, 23);
             this.excelButton.TabIndex = 13;
@@ -216,7 +216,7 @@
             this.startButtonTest.TabIndex = 24;
             this.startButtonTest.Text = "Ок";
             this.startButtonTest.UseVisualStyleBackColor = true;
-            this.startButtonTest.Click += new System.EventHandler(this.Test_Button_Click_1);
+            this.startButtonTest.Click += new System.EventHandler(this.StartButton_Button_Click_1);
             // 
             // tabPage1
             // 
@@ -496,7 +496,7 @@
             // labelNumbImpAll
             // 
             this.labelNumbImpAll.AutoSize = true;
-            this.labelNumbImpAll.Location = new System.Drawing.Point(3, 620);
+            this.labelNumbImpAll.Location = new System.Drawing.Point(647, 611);
             this.labelNumbImpAll.Name = "labelNumbImpAll";
             this.labelNumbImpAll.Size = new System.Drawing.Size(130, 13);
             this.labelNumbImpAll.TabIndex = 39;
@@ -511,17 +511,17 @@
             this.listComboBox.Size = new System.Drawing.Size(97, 21);
             this.listComboBox.TabIndex = 40;
             // 
-            // OneHolecheckBox
+            // OneRowCheckBox
             // 
-            this.OneHolecheckBox.AutoSize = true;
-            this.OneHolecheckBox.Checked = true;
-            this.OneHolecheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.OneHolecheckBox.Location = new System.Drawing.Point(13, 19);
-            this.OneHolecheckBox.Name = "OneHolecheckBox";
-            this.OneHolecheckBox.Size = new System.Drawing.Size(139, 30);
-            this.OneHolecheckBox.TabIndex = 41;
-            this.OneHolecheckBox.Text = "Подсчитать импульсы\r\n из одной скважины";
-            this.OneHolecheckBox.UseVisualStyleBackColor = true;
+            this.OneRowCheckBox.AutoSize = true;
+            this.OneRowCheckBox.Checked = true;
+            this.OneRowCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.OneRowCheckBox.Location = new System.Drawing.Point(13, 19);
+            this.OneRowCheckBox.Name = "OneRowCheckBox";
+            this.OneRowCheckBox.Size = new System.Drawing.Size(168, 30);
+            this.OneRowCheckBox.TabIndex = 41;
+            this.OneRowCheckBox.Text = "Подсчитать импульсы\r\nпо одной скважине/датчику";
+            this.OneRowCheckBox.UseVisualStyleBackColor = true;
             // 
             // labelTypeCalc
             // 
@@ -536,7 +536,7 @@
             // 
             this.groupBox2.Controls.Add(this.groupBox4);
             this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Controls.Add(this.OneHolecheckBox);
+            this.groupBox2.Controls.Add(this.OneRowCheckBox);
             this.groupBox2.Controls.Add(this.labelTypeCalc);
             this.groupBox2.Controls.Add(this.listComboBox);
             this.groupBox2.Location = new System.Drawing.Point(10, 215);
@@ -649,7 +649,7 @@
             // doubleExcelCheckBox
             // 
             this.doubleExcelCheckBox.AutoSize = true;
-            this.doubleExcelCheckBox.Location = new System.Drawing.Point(50, 580);
+            this.doubleExcelCheckBox.Location = new System.Drawing.Point(317, 607);
             this.doubleExcelCheckBox.Name = "doubleExcelCheckBox";
             this.doubleExcelCheckBox.Size = new System.Drawing.Size(134, 17);
             this.doubleExcelCheckBox.TabIndex = 46;
@@ -671,7 +671,7 @@
             // autosaveCheckBox
             // 
             this.autosaveCheckBox.AutoSize = true;
-            this.autosaveCheckBox.Location = new System.Drawing.Point(33, 591);
+            this.autosaveCheckBox.Location = new System.Drawing.Point(502, 600);
             this.autosaveCheckBox.Name = "autosaveCheckBox";
             this.autosaveCheckBox.Size = new System.Drawing.Size(119, 30);
             this.autosaveCheckBox.TabIndex = 45;
@@ -723,7 +723,7 @@
             // persentageLabel
             // 
             this.persentageLabel.AutoSize = true;
-            this.persentageLabel.Location = new System.Drawing.Point(158, 607);
+            this.persentageLabel.Location = new System.Drawing.Point(157, 613);
             this.persentageLabel.Name = "persentageLabel";
             this.persentageLabel.Size = new System.Drawing.Size(15, 13);
             this.persentageLabel.TabIndex = 46;
@@ -740,7 +740,6 @@
             this.Controls.Add(this.daysRadioButton);
             this.Controls.Add(this.doubleExcelCheckBox);
             this.Controls.Add(this.hoursRadioButton);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.autosaveCheckBox);
             this.Controls.Add(this.groupBox2);
@@ -751,6 +750,7 @@
             this.Controls.Add(this.returnButton);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.AAZParametrs);
+            this.Controls.Add(this.progressBar1);
             this.Name = "MainForm";
             this.Text = "Выборка скважин";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -804,7 +804,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridView HoleListGridView;
         private System.Windows.Forms.ComboBox listComboBox;
-        private System.Windows.Forms.CheckBox OneHolecheckBox;
+        private System.Windows.Forms.CheckBox OneRowCheckBox;
         private System.Windows.Forms.Label labelTypeCalc;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
