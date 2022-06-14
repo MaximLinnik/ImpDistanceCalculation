@@ -97,6 +97,7 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.persentageLabel = new System.Windows.Forms.Label();
+            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filtrationDataGridView)).BeginInit();
@@ -409,7 +410,8 @@
             this.Column34,
             this.Column3,
             this.Column15,
-            this.Column14});
+            this.Column14,
+            this.Column16});
             this.ImpulsesGridView.Location = new System.Drawing.Point(6, 414);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
             this.ImpulsesGridView.Size = new System.Drawing.Size(490, 139);
@@ -730,6 +732,11 @@
             this.persentageLabel.Text = "%";
             this.persentageLabel.Visible = false;
             // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "Фильтрация";
+            this.Column16.Name = "Column16";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -849,5 +856,6 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.RadioButton hwidRadioButton;
         private System.Windows.Forms.RadioButton holeRadioButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
     }
 }
