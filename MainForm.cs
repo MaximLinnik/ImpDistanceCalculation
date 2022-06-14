@@ -298,9 +298,9 @@ namespace ImpHoleCalculation
                 int hole = int.Parse(listComboBox.Text);
                 if (ImpulsesGridView.Rows.Count != 1)
                     filtrationDrilling(hole, null);
-
-                countImpByHole(); //расчет количества импульсов по скважинам
                 */
+                countImpByHWID(); //расчет количества импульсов по HWID
+                
             }
             
             
@@ -1506,11 +1506,39 @@ namespace ImpHoleCalculation
             }
         }
 
+        //расчет количества импульсов по HWID
+        public void numberImpByHWID()
+        {
+            int rowCountHWID = HoleListGridView.RowCount;
+            int rowCountImp = ImpulsesGridView.RowCount;
+
+
+            for (int i = 0; i < rowCountImp - 1; i++)
+            {
+                int impHWIDName = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
+                for (int j = 0; j < rowCountHWID - 1; j++)
+                {
+                    int HWIDName = int.Parse(HoleListGridView.Rows[j].Cells[1].Value.ToString());
+                    if (impHWIDName == HWIDName)
+                    {
+                        HoleListGridView.Rows[j].Cells[2].Value = int.Parse(HoleListGridView.Rows[j].Cells[2].Value.ToString()) + 1;
+                        break;
+                    }
+                }
+            }
+        }
+
         //расчет количества ипульсов по скважинам
         public void countImpByHole()
         {
             //HoleList();
             numberImpByHoles();
+        }
+
+        //расчет количества ипульсов по hwid
+        public void countImpByHWID()
+        {
+            numberImpByHWID();
         }
 
 
@@ -1937,6 +1965,8 @@ namespace ImpHoleCalculation
 
         private void ListButton_Click(object sender, EventArgs e)
         {
+
+            oneRowParametr = false;
             if (holeRadioButton.Checked)
             {
                 holeList();
