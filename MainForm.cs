@@ -178,6 +178,8 @@ namespace ImpHoleCalculation
             else //hwid
             {
                 HWIDList();
+                if (HoleListGridView.RowCount != 0)
+                    format(HoleListGridView, 1, 1);
             }
 
             //получение импульсов (и проставление имени скважины)
@@ -187,12 +189,16 @@ namespace ImpHoleCalculation
                 {
                     getAllImpulses(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
                     sortDate(ImpulsesGridView); // сортировка выбившихся значений по дате (импульсы)
+                    if (ImpulsesGridView.RowCount != 0)
+                        format(ImpulsesGridView, 2, 7);
                     countImpByHole(ImpulsesGridView); //расчет количества импульсов по скважинам
                 }
                 else //hwid
                 {
                     getAllImpulsesHWID(); /// получение всех импульсов + удаление импульсов, если не вход в скважину (случай выбора одной скважины)
                     sortDate(ImpulsesGridView); // сортировка выбившихся значений по дате (импульсы)
+                    if (ImpulsesGridView.RowCount != 0)
+                        format(ImpulsesGridView, 2, 7);
                     countImpByHWID(ImpulsesGridView); //расчет количества импульсов по HWID
                 }
 
@@ -324,6 +330,8 @@ namespace ImpHoleCalculation
 
                     getAllImpulsesByDay(dateBefore, rightBorder); // получение импульсов по дню
                     sortDate(ImpulsesGridView); // сортировка выбившихся значений по дате (импульсы)
+                    if (ImpulsesGridView.RowCount != 0)
+                        format(ImpulsesGridView, 2, 7);
 
                     if (holeRadioButton.Checked)
                     {
@@ -392,35 +400,6 @@ namespace ImpHoleCalculation
                             {
                                 removeDublicates(filtrationDataGridView);
                                 sortDate(filtrationDataGridView);
-                            }
-
-                            if (holeRadioButton.Checked)
-                            {
-                                /*
-                                //нужно создавать доп. лист, куда писать предыдущие значения итерации фильтрации
-
-                                //if (firstTime)
-                                //{
-                                    holeList();
-                                    firstTime = false;
-                                //}
-
-                                countImpByHole(filtrationDataGridView); //расчет количества импульсов по скважинам
-                                HoleListGridView.Refresh();// обновлеие промежуточного итого по количеству имп
-                                */
-                            }
-                            else
-                            {
-                                /*
-                                if (firstTime)
-                                {
-                                    HWIDList();
-                                    firstTime = false;
-                                }
-                                countImpByHWID(filtrationDataGridView); //расчет количества импульсов по датчичкам
-                                HoleListGridView.Refresh();// обновлеие промежуточного итого по количеству имп
-                                */
-
                             }
 
                             setExcelData(typeName, filtrationDataGridView, dateBefore, rightBorder);
@@ -703,7 +682,7 @@ namespace ImpHoleCalculation
                 ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(amplitude); // амплитуда
                 ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(duration); // длительность
 
-                ImpulsesGridView.Rows[i].Cells[colCount-1].Value = 0; // чекбокс фильтрации
+                ImpulsesGridView.Rows[i].Cells[colCount-1].Value = 0; // чекбокс true hwid
 
                 /*
                 try {ImpulsesGridView.Rows[i].Cells[13].Value = double.Parse(reader[9].ToString());}
@@ -792,7 +771,7 @@ namespace ImpHoleCalculation
                 ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(amplitude); // амплитуда
                 ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(duration); // длительность
 
-                ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0; // чекбокс фильтрации
+                ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0;  // чекбокс true hwid
 
                 /*
                 try {ImpulsesGridView.Rows[i].Cells[13].Value = double.Parse(reader[9].ToString());}
@@ -881,7 +860,7 @@ namespace ImpHoleCalculation
                     ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(amplitude); // амплитуда
                     ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(duration); // длительность
 
-                    ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0; // чекбокс фильтрации
+                    ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0; // чекбокс true hwid
 
                     i++;
                 }
@@ -958,7 +937,7 @@ namespace ImpHoleCalculation
                     ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(amplitude); // амплитуда
                     ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(duration); // длительность
 
-                    ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0; // чекбокс фильтрации
+                    ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0; // чекбокс true hwid
 
                     i++;
                 }
@@ -1033,7 +1012,7 @@ namespace ImpHoleCalculation
                 ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(amplitude); // амплитуда
                 ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(duration); // длительность
 
-                ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0; // чекбокс фильтрации
+                ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0; // чекбокс true hwid
                 i++;
                 }
                 con.Close();
@@ -1678,7 +1657,7 @@ namespace ImpHoleCalculation
             int rowCount = HoleListGridView.RowCount;
             for (int i = 0; i < rowCount - 1; i++)
             {
-                int name = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
+                String name = HoleListGridView.Rows[i].Cells[1].Value.ToString();
                 listComboBox.Items.Add(name);
             }
             listComboBox.SelectedIndex = 0;
@@ -1696,6 +1675,8 @@ namespace ImpHoleCalculation
             else
             {
                 HWIDList();
+                if (HoleListGridView.RowCount != 0)
+                    format(HoleListGridView, 1, 1);
                 setToBox();
                 labelTypeCalc.Text = "Датчик:";
             }
@@ -1786,13 +1767,13 @@ namespace ImpHoleCalculation
 
 
 
-        private void format(int position, int col)
+        private void format(DataGridView datagrid, int hwid, int col)
         {
             int id = 0;
-            for (int i = position + 1; i < ImpulsesGridView.Rows.Count; i++)
+            for (int i = 0; i < datagrid.Rows.Count-1; i++)
             {
-                id = Int32.Parse(ImpulsesGridView.Rows[i - 1].Cells[col].Value.ToString());
-                ImpulsesGridView.Rows[i - 1].Cells[col].Value = string.Format("{0,3:00#}-{1,3:00#}", id / 256, id % 256);
+                id = Int32.Parse(datagrid.Rows[i].Cells[hwid].Value.ToString());
+                datagrid.Rows[i].Cells[col].Value = string.Format("{0,3:00#}-{1,3:00#}", id / 256, id % 256);
 
             }
         }

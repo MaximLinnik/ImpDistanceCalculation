@@ -64,14 +64,6 @@
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImpulsesGridView = new System.Windows.Forms.DataGridView();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImpulseHoleGridView = new System.Windows.Forms.DataGridView();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -100,6 +92,14 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.persentageLabel = new System.Windows.Forms.Label();
+            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filtrationDataGridView)).BeginInit();
@@ -425,46 +425,6 @@
             this.ImpulsesGridView.Size = new System.Drawing.Size(490, 139);
             this.ImpulsesGridView.TabIndex = 3;
             // 
-            // Column18
-            // 
-            this.Column18.HeaderText = "№";
-            this.Column18.Name = "Column18";
-            // 
-            // Column24
-            // 
-            this.Column24.HeaderText = "ID";
-            this.Column24.Name = "Column24";
-            // 
-            // Column13
-            // 
-            this.Column13.HeaderText = "HWID";
-            this.Column13.Name = "Column13";
-            // 
-            // Column34
-            // 
-            this.Column34.HeaderText = "Дата (импульс)";
-            this.Column34.Name = "Column34";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Имя скважины";
-            this.Column3.Name = "Column3";
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "Амплитуда";
-            this.Column15.Name = "Column15";
-            // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "Длительность";
-            this.Column14.Name = "Column14";
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "Фильтрация";
-            this.Column16.Name = "Column16";
-            // 
             // ImpulseHoleGridView
             // 
             this.ImpulseHoleGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -757,6 +717,46 @@
             this.persentageLabel.Text = "%";
             this.persentageLabel.Visible = false;
             // 
+            // Column18
+            // 
+            this.Column18.HeaderText = "№";
+            this.Column18.Name = "Column18";
+            // 
+            // Column24
+            // 
+            this.Column24.HeaderText = "ID";
+            this.Column24.Name = "Column24";
+            // 
+            // Column13
+            // 
+            this.Column13.HeaderText = "HWID";
+            this.Column13.Name = "Column13";
+            // 
+            // Column34
+            // 
+            this.Column34.HeaderText = "Дата (импульс)";
+            this.Column34.Name = "Column34";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Имя скважины";
+            this.Column3.Name = "Column3";
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "Амплитуда";
+            this.Column15.Name = "Column15";
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "Длительность";
+            this.Column14.Name = "Column14";
+            // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "HWID (прав имя)";
+            this.Column16.Name = "Column16";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -858,18 +858,10 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.Label persentageLabel;
         private System.Windows.Forms.DataGridView filtrationDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column24;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column34;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
         private System.Windows.Forms.Button listButton;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.RadioButton hwidRadioButton;
         private System.Windows.Forms.RadioButton holeRadioButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
         private System.Windows.Forms.CheckBox filtrationCheckBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
@@ -879,5 +871,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column24;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column34;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
     }
 }
