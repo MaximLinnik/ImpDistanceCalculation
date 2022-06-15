@@ -724,7 +724,8 @@ namespace ImpHoleCalculation
 
             if (hwidRadioButton.Checked && OneRowCheckBox.Checked)
             {
-                String hwid = " AND Impulses.HWID =" + listComboBox.Text;
+                //String hwid = " AND Impulses.HWID =" + listComboBox.Text;
+                String hwid = " AND Impulses.HWID =" + reverseFormat(listComboBox.Text);
                 query += hwid;
             }
             
@@ -904,7 +905,7 @@ namespace ImpHoleCalculation
 
                 if (hwidRadioButton.Checked && OneRowCheckBox.Checked)
                 {
-                    String hwid = " AND Impulses.HWID =" + listComboBox.Text;
+                    String hwid = " AND Impulses.HWID =" + reverseFormat(listComboBox.Text);
                     query += hwid;
                 }
 
@@ -1776,6 +1777,15 @@ namespace ImpHoleCalculation
                 datagrid.Rows[i].Cells[col].Value = string.Format("{0,3:00#}-{1,3:00#}", id / 256, id % 256);
 
             }
+        }
+
+        public double reverseFormat(String hwidText)
+        {
+            double hwid = 0;
+            String res1 = hwidText.Substring(0,3);
+            String res2 = hwidText.Substring(hwidText.Length - 3, 3);
+            hwid = double.Parse(res1) * 256 + double.Parse(res2);
+            return hwid;
         }
 
         //вывод импульсов (часы)
