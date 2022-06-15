@@ -165,6 +165,7 @@ namespace ImpHoleCalculation
             }
             else oneRowParametr = false; // для того, чтобы не удалялись все скважины при запуске
 
+            //получение списка скважин/hwid
             if (holeRadioButton.Checked) // скважина
             {
                 getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
@@ -175,6 +176,7 @@ namespace ImpHoleCalculation
                 HWIDList();
             }
 
+            //получение импульсов (и проставление имени скважины)
             if (!autoFolderCheckBox.Checked)
             {
                 if (holeRadioButton.Checked)  // скважина
@@ -190,7 +192,7 @@ namespace ImpHoleCalculation
                     countImpByHWID(); //расчет количества импульсов по HWID
                 }
 
-                //фильтрация
+                //фильтрация (случай с полной датой)
                 // 2 - hwid
                 // 4 - скважины
                 int rowCounter = 0;// для того, чтобы каждый раз не проходить отсорт табл сначала
@@ -264,7 +266,10 @@ namespace ImpHoleCalculation
             //setImpHoleData(); // проставление имен скважин к импульсам (устарело)
 
             //if(oneHoleParametr) сlearImpulsesByHole();//очистка таблицы импульсов, чтобы она содержала только строки с нужной скважиной (не нужно)
-
+            
+            //фильтрация (случай с постоянным сохранением)
+            // 2 - hwid
+            // 4 - скважины
             if (autoFolderCheckBox.Checked)
             {
                 filtrationDataGridView.Rows.Clear();
@@ -296,13 +301,21 @@ namespace ImpHoleCalculation
                     HoleListGridView.Refresh();// обновлеие промежуточного итого по количеству имп
                     //плюсовать!!!
 
+                    List<Impulse> prevElements = new List<Impulse>();// лист для последних импульсов с предыдущ итерации
+                    double lastHwid = 0,  lastHole = 0;
                     for (int i = 0; i < rowCount - 1; i++)
                     {
                         holeName = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
+                        //lastRow = prevElements
                         if (HoleListGridView.Rows[i].Cells[2].Value.ToString() == "0") continue; // пропуск пустой скважины
 
                         //lastRow = filtrationDrilling(holeName, lastRow); //фильтрация
 
+                        try { lastHwid = double.Parse(lastRow.Cells[2].Value.ToString()); }
+                        catch { lastHwid = 0; }
+                        try { lastHole = double.Parse(lastRow.Cells[4].Value.ToString()); }
+                        catch { lastHole = 0; }
+                        prevElements.Add(new Impulse(0, lastHwid, 0, lastHole, 0, 0, lastRow));
 
                         setExcelData(holeName, dateBefore, rightBorder);
                         filenameHours = folderSaveHours(dateBefore, holeName);
@@ -1123,6 +1136,7 @@ namespace ImpHoleCalculation
                             //ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 1; // чек того, что импульс фильтрован
                             ImpulsesGridView.Rows.RemoveAt(i);
                             rowCount--;
+                            i--;
                         }
                         else if (firstApprove)
                         {
@@ -1135,6 +1149,7 @@ namespace ImpHoleCalculation
                             //ImpulsesGridView.Rows[checkFirst].Cells[colCount - 1].Value = 1; // чек того, что импульс фильтрован
                             ImpulsesGridView.Rows.RemoveAt(checkFirst);
                             rowCount--;
+                            i--;
                         }
                         else
                         {
@@ -1186,6 +1201,7 @@ namespace ImpHoleCalculation
                                 addToFiltrationGrid(ImpulsesGridView.Rows[j]);
                                 ImpulsesGridView.Rows.RemoveAt(j);
                                 rowCountImp--;
+                                j--;
                             }
                         }
                     }

@@ -76,6 +76,7 @@
       <DependentUpon>HoleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ImpDifference.cs" />
+    <Compile Include="Impulse.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
