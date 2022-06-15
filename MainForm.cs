@@ -327,14 +327,18 @@ namespace ImpHoleCalculation
                     filtrationDataGridView.Rows.Clear();
 
                     rightBorder = dateBefore.AddDays(1);
+                    rightBorder = new DateTime(rightBorder.Year, rightBorder.Month, rightBorder.Day, 0, 0, 0);
+
                     if (rightBorder > dateAfter)// когда присутствуют часы/минуты в дате
                     {
                         rightBorder = dateAfter;
                     }
+                    /*
                     else
                     {
                         rightBorder = new DateTime(rightBorder.Year, rightBorder.Month, rightBorder.Day, 0, 0, 0);
                     }
+                    */
  
                       
                     if (holeRadioButton.Checked)
