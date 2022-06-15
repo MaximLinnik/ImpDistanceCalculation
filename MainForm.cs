@@ -119,7 +119,7 @@ namespace ImpHoleCalculation
             labelNumbImpAll.Text = count.ToString();
             */
 
-            int holeName = 0;
+            double typeName = 0;
             SaveFileDialog saveDialog = null;
             SaveFileDialog saveDialog2 = null;
 
@@ -276,11 +276,12 @@ namespace ImpHoleCalculation
 
                 createDirectories(); //предварительное создание папок
                 int rowCount = HoleListGridView.Rows.Count;
-                DataGridViewRow lastRow = null;
+                Impulse lastRow = null;
                 DateTime dateBefore = DateTime.Parse(dateBeforeText.Text);
                 DateTime dateAfter = DateTime.Parse(dateAfterText.Text);
                 DateTime rightBorder;
 
+                List<Impulse> prevElements = new List<Impulse>();// лист для последних импульсов с предыдущ итерации
                 while (dateBefore < dateAfter)
                 {
                     ImpulsesGridView.Rows.Clear();
@@ -301,31 +302,61 @@ namespace ImpHoleCalculation
                     HoleListGridView.Refresh();// обновлеие промежуточного итого по количеству имп
                     //плюсовать!!!
 
-                    List<Impulse> prevElements = new List<Impulse>();// лист для последних импульсов с предыдущ итерации
                     double lastHwid = 0,  lastHole = 0;
+                    int count = 0; //счетчик для прохождения по таблице
                     for (int i = 0; i < rowCount - 1; i++)
                     {
-                        holeName = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
-                        //lastRow = prevElements
+                        typeName = int.Parse(HoleListGridView.Rows[i].Cells[1].Value.ToString());
+                        
                         if (HoleListGridView.Rows[i].Cells[2].Value.ToString() == "0") continue; // пропуск пустой скважины
 
-                        //lastRow = filtrationDrilling(holeName, lastRow); //фильтрация
+                        if (holeRadioButton.Checked)
+                        {
+                            lastRow = prevElements.Find(x => x.holeName == typeName);
+                            if(lastRow == null)
+                            {
+                                lastRow = new Impulse(0, 0, default, 0, 0, 0, null);
+                                lastRow.row = filtrationDrilling(typeName, null, 4, ref count); //фильтрация
+                            }
+                            else
+                            {
+                                lastRow.row = filtrationDrilling(typeName, lastRow.row, 4, ref count); //фильтрация
+                            }
+                        }
+                        else
+                        {
+                            lastRow = prevElements.Find(x => x.holeName == typeName);
+                            if (lastRow == null)
+                            {
+                                lastRow = new Impulse(0, 0, default, 0, 0, 0, null);
+                                lastRow.row = filtrationDrilling(typeName, null, 2, ref count); //фильтрация
+                            }
+                            else
+                            {
+                                lastRow.row = filtrationDrilling(typeName, lastRow.row, 2, ref count); //фильтрация
+                            }
+                        }
 
-                        try { lastHwid = double.Parse(lastRow.Cells[2].Value.ToString()); }
-                        catch { lastHwid = 0; }
-                        try { lastHole = double.Parse(lastRow.Cells[4].Value.ToString()); }
-                        catch { lastHole = 0; }
-                        prevElements.Add(new Impulse(0, lastHwid, 0, lastHole, 0, 0, lastRow));
+                        if (lastRow.row != null)
+                        {
+                            prevElements.Remove(lastRow);
+                            try { lastHwid = double.Parse(lastRow.row.Cells[2].Value.ToString()); }
+                            catch { lastHwid = 0; }
+                            try { lastHole = double.Parse(lastRow.row.Cells[4].Value.ToString()); }
+                            catch { lastHole = 0; }
+                            prevElements.Add(new Impulse(0, lastHwid, default, lastHole, 0, 0, lastRow.row));
+                        }
 
-                        setExcelData(holeName, dateBefore, rightBorder);
-                        filenameHours = folderSaveHours(dateBefore, holeName);
 
-                        excel(holeName, ImpulseHoleGridView, filenameHours);
+                        setExcelData(typeName, dateBefore, rightBorder);
+                        filenameHours = folderSaveHours(dateBefore, typeName);
+
+                        excel(typeName, ImpulseHoleGridView, filenameHours);
 
                         //if (doubleExcelCheckBox.Checked)
                         //{
-                            filenameDays = folderSaveDays(dateBefore, holeName);
-                            excel(holeName, ImpulseHoleGridView2, filenameDays);
+                            filenameDays = folderSaveDays(dateBefore, typeName);
+                            excel(typeName, ImpulseHoleGridView2, filenameDays);
                         //}
                     }
                     dateBefore = rightBorder;
@@ -487,7 +518,7 @@ namespace ImpHoleCalculation
         }
 
         //получение имени файлов, если выбрано автосохранение в папку (по часам)
-        public string folderSaveHours(DateTime dateB, int hole)
+        public string folderSaveHours(DateTime dateB, double hole)
         {
             string res = "";
 
@@ -505,7 +536,7 @@ namespace ImpHoleCalculation
         }
 
         //получение имени файлов, если выбрано автосохранение в папку (по дням)
-        public string folderSaveDays(DateTime dateB, int hole)
+        public string folderSaveDays(DateTime dateB, double hole)
         {
             string res = "";
 
@@ -1056,7 +1087,7 @@ namespace ImpHoleCalculation
 
         //фильтрация бурения из 2х этапов (скважина)
 
-        public DataGridViewRow filtrationDrilling(int name, DataGridViewRow lastRow, int position, ref int rowCounter)
+        public DataGridViewRow filtrationDrilling(double name, DataGridViewRow lastRow, int position, ref int rowCounter)
         {
             DataGridViewRow row = filtrationDrillingFirstStep(name, lastRow, position, ref rowCounter);
             filtrationDrillingSecondStep(name, position, ref rowCounter);
@@ -1069,7 +1100,7 @@ namespace ImpHoleCalculation
         }
 
         // первый этап фильтрации бурения - проверка соответсвия по парам (скважины/hwid)
-        public DataGridViewRow filtrationDrillingFirstStep(int name, DataGridViewRow lastRow, int position, ref int rowCounter)
+        public DataGridViewRow filtrationDrillingFirstStep(double name, DataGridViewRow lastRow, int position, ref int rowCounter)
         {
             DataGridViewRow row = null, firstImp = null, secondImp = null;
             int countImp = 0, i = 0, checkFirst = 0;
@@ -1084,7 +1115,7 @@ namespace ImpHoleCalculation
 
             while (i < rowCount - 1)
             {
-                int type = int.Parse(ImpulsesGridView.Rows[i].Cells[position].Value.ToString());
+                double type = double.Parse(ImpulsesGridView.Rows[i].Cells[position].Value.ToString());
                 if (type == name)
                 {
                     switch (countImp)
@@ -1172,7 +1203,7 @@ namespace ImpHoleCalculation
 
 
         // второй этап фильтрации бурения - добавление не попавших импульсов по окресностям (скважина/hwid)
-        public void filtrationDrillingSecondStep(int name, int position, ref int rowCounter)
+        public void filtrationDrillingSecondStep(double name, int position, ref int rowCounter)
         {
             DataGridViewRow row = null, firstImp = null, secondImp = null;
             int rowCountFilterImp = filtrationDataGridView.Rows.Count;
@@ -1180,7 +1211,7 @@ namespace ImpHoleCalculation
             //взять первый опорный из фильтр табл и чекать по 3 сек. Если одинаковый, не записывать, также убрать дубли
             for (int i = rowCounter; i < rowCountFilterImp - 1; i++)
             {
-                int typeFilter = int.Parse(filtrationDataGridView.Rows[i].Cells[position].Value.ToString());
+                double typeFilter = double.Parse(filtrationDataGridView.Rows[i].Cells[position].Value.ToString());
                 DateTime dateFilter = DateTime.Parse(filtrationDataGridView.Rows[i].Cells[3].Value.ToString());
 
                 if (typeFilter == name)
@@ -1773,7 +1804,7 @@ namespace ImpHoleCalculation
         }
 
         //разбиение импульсов по скважине по часам (по формуле без перебора)
-        public void countImpulsesHoursFormula(DataGridView dataGridView, int hole, DateTime dateBefore, DateTime dateAfter)
+        public void countImpulsesHoursFormula(DataGridView dataGridView, double hole, DateTime dateBefore, DateTime dateAfter)
         {
             int rowCountImp = ImpulsesGridView.Rows.Count;
             int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
@@ -1814,7 +1845,7 @@ namespace ImpHoleCalculation
                 int hour = dateImp.Hour - dateFirst.Hour;
                 */
 
-                int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
+                double holeName = double.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
                 if (holeName == hole && checkDate)
                 {
                     double difference = (dateImp - dateFirst).TotalHours;
@@ -1826,7 +1857,7 @@ namespace ImpHoleCalculation
         }
 
         //разбиение импульсов по скважине по дням (по формуле без перебора)
-        public void countImpulsesDaysFormula(DataGridView dataGridView, int hole, DateTime dateBefore, DateTime dateAfter)
+        public void countImpulsesDaysFormula(DataGridView dataGridView, double hole, DateTime dateBefore, DateTime dateAfter)
         {
             int rowCountImp = ImpulsesGridView.Rows.Count;
             int rowCountImpHole = ImpulseHoleGridView.Rows.Count;
@@ -1836,7 +1867,7 @@ namespace ImpHoleCalculation
             //поиск первой даты для скважины
             for (int i = 0; i < rowCountImp - 1; i++)
             {
-                int holeName = int.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
+                double holeName = double.Parse(ImpulsesGridView.Rows[i].Cells[4].Value.ToString());
                 dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
                 if (holeName == hole && dateBefore < dateImp)
                 {
@@ -1868,7 +1899,7 @@ namespace ImpHoleCalculation
             }
         }
 
-        public void setExcelData(int hole, DateTime dateLeft, DateTime dateRight)
+        public void setExcelData(double hole, DateTime dateLeft, DateTime dateRight)
         {
             ImpulseHoleGridView.Rows.Clear();
 
@@ -1899,7 +1930,7 @@ namespace ImpHoleCalculation
             //countImpulses(holeName);
         }
 
-        public void excel(int holeName, DataGridView dataGridView, String filename)
+        public void excel(double holeName, DataGridView dataGridView, String filename)
         {
             Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
