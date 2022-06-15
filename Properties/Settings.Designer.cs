@@ -226,5 +226,17 @@ namespace ImpHoleCalculation.Properties {
                 this["SetHWID"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Filtration {
+            get {
+                return ((bool)(this["Filtration"]));
+            }
+            set {
+                this["Filtration"] = value;
+            }
+        }
     }
 }
