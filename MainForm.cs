@@ -1624,7 +1624,7 @@ namespace ImpHoleCalculation
 
             if (oneRowParametr) // булева переменная, проставляемая по чекбоксу
             {
-                String hwid = "where Sensors.HWID =" + listComboBox.Text;
+                String hwid = "where Sensors.HWID =" + reverseFormat(listComboBox.Text);
                 query += hwid;
             }
 
@@ -1740,10 +1740,10 @@ namespace ImpHoleCalculation
 
             for (int i = 0; i < rowCountImp - 1; i++)
             {
-                int impHWIDName = int.Parse(dataGridView.Rows[i].Cells[2].Value.ToString());
+                String impHWIDName = dataGridView.Rows[i].Cells[7].Value.ToString();
                 for (int j = 0; j < rowCountHWID - 1; j++)
                 {
-                    int HWIDName = int.Parse(HoleListGridView.Rows[j].Cells[1].Value.ToString());
+                    String HWIDName = HoleListGridView.Rows[j].Cells[1].Value.ToString();
                     if (impHWIDName == HWIDName)
                     {
                         HoleListGridView.Rows[j].Cells[2].Value = int.Parse(HoleListGridView.Rows[j].Cells[2].Value.ToString()) + 1;
