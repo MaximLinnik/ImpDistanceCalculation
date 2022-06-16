@@ -40,6 +40,14 @@
             this.startButtonTest = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.filtrationDataGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImpulseHoleGridView2 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,6 +64,14 @@
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImpulsesGridView = new System.Windows.Forms.DataGridView();
+            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ImpulseHoleGridView = new System.Windows.Forms.DataGridView();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -84,22 +100,7 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.persentageLabel = new System.Windows.Forms.Label();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.progressLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filtrationDataGridView)).BeginInit();
@@ -192,7 +193,7 @@
             // 
             // excelButton
             // 
-            this.excelButton.Location = new System.Drawing.Point(15, 611);
+            this.excelButton.Location = new System.Drawing.Point(140, 606);
             this.excelButton.Name = "excelButton";
             this.excelButton.Size = new System.Drawing.Size(30, 23);
             this.excelButton.TabIndex = 13;
@@ -255,6 +256,46 @@
             this.filtrationDataGridView.Name = "filtrationDataGridView";
             this.filtrationDataGridView.Size = new System.Drawing.Size(268, 139);
             this.filtrationDataGridView.TabIndex = 46;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "№";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "HWID";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "Дата (импульс)";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "Имя скважины";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.HeaderText = "Амплитуда";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.HeaderText = "Длительность";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            // 
+            // Column17
+            // 
+            this.Column17.HeaderText = "HWID (прав имя)";
+            this.Column17.Name = "Column17";
             // 
             // ImpulseHoleGridView2
             // 
@@ -384,6 +425,46 @@
             this.ImpulsesGridView.Name = "ImpulsesGridView";
             this.ImpulsesGridView.Size = new System.Drawing.Size(490, 139);
             this.ImpulsesGridView.TabIndex = 3;
+            // 
+            // Column18
+            // 
+            this.Column18.HeaderText = "№";
+            this.Column18.Name = "Column18";
+            // 
+            // Column24
+            // 
+            this.Column24.HeaderText = "ID";
+            this.Column24.Name = "Column24";
+            // 
+            // Column13
+            // 
+            this.Column13.HeaderText = "HWID";
+            this.Column13.Name = "Column13";
+            // 
+            // Column34
+            // 
+            this.Column34.HeaderText = "Дата (импульс)";
+            this.Column34.Name = "Column34";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Имя скважины";
+            this.Column3.Name = "Column3";
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "Амплитуда";
+            this.Column15.Name = "Column15";
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "Длительность";
+            this.Column14.Name = "Column14";
+            // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "HWID (прав имя)";
+            this.Column16.Name = "Column16";
             // 
             // ImpulseHoleGridView
             // 
@@ -670,92 +751,21 @@
             // persentageLabel
             // 
             this.persentageLabel.AutoSize = true;
-            this.persentageLabel.Location = new System.Drawing.Point(157, 613);
+            this.persentageLabel.Location = new System.Drawing.Point(183, 577);
             this.persentageLabel.Name = "persentageLabel";
             this.persentageLabel.Size = new System.Drawing.Size(15, 13);
             this.persentageLabel.TabIndex = 46;
             this.persentageLabel.Text = "%";
             this.persentageLabel.Visible = false;
             // 
-            // Column18
+            // progressLabel
             // 
-            this.Column18.HeaderText = "№";
-            this.Column18.Name = "Column18";
-            // 
-            // Column24
-            // 
-            this.Column24.HeaderText = "ID";
-            this.Column24.Name = "Column24";
-            // 
-            // Column13
-            // 
-            this.Column13.HeaderText = "HWID";
-            this.Column13.Name = "Column13";
-            // 
-            // Column34
-            // 
-            this.Column34.HeaderText = "Дата (импульс)";
-            this.Column34.Name = "Column34";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Имя скважины";
-            this.Column3.Name = "Column3";
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "Амплитуда";
-            this.Column15.Name = "Column15";
-            // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "Длительность";
-            this.Column14.Name = "Column14";
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "HWID (прав имя)";
-            this.Column16.Name = "Column16";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "№";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "HWID";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "Дата (импульс)";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.HeaderText = "Имя скважины";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.HeaderText = "Амплитуда";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.HeaderText = "Длительность";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "HWID (прав имя)";
-            this.Column17.Name = "Column17";
+            this.progressLabel.AutoSize = true;
+            this.progressLabel.Location = new System.Drawing.Point(7, 611);
+            this.progressLabel.Name = "progressLabel";
+            this.progressLabel.Size = new System.Drawing.Size(81, 13);
+            this.progressLabel.TabIndex = 47;
+            this.progressLabel.Text = "Текущая дата:";
             // 
             // MainForm
             // 
@@ -763,6 +773,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1221, 638);
+            this.Controls.Add(this.progressLabel);
             this.Controls.Add(this.persentageLabel);
             this.Controls.Add(this.daysRadioButton);
             this.Controls.Add(this.doubleExcelCheckBox);
@@ -879,5 +890,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
+        private System.Windows.Forms.Label progressLabel;
     }
 }

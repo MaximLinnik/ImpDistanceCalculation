@@ -327,6 +327,8 @@ namespace ImpHoleCalculation
                 while (dateBefore < dateAfter)
                 {
                     ImpulsesGridView.Rows.Clear();
+                    progressLabel.Text = "Текущая дата: " + dateBefore.ToString("yyyy-MM-dd"); // прогресс лейбл
+                    progressLabel.Refresh();
                     //filtrationDataGridView.Rows.Clear();
                     if (filtrationDataGridView.RowCount != 1)
                     {
@@ -566,7 +568,8 @@ namespace ImpHoleCalculation
                 }
             }
             */
-
+            progressLabel.Text = "Закончено"; // прогресс лейбл
+            progressLabel.Refresh();
             MessageBox.Show("Работа завершена");
 
             //setHoleDateRow();
@@ -2359,7 +2362,7 @@ namespace ImpHoleCalculation
             
 
             setList(); // вывод заранее списка скважин при загрузке формы
-
+            progressLabel.Text = "";
         }
 
         private void HoleListGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -2436,6 +2439,7 @@ namespace ImpHoleCalculation
         private void StartButton_Button_Click_1(object sender, EventArgs e)
         {
             oneRowParametr = false;
+            progressLabel.Text = "";
             /*
             if (holeRadioButton.Checked)
             {
