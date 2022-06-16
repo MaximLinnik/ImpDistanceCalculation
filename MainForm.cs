@@ -239,6 +239,7 @@ namespace ImpHoleCalculation
                                     sortDate(filtrationDataGridView);
                                 }
                                 HWIDList();
+
                                 if (HoleListGridView.RowCount != 0)
                                     format(HoleListGridView, 1, 1);
                                 countImpByHWID(filtrationDataGridView); //расчет количества импульсов по датчику
@@ -326,7 +327,12 @@ namespace ImpHoleCalculation
                 while (dateBefore < dateAfter)
                 {
                     ImpulsesGridView.Rows.Clear();
-                    filtrationDataGridView.Rows.Clear();
+                    //filtrationDataGridView.Rows.Clear();
+                    if (filtrationDataGridView.RowCount != 1)
+                    {
+                        removeImpulseBySec(3, dateBefore);
+                    }
+
 
                     rightBorder = dateBefore.AddDays(1);
                     rightBorder = new DateTime(rightBorder.Year, rightBorder.Month, rightBorder.Day, 0, 0, 0);
@@ -351,6 +357,8 @@ namespace ImpHoleCalculation
                             format(ImpulsesGridView, 2, 7);
 
                         holeList();
+                        if (ImpulsesGridView.RowCount != 0)
+                            format(ImpulsesGridView, 2, 7);
                         countImpByHole(ImpulsesGridView); //расчет количества импульсов по скважинам
                         HoleListGridView.Refresh();// обновлеие промежуточного итого по количеству имп
                         if(firstTimeList && !filtrationCheckBox.Checked)
@@ -392,8 +400,10 @@ namespace ImpHoleCalculation
                         {
                             if (holeRadioButton.Checked)//скважина
                             {
+                                
 
                                 lastRow = prevElements.Find(x => x.holeName == typeName);
+                                prevElements.Remove(lastRow);
                                 if (lastRow == null)
                                 {
                                     lastRow = new Impulse(0, "0", default, "0", 0, 0, null);
@@ -411,6 +421,7 @@ namespace ImpHoleCalculation
                                 prevElements.Remove(lastRow);
                                 if (lastRow == null)
                                 {
+                                    
                                     lastRow = new Impulse(0, "0", default, "0", 0, 0, null);
                                     lastRow.row = filtrationDrilling(typeName, null, 7, ref count); //фильтрация
                                 }
@@ -423,7 +434,7 @@ namespace ImpHoleCalculation
                             if (lastRow.row != null)
                             {
 
-                                try { lastHwid = lastRow.row.Cells[2].Value.ToString(); }
+                                try { lastHwid = lastRow.row.Cells[7].Value.ToString(); }
                                 catch { lastHwid = "0"; }
                                 try { lastHole = lastRow.row.Cells[4].Value.ToString(); }
                                 catch { lastHole = "0"; }
@@ -436,6 +447,7 @@ namespace ImpHoleCalculation
                                 sortDate(filtrationDataGridView);
                             }
 
+                            removeImpulseByDate(dateBefore);
 
                             if (holeRadioButton.Checked) //скважина
                             {
@@ -507,13 +519,13 @@ namespace ImpHoleCalculation
                         else
                         {
                             
-                            if (firstTime)
-                            {
+                            //if (firstTime)
+                            //{
                                 HWIDList();
                                 if (HoleListGridView.RowCount != 0)
                                     format(HoleListGridView, 1, 1);
                                 firstTime = false;
-                            }
+                            //}
                             countImpByHWID(filtrationDataGridView); //расчет количества импульсов по датчичкам
                             HoleListGridView.Refresh();// обновлеие промежуточного итого по количеству имп
                             if (firstTimeList && filtrationCheckBox.Checked)
@@ -564,6 +576,40 @@ namespace ImpHoleCalculation
             setImpulses();
             numberOfImpulses();
             */
+        }
+
+        //удаление из таблицы значений больше 3 сек от начала даты
+        public void removeImpulseBySec(double sec, DateTime date)
+        {
+            int rowCount = filtrationDataGridView.RowCount;
+            for(int i = 0; i < rowCount - 1; i++)
+            {
+                DateTime dateImp = DateTime.Parse(filtrationDataGridView.Rows[i].Cells[3].Value.ToString());
+                double difference = (date - dateImp).TotalSeconds;
+                if (difference > sec)
+                {
+                    filtrationDataGridView.Rows.RemoveAt(i);
+                    i--;
+                    rowCount--;
+                }
+            }
+        }
+
+        //удаление из отфильтр табл значений с предыдущей даты перед записью
+        public void removeImpulseByDate(DateTime date)
+        {
+            int rowCount = filtrationDataGridView.RowCount;
+            for (int i = 0; i < rowCount - 1; i++)
+            {
+                DateTime dateImp = DateTime.Parse(filtrationDataGridView.Rows[i].Cells[3].Value.ToString());
+                
+                if (dateImp < date)
+                {
+                    filtrationDataGridView.Rows.RemoveAt(i);
+                    i--;
+                    rowCount--;
+                }
+            }
         }
 
         //сохранение значений первой итерации при расчете
@@ -1296,11 +1342,13 @@ namespace ImpHoleCalculation
             int countImp = 0, i = 0, checkFirst = 0;
             int rowCount = ImpulsesGridView.Rows.Count;
             bool firstApprove = false;// добавить в отфильтр табл. первый, если на предыдущей паре он прошел
+            bool firstExist = false;
             if (lastRow != null)// если не было последней строчки из предыдущей пачки расчетов
             {
                 countImp = 1;
                 firstImp = lastRow;
-                
+                firstExist = true;
+
             }
 
             while (i < rowCount - 1)
@@ -1339,7 +1387,7 @@ namespace ImpHoleCalculation
                         if (amplFirst > amplSecond)
                             deltaAmpl = amplFirst / amplSecond;
                         else
-                            deltaAmpl = amplSecond/ amplFirst;
+                            deltaAmpl = amplSecond / amplFirst;
 
                         double deltaDur = 0;
                         deltaDur = (dateSecond - dateFirst).TotalSeconds + durationFirst;
@@ -1348,16 +1396,29 @@ namespace ImpHoleCalculation
                         {
                             // добавл в отфильтр табл
                             //filtrationDataGridView.Rows.Add(firstImp);
-                            addToFiltrationGrid(firstImp);
-                            countImp = 1;//так как первый уже найден
-                            firstImp = secondImp;
-                            firstApprove = true;
+                            
+
 
                             int colCount = ImpulsesGridView.Columns.Count;
                             //ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 1; // чек того, что импульс фильтрован
-                            ImpulsesGridView.Rows.RemoveAt(i);
-                            rowCount--;
-                            i--;
+
+                            if (!firstExist)
+                            {
+                                addToFiltrationGrid(firstImp);
+                                ImpulsesGridView.Rows.RemoveAt(i);
+                                rowCount--;
+                                i--;
+                            }
+                            else
+                            {
+                                addToFiltrationGrid(firstImp);
+                                addToFiltrationGrid(secondImp);
+                                firstExist = false ;
+                                i++;
+                            }
+                            countImp = 1;//так как первый уже найден
+                            firstImp = secondImp;
+                            firstApprove = true;
                         }
                         else if (firstApprove)
                         {
@@ -1382,9 +1443,10 @@ namespace ImpHoleCalculation
                 }
                 i++;
             }
-            if (secondImp!=null)
+            if (secondImp != null)
             {
                 row = secondImp;
+                addToFiltrationGrid(secondImp);
             }
             if (row == null) row = lastRow; // для случая, когда в текущей итерации было ничего не найдено
             rowCounter += filtrationDataGridView.RowCount;
