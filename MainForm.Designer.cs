@@ -252,10 +252,11 @@
             this.dataGridViewTextBoxColumn9,
             this.dataGridViewTextBoxColumn10,
             this.Column17});
-            this.filtrationDataGridView.Location = new System.Drawing.Point(727, 404);
+            this.filtrationDataGridView.Location = new System.Drawing.Point(727, 533);
             this.filtrationDataGridView.Name = "filtrationDataGridView";
-            this.filtrationDataGridView.Size = new System.Drawing.Size(268, 139);
+            this.filtrationDataGridView.Size = new System.Drawing.Size(268, 10);
             this.filtrationDataGridView.TabIndex = 46;
+            this.filtrationDataGridView.Visible = false;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -340,7 +341,7 @@
             this.Column12});
             this.HoleListGridView.Location = new System.Drawing.Point(6, 6);
             this.HoleListGridView.Name = "HoleListGridView";
-            this.HoleListGridView.Size = new System.Drawing.Size(989, 388);
+            this.HoleListGridView.Size = new System.Drawing.Size(989, 522);
             this.HoleListGridView.TabIndex = 44;
             this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
             // 
@@ -421,10 +422,11 @@
             this.Column15,
             this.Column14,
             this.Column16});
-            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 414);
+            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 543);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
-            this.ImpulsesGridView.Size = new System.Drawing.Size(490, 139);
+            this.ImpulsesGridView.Size = new System.Drawing.Size(490, 10);
             this.ImpulsesGridView.TabIndex = 3;
+            this.ImpulsesGridView.Visible = false;
             // 
             // Column18
             // 
@@ -728,6 +730,7 @@
             this.button1.TabIndex = 44;
             this.button1.Text = "Тест";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // progressBar1
