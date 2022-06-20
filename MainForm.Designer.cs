@@ -101,6 +101,7 @@
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.persentageLabel = new System.Windows.Forms.Label();
             this.progressLabel = new System.Windows.Forms.Label();
+            this.excelMergeButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filtrationDataGridView)).BeginInit();
@@ -193,7 +194,7 @@
             // 
             // excelButton
             // 
-            this.excelButton.Location = new System.Drawing.Point(140, 606);
+            this.excelButton.Location = new System.Drawing.Point(824, 607);
             this.excelButton.Name = "excelButton";
             this.excelButton.Size = new System.Drawing.Size(30, 23);
             this.excelButton.TabIndex = 13;
@@ -724,9 +725,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(97, 574);
+            this.button1.Location = new System.Drawing.Point(276, 603);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(35, 23);
             this.button1.TabIndex = 44;
             this.button1.Text = "Тест";
             this.button1.UseVisualStyleBackColor = true;
@@ -770,12 +771,23 @@
             this.progressLabel.TabIndex = 47;
             this.progressLabel.Text = "Текущая дата:";
             // 
+            // excelMergeButton
+            // 
+            this.excelMergeButton.Location = new System.Drawing.Point(87, 574);
+            this.excelMergeButton.Name = "excelMergeButton";
+            this.excelMergeButton.Size = new System.Drawing.Size(90, 40);
+            this.excelMergeButton.TabIndex = 48;
+            this.excelMergeButton.Text = "Объединение\r\nфайлов";
+            this.excelMergeButton.UseVisualStyleBackColor = true;
+            this.excelMergeButton.Click += new System.EventHandler(this.ExcelMergeButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1221, 638);
+            this.Controls.Add(this.excelMergeButton);
             this.Controls.Add(this.progressLabel);
             this.Controls.Add(this.persentageLabel);
             this.Controls.Add(this.daysRadioButton);
@@ -894,5 +906,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
         private System.Windows.Forms.Label progressLabel;
+        private System.Windows.Forms.Button excelMergeButton;
     }
 }
