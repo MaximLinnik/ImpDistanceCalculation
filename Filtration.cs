@@ -59,7 +59,7 @@ namespace ImpHoleCalculation
                         double secNext = TimeSpan.FromTicks(dateNext.Ticks).TotalSeconds;
                         double delta1 = 0;
                         double delta2 = 0;
-                        if (delta1 > (300 * 10 ^ (-3)) && delta2 > (300 * 10 ^ (-3)))
+                        if (delta1 > (300 * 0.001) && delta2 > (300 * 0.001))
                         {
                             // добавл в отфильтр табл
                             filtrationDataGridView.Rows.Add(rowImp);
@@ -123,7 +123,27 @@ namespace ImpHoleCalculation
                             break;
                         case 1:
                             secondImp = ImpulsesGridView.Rows[i];
-                            countImp++;
+                            double deltaDur = 0;
+                            
+                            double secFirst = TimeSpan.FromTicks(long.Parse(firstImp.Cells[7].Value.ToString())).TotalSeconds;
+                            double secSecond = TimeSpan.FromTicks(long.Parse(secondImp.Cells[7].Value.ToString())).TotalSeconds;
+                            double durationFirst = double.Parse(firstImp.Cells[6].Value.ToString());
+                            if (durationFirst < 0) // для отриц длительности
+                            {
+                                durationFirst = 65536 + durationFirst;
+                            }
+                            double quants = (durationFirst / 40) * (0.001);
+                            deltaDur = (secSecond - secFirst) + quants;
+                            if(deltaDur > (100 * 0.001))
+                            {
+                                firstImp = secondImp;
+                                secondImp = null;
+                            }
+                            else
+                            {
+
+                                countImp++;
+                            }
                             break;
 
                     }
@@ -131,10 +151,10 @@ namespace ImpHoleCalculation
                     {
 
                         //расчеты (если предыдущий был одобрен до этого, то он не отбрасывается)
-                        DateTime dateFirst = DateTime.Parse(firstImp.Cells[3].Value.ToString());
-                        DateTime dateSecond = DateTime.Parse(secondImp.Cells[3].Value.ToString());
-                        double secFirst = TimeSpan.FromTicks(dateFirst.Ticks).TotalSeconds;
-                        double secSecond = TimeSpan.FromTicks(dateSecond.Ticks).TotalSeconds;
+                        //DateTime dateFirst = DateTime.Parse(firstImp.Cells[3].Value.ToString());
+                        //DateTime dateSecond = DateTime.Parse(secondImp.Cells[3].Value.ToString());
+                        double secFirst = TimeSpan.FromTicks(long.Parse(firstImp.Cells[7].Value.ToString())).TotalSeconds;
+                        double secSecond = TimeSpan.FromTicks(long.Parse(secondImp.Cells[7].Value.ToString())).TotalSeconds;
                         double amplFirst = double.Parse(firstImp.Cells[5].Value.ToString());
                         double amplSecond = double.Parse(secondImp.Cells[5].Value.ToString());
                         double durationFirst = double.Parse(firstImp.Cells[6].Value.ToString());
@@ -146,10 +166,19 @@ namespace ImpHoleCalculation
                         else
                             deltaAmpl = amplSecond / amplFirst;
 
+                        
                         double deltaDur = 0;
-                        deltaDur = (dateSecond - dateFirst).TotalSeconds + durationFirst;
-
-                        if (deltaAmpl < 2 && deltaDur > (300 * 10 ^ (-3)))
+                        //deltaDur = (dateSecond - dateFirst).TotalSeconds + durationFirst;
+                        // кванты/40 = мс
+                        //65536 + длит
+                        if(durationFirst < 0)  // для отриц длительности
+                        {
+                            durationFirst = 65536 + durationFirst;
+                        }
+                        double quants = (durationFirst / 40) * (0.001);
+                        deltaDur = (secSecond - secFirst) + quants;
+                        
+                        if (deltaAmpl < 2 && deltaDur < (100 * 0.001))
                         {
                             // добавл в отфильтр табл
                             //filtrationDataGridView.Rows.Add(firstImp);
@@ -221,8 +250,8 @@ namespace ImpHoleCalculation
             for (int i = rowCounter; i < rowCountFilterImp - 1; i++)
             {
                 String typeFilter = filtrationDataGridView.Rows[i].Cells[position].Value.ToString();
-                DateTime dateFilter = DateTime.Parse(filtrationDataGridView.Rows[i].Cells[3].Value.ToString());
-
+                //DateTime dateFilter = DateTime.Parse(filtrationDataGridView.Rows[i].Cells[3].Value.ToString());
+                double dateFilter = TimeSpan.FromTicks(long.Parse(filtrationDataGridView.Rows[i].Cells[7].Value.ToString())).TotalSeconds;
                 if (typeFilter == name)
                 {
                     for (int j = 0; j < rowCountImp - 1; j++)
@@ -234,8 +263,10 @@ namespace ImpHoleCalculation
                         if (check == 0 && idFiler != idImp)
                         {
                             //int typeImp = int.Parse(ImpulsesGridView.Rows[j].Cells[position].Value.ToString());
-                            DateTime dateImp = DateTime.Parse(ImpulsesGridView.Rows[j].Cells[3].Value.ToString());
-                            double difference = Math.Abs((dateFilter - dateImp).TotalSeconds);
+                            //DateTime dateImp = DateTime.Parse(ImpulsesGridView.Rows[j].Cells[3].Value.ToString());
+                            double dateImp = TimeSpan.FromTicks(long.Parse(ImpulsesGridView.Rows[j].Cells[7].Value.ToString())).TotalSeconds; ;
+                            //double difference = Math.Abs((dateFilter - dateImp).TotalSeconds);
+                            double difference = Math.Abs(dateFilter - dateImp);
                             if (typeFilter == name && difference < 3)
                             {
                                 addToFiltrationGrid(filtrationDataGridView, ImpulsesGridView.Rows[j]);
@@ -262,6 +293,7 @@ namespace ImpHoleCalculation
             filtrationDataGridView.Rows[index].Cells[4].Value = row.Cells[4].Value; // имя скважины
             filtrationDataGridView.Rows[index].Cells[5].Value = row.Cells[5].Value; // амплитуда
             filtrationDataGridView.Rows[index].Cells[6].Value = row.Cells[6].Value; // длительность
+            filtrationDataGridView.Rows[index].Cells[7].Value = row.Cells[7].Value; // длительность// тики
 
             filtrationDataGridView.Rows[index].Cells[colCount - 1].Value = row.Cells[colCount - 1].Value; // hwid прав имя
         }
