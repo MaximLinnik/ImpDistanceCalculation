@@ -9,10 +9,10 @@ namespace ImpHoleCalculation
     class ExcelRow
     {
         public double number;
-        public String date;
+        public DateTime date;
         public double count;
 
-        public ExcelRow(double number, String date, double count)
+        public ExcelRow(double number, DateTime date, double count)
         {
             this.number = number;
             this.date = date;

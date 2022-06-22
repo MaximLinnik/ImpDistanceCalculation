@@ -2192,7 +2192,8 @@ namespace ImpHoleCalculation
 
         private void ExcelMergeButton_Click(object sender, EventArgs e)
         {
-            ExcelMerge.start();
+            getAllHole();
+            ExcelMerge.start(server, db, login, password, TempHoleGridView);
         }
     }
 }

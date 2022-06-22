@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -73,7 +74,8 @@ namespace ImpHoleCalculation
             return list;
         }
 
-        public static List<FileInfo> getDayFiles(String name)
+        //взятие файлов скважин
+        public static List<FileInfo> getDayFilesHoles(String name)
         {
             
             DirectoryInfo directory = new DirectoryInfo(name);
@@ -89,7 +91,7 @@ namespace ImpHoleCalculation
             for (int i = 0; i < info.Length; i++)
             {
                 String feature = info[i].Name.Substring(3, 1); // "-" которая определяет скважина или датчик
-                if(feature == "-")
+                if(feature != "-")
                 {
                     list.Add(info[i]);
                 }
@@ -99,7 +101,150 @@ namespace ImpHoleCalculation
             return list;
         }
 
-        public static List<ExcelMerge> setAllFiles()
+        //получение списка скважин
+        public static List<ListHoles> holeList(String server, String db, String login, String password)
+        {
+
+            List<ListHoles> list = new List<ListHoles>();
+            String connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+            SqlConnection con = new SqlConnection(connectionString);
+            /*
+            String query = @"select Holes.Name, Holes.BeginTime, Holes.EndTime, Holes.X, Holes.Y, Holes.Z, Holes.Description  
+                            from Holes
+                            " +
+                            @"  ";
+                            */
+
+            String query = @"select Holes.Name
+                            from Holes
+                            " +
+                @"  ";
+
+            con.Open();
+            SqlCommand command = new SqlCommand(query, con);
+            SqlDataReader reader = command.ExecuteReader();
+            int i = 0;
+
+            while (reader.Read())
+            {
+                list.Add(new ListHoles(reader[0].ToString()));
+                i++;
+
+            }
+            con.Close();
+            return list;
+        }
+
+        //обратный перевод hwid
+        public static String reverseFormat(String hwidText)
+        {
+            double hwid = 0;
+            String res1 = hwidText.Substring(0, 3);
+            String res2 = hwidText.Substring(hwidText.Length - 3, 3);
+            hwid = double.Parse(res1) * 256 + double.Parse(res2);
+            return hwid.ToString();
+        }
+
+        // проверка на соответсвие датчика скважине
+        public static int checkHoleImp(ExcelMerge element, DataGridView TempHoleGridView)
+        {
+            int holeName = 0;
+
+            int rowCountHoleImp = TempHoleGridView.Rows.Count;
+
+            for (int j = 0; j < rowCountHoleImp - 1; j++)
+            {
+                DateTime dateBefore = DateTime.Parse(TempHoleGridView.Rows[j].Cells[4].Value.ToString());
+                DateTime dateAfter = DateTime.Parse(TempHoleGridView.Rows[j].Cells[5].Value.ToString());
+                DateTime dateBeforeLeftBorder = new DateTime(dateBefore.Year, dateBefore.Month, dateBefore.Day, 0, 0, 0);
+                DateTime dateAfterRightBorder;
+                if (dateAfter.Ticks == 3155378975990000000) //максимальное значение
+                {
+                    dateAfterRightBorder = dateAfter;
+                }
+                else
+                {
+                    dateAfterRightBorder = dateAfter.AddDays(1);
+                    dateAfterRightBorder = new DateTime(dateAfterRightBorder.Year, dateAfterRightBorder.Month, dateAfterRightBorder.Day, 0, 0, 0);
+                }
+               
+                
+                int hwidInHole = int.Parse(TempHoleGridView.Rows[j].Cells[3].Value.ToString());
+
+                //DateTime dateImp = DateTime.Parse(ImpulsesGridView.Rows[i].Cells[3].Value.ToString());
+                //int hwidImp = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
+                String name = reverseFormat(element.name);
+                int hwidImp = int.Parse(name);
+                if (hwidImp == hwidInHole && dateBeforeLeftBorder <= element.date && element.date <= dateAfterRightBorder)
+                {
+                    if (hwidImp == hwidInHole && dateBefore <= element.date && element.date <= dateAfter)
+                    {
+
+                        holeName = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
+
+                        //result = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
+                        break;
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+
+            return holeName;
+        }
+
+        //взятие файлов датчиков
+        public static List<FileInfo> getDayFilesHWID(String name)
+        {
+
+            DirectoryInfo directory = new DirectoryInfo(name);
+            FileInfo[] info = directory.GetFiles();
+            List<FileInfo> list = new List<FileInfo>();
+            /*
+            String[] list = new String[info.Length];
+            for (int i = 0; i < info.Length; i++)
+            {
+                list[i] = info[i].Name;
+            }
+            */
+            for (int i = 0; i < info.Length; i++)
+            {
+                String feature = info[i].Name.Substring(3, 1); // "-" которая определяет скважина или датчик
+                if (feature == "-")
+                {
+                    list.Add(info[i]);
+                }
+
+
+            }
+            return list;
+        }
+
+        //размещение датчиков в листы скважин
+        public static void setHWIDToHole(List<ExcelMerge> list, List<ListHoles> holes, DataGridView TempHoleGridView)
+        {
+            foreach (ExcelMerge element in list)
+            {
+                int holeName = checkHoleImp(element, TempHoleGridView);
+                setHWIDToList(holes, holeName, element);
+            }
+        }
+        
+        //добавление найденого соответствия в лист
+        public static void setHWIDToList(List<ListHoles> holes, int holeName, ExcelMerge element)
+        {
+            for(int i = 0; i<holes.Count; i++)
+            {
+                if(holes.ElementAt(i).name == holeName.ToString())
+                {
+                    holes.ElementAt(i).excelRows.Add(element);
+                }
+            }
+        }
+
+        public static List<ExcelMerge> setAllFilesHoles()
         {
 
             List<ExcelMerge> list = new List<ExcelMerge>();
@@ -110,12 +255,35 @@ namespace ImpHoleCalculation
                 String[] listMonths = getMonthFolders(listYears[y]);
                 for(int m = 0; m < listMonths.Length; m++)
                 {
-                    List<FileInfo> listFiles = getDayFiles(listMonths[m]);
+                    List<FileInfo> listFiles = getDayFilesHoles(listMonths[m]);
                     setFileName(list, identificators, listFiles);
                 }
                 
             }
-            merge(list, identificators);
+            mergeHole(list, identificators);
+            return list;
+        }
+
+        public static List<ExcelMerge> setAllFilesHWID(String server, String db, String login, String password, DataGridView TempHoleGridView)
+        {
+
+            List<ExcelMerge> list = new List<ExcelMerge>();
+            List<String> identificators = new List<String>();
+            List<ListHoles> holes = holeList(server, db, login, password);
+            String[] listYears = getYearFolders();
+            for (int y = 0; y < listYears.Length; y++)
+            {
+                String[] listMonths = getMonthFolders(listYears[y]);
+                for (int m = 0; m < listMonths.Length; m++)
+                {
+                    List<FileInfo> listFiles = getDayFilesHWID(listMonths[m]);
+                    
+                    setFileName(list, identificators, listFiles);
+                    setHWIDToHole(list, holes, TempHoleGridView);
+                }
+
+            }
+            mergeHWID(holes);
             return list;
         }
 
@@ -160,7 +328,7 @@ namespace ImpHoleCalculation
                     double id = double.Parse(xlRange.Cells[i, 1].Value2.ToString());
                     String date = xlRange.Cells[i, 2].Value2.ToString();
                     double count = double.Parse(xlRange.Cells[i, 3].Value2.ToString());
-                    ExcelRow row = new ExcelRow(id, date, count);
+                    ExcelRow row = new ExcelRow(id, DateTime.Parse(date), count);
                     excelRows.Add(row);
 
                 }
@@ -230,7 +398,8 @@ namespace ImpHoleCalculation
             }
         }
 
-        public static void merge(List<ExcelMerge> list, List<String> identificators)
+        //объединение файлов скважин (без датчиков)
+        public static void mergeHole(List<ExcelMerge> list, List<String> identificators)
         {
             
             foreach (String name in identificators)
@@ -253,12 +422,44 @@ namespace ImpHoleCalculation
             }
         }
 
+        //объединение файлов датчиков
+        public static void mergeHWID(List<ListHoles> holes)
+        {
+
+            foreach (ListHoles hole in holes)
+            {
+                List<ExcelRow> excelRowsDays = new List<ExcelRow>();
+                List<ExcelRow> excelRowsHours = new List<ExcelRow>();
+                if (hole.excelRows.Count!= 0)
+                {
+                    foreach (ExcelMerge file in hole.excelRows)
+                    {
+
+                        if (file.groupingType == "days")
+                        {
+                            rowList(file, excelRowsDays);
+                        }
+                        else if (file.groupingType == "hours")
+                        {
+                            rowList(file, excelRowsHours);
+                        }
+                    }
+                    save(hole.name, excelRowsDays, "days");
+                    save(hole.name, excelRowsHours, "hours");
+                }
+
+            }
+        }
 
 
-        public static void start()
+
+        public static void start(String server, String db, String login, String password, DataGridView TempHoleGridView)
         {
             createResultFolder();
-            setAllFiles();
+            //получить хронологию скважин в лист? а потом смотреть по дате в параметрах класса?
+            
+            //setAllFilesHoles();
+            setAllFilesHWID(server, db, login, password, TempHoleGridView);
             MessageBox.Show("Файлы объединены");
 
             
