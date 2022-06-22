@@ -175,8 +175,8 @@ namespace ImpHoleCalculation
                 //int hwidImp = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
                 String name = reverseFormat(element.name);
                 int hwidImp = int.Parse(name);
-                if (hwidImp == hwidInHole && dateBeforeLeftBorder <= element.date && element.date <= dateAfterRightBorder)
-                {
+                //if (hwidImp == hwidInHole && dateBeforeLeftBorder <= element.date && element.date <= dateAfterRightBorder)
+                //{
                     if (hwidImp == hwidInHole && dateBefore <= element.date && element.date <= dateAfter)
                     {
 
@@ -185,11 +185,11 @@ namespace ImpHoleCalculation
                         //result = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
                         break;
                     }
-                    else
-                    {
+                    //else
+                    //{
                         // учитывать, если надо записывать начало файла или конец: ифы с границами
-                    }
-                }
+                    //}
+                //}
             }
 
             return holeName;
@@ -227,6 +227,7 @@ namespace ImpHoleCalculation
         {
             foreach (ExcelMerge element in list)
             {
+
                 int holeName = checkHoleImp(element, TempHoleGridView);
                 setHWIDToList(holes, holeName, element);
             }
@@ -264,10 +265,10 @@ namespace ImpHoleCalculation
             return list;
         }
 
-        public static List<ExcelMerge> setAllFilesHWID(String server, String db, String login, String password, DataGridView TempHoleGridView)
+        public static void setAllFilesHWID(String server, String db, String login, String password, DataGridView TempHoleGridView)
         {
 
-            List<ExcelMerge> list = new List<ExcelMerge>();
+            
             List<String> identificators = new List<String>();
             List<ListHoles> holes = holeList(server, db, login, password);
             String[] listYears = getYearFolders();
@@ -277,14 +278,14 @@ namespace ImpHoleCalculation
                 for (int m = 0; m < listMonths.Length; m++)
                 {
                     List<FileInfo> listFiles = getDayFilesHWID(listMonths[m]);
-                    
+                    List<ExcelMerge> list = new List<ExcelMerge>();
                     setFileName(list, identificators, listFiles);
                     setHWIDToHole(list, holes, TempHoleGridView);
                 }
 
             }
             mergeHWID(holes);
-            return list;
+            //return list;
         }
 
         //разбиение имени файла на части, которые будут использоваться в качестве полей класса и получение уникальных идентификаторов
@@ -316,26 +317,38 @@ namespace ImpHoleCalculation
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(file.link);
             Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
             Excel.Range xlRange = xlWorksheet.UsedRange;
-
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
-
-            for (int i = 2; i <= rowCount; i++)
+            try
             {
-
-                if (xlRange.Cells[i, 1] != null && xlRange.Cells[i, 1].Value2 != null)
+                for (int i = 2; i <= rowCount; i++)
                 {
-                    double id = double.Parse(xlRange.Cells[i, 1].Value2.ToString());
-                    String date = xlRange.Cells[i, 2].Value2.ToString();
-                    double count = double.Parse(xlRange.Cells[i, 3].Value2.ToString());
-                    ExcelRow row = new ExcelRow(id, DateTime.Parse(date), count);
-                    excelRows.Add(row);
+
+                    if (xlRange.Cells[i, 1] != null && xlRange.Cells[i, 1].Value2 != null)
+                    {
+                        double id = double.Parse(xlRange.Cells[i, 1].Value2.ToString());
+                        String date = xlRange.Cells[i, 2].Value2.ToString();
+                        double count = double.Parse(xlRange.Cells[i, 3].Value2.ToString());
+                        ExcelRow row = new ExcelRow(id, DateTime.Parse(date), count);
+                        excelRows.Add(row);
+
+                    }
 
                 }
-
             }
-            xlApp.Quit();
-            xlWorkbook = null;
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                xlApp.Quit();
+                xlWorkbook = null;
+            }
+
+
+
+
 
         }
 
@@ -366,7 +379,7 @@ namespace ImpHoleCalculation
                     {
                         
                         worksheet.Cells[cellRowIndex, 1] = cellRowIndex - 1;
-                        worksheet.Cells[cellRowIndex, 2] = row.date;
+                        worksheet.Cells[cellRowIndex, 2] = row.date.ToString();
                         worksheet.Cells[cellRowIndex, 3] = row.count;
 
                         cellColumnIndex++;

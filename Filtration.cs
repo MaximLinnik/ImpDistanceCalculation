@@ -97,7 +97,7 @@ namespace ImpHoleCalculation
         public static DataGridViewRow filtrationDrilling(String name, DataGridView ImpulsesGridView, DataGridView filtrationDataGridView, DataGridViewRow lastRow, int position, ref int rowCounter)
         {
             DataGridViewRow row = filtrationDrillingFirstStep(name, ImpulsesGridView, filtrationDataGridView, lastRow, position, ref rowCounter);
-            MainForm.sortDate(filtrationDataGridView);
+            //MainForm.sortDate(filtrationDataGridView);
             filtrationDrillingSecondStep(name, ImpulsesGridView, filtrationDataGridView, position, ref rowCounter);
 
             //MainForm.sortDate(filtrationDataGridView);
@@ -284,11 +284,8 @@ namespace ImpHoleCalculation
             return row;
         }
 
-
-
-
-
-        public static DataGridViewRow filtrationDrillingFirstStepReverse(String name, DataGridView ImpulsesGridView, DataGridView filtrationDataGridView, DataGridViewRow lastRow, int position, ref int rowCounter)
+        // первый этап фильтрации бурения
+        public static DataGridViewRow filtrationDrillingFirstStepOld(String name, DataGridView ImpulsesGridView, DataGridView filtrationDataGridView, DataGridViewRow lastRow, int position, ref int rowCounter)
         {
             DataGridViewRow row = null, firstImp = null, secondImp = null;
             int countImp = 0, i = 0, checkFirst = 0;
@@ -365,23 +362,26 @@ namespace ImpHoleCalculation
                         double quants = (durationFirst / 40) * (0.001);
                         deltaDur = (secSecond - secFirst) + quants;
 
-                        if (deltaAmpl > 2 || deltaDur > (100 * 0.001))
+                        if (deltaAmpl < 2 && deltaDur < (100 * 0.001))
                         {
+                            // добавл в отфильтр табл
+                            //filtrationDataGridView.Rows.Add(firstImp);
+
+
+
                             int colCount = ImpulsesGridView.Columns.Count;
-                            /*
+                            //ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 1; // чек того, что импульс фильтрован
+
                             if (!firstExist) // нет строки за предыдущий день
                             {
-                                
                                 addToFiltrationGrid(filtrationDataGridView, firstImp);
                                 ImpulsesGridView.Rows.RemoveAt(positionFirst);
                                 rowCount--;
                                 i--;
                                 //i = positionFirst;
-                                
                             }
                             else // есть строка за предыдущий день
                             {
-                                
                                 addToFiltrationGrid(filtrationDataGridView, firstImp);
                                 //addToFiltrationGrid(filtrationDataGridView, secondImp);
 
@@ -390,9 +390,7 @@ namespace ImpHoleCalculation
                                 i++;
                                 rowCount--;
                                 //i = positionFirst;
-                                
                             }
-                        */
                             countImp = 1;//так как первый уже найден
                             firstImp = secondImp;
                             positionFirst = positionSecond;
@@ -400,38 +398,23 @@ namespace ImpHoleCalculation
                         }
                         else if (firstApprove) // если импульс до этого был одобрен
                         {
-                            
                             addToFiltrationGrid(filtrationDataGridView, secondImp); //сбросить в отфильтр табл импульс, котор прошел до этого
-                            ImpulsesGridView.Rows.RemoveAt(positionSecond);
                             countImp = 0;
                             row = firstImp;
                             secondImp = null;
 
                             int colCount = ImpulsesGridView.Columns.Count;
                             //ImpulsesGridView.Rows[checkFirst].Cells[colCount - 1].Value = 1; // чек того, что импульс фильтрован
-                            
+                            ImpulsesGridView.Rows.RemoveAt(positionSecond);
                             rowCount--;
-                            //i--;
+                            i--;
                             //i = positionFirst;
-                            
                         }
-                        else // если не прошла формула (надо отфильтровывать)
+                        else // если не прошла формула
                         {
                             countImp = 0;
-                            addToFiltrationGrid(filtrationDataGridView, firstImp);
-                            if (!firstExist)
-                            {
-                                ImpulsesGridView.Rows.RemoveAt(positionFirst);
-                            }
-                            else
-                            {
-                                firstExist = false;
-                            }
-                            addToFiltrationGrid(filtrationDataGridView, secondImp);
-                            ImpulsesGridView.Rows.RemoveAt(positionSecond);
                             firstImp = null;
                             secondImp = null;
-                            rowCount = rowCount - 2;
                             firstApprove = false;
                         }
                     }
