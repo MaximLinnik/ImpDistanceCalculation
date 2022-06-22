@@ -98,7 +98,7 @@ namespace ImpHoleCalculation
         {
             DataGridViewRow row = filtrationDrillingFirstStep(name, ImpulsesGridView, filtrationDataGridView, lastRow, position, ref rowCounter);
             MainForm.sortDate(filtrationDataGridView);
-            filtrationDrillingSecondStep(name, ImpulsesGridView, filtrationDataGridView, position, ref rowCounter);
+            //filtrationDrillingSecondStep(name, ImpulsesGridView, filtrationDataGridView, position, ref rowCounter);
 
             //MainForm.sortDate(filtrationDataGridView);
 
@@ -194,15 +194,15 @@ namespace ImpHoleCalculation
                             int colCount = ImpulsesGridView.Columns.Count;
                             //ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 1; // чек того, что импульс фильтрован
 
-                            if (!firstExist)
+                            if (!firstExist) // если нет импульса из пред набора
                             {
                                 addToFiltrationGrid(filtrationDataGridView, firstImp);
-                                ImpulsesGridView.Rows.RemoveAt(i);
+                                ImpulsesGridView.Rows.RemoveAt(positionFirst);
                                 rowCount--;
                                 i--;
                                 //i = positionFirst;
                             }
-                            else
+                            else // если есть импульс из пред набора
                             {
                                 addToFiltrationGrid(filtrationDataGridView, firstImp);
                                //addToFiltrationGrid(filtrationDataGridView, secondImp);
@@ -217,7 +217,7 @@ namespace ImpHoleCalculation
                             firstImp = secondImp;
                             firstApprove = true;
                         }
-                        else if (firstApprove)
+                        else if (firstApprove) // если не прошло по формуле, но первый импульс прошел в пред раз
                         {
                             addToFiltrationGrid(filtrationDataGridView, firstImp); //сбросить в отфильтр табл импульс, котор прошел до этого
                             countImp = 0;
@@ -231,7 +231,7 @@ namespace ImpHoleCalculation
                             i--;
                             //i = positionFirst;
                         }
-                        else
+                        else //если не прошло по формуле и нет первого
                         {
                             countImp = 0;
                             firstImp = null;
