@@ -236,6 +236,7 @@ namespace ImpHoleCalculation
                             countImp = 0;
                             firstImp = null;
                             secondImp = null;
+                            firstApprove = false;
                         }
                     }
                 }
