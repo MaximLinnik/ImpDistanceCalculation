@@ -271,13 +271,13 @@ namespace ImpHoleCalculation
                                 {
                                     String type = HoleListGridView.Rows[i].Cells[1].Value.ToString();
                                     Filtration.filtrationDrilling(type, ImpulsesGridView, filtrationDataGridView, null, 4, ref rowCounter);
-                                    
+                                    /*
                                     if (filtrationDataGridView.Rows.Count != 1)
                                     {
                                         Filtration.removeDublicates(filtrationDataGridView);
                                         sortDate(filtrationDataGridView);
                                     }
-                                    
+                                    */
                                     //holeList();
                                     countImpByHole(ImpulsesGridView); //расчет количества импульсов по скважинам
                                 }
@@ -286,12 +286,14 @@ namespace ImpHoleCalculation
                                     //String type = reverseFormat(HoleListGridView.Rows[i].Cells[1].Value.ToString());
                                     String type = HoleListGridView.Rows[i].Cells[1].Value.ToString();
                                     Filtration.filtrationDrilling(type, ImpulsesGridView, filtrationDataGridView, null, 8, ref rowCounter);
+                                    /*
                                     if (filtrationDataGridView.Rows.Count != 1)
                                     {
                                         Filtration.removeDublicates(filtrationDataGridView);
                                         sortDate(filtrationDataGridView);
 
                                     }
+                                    */
                                     countImpByHWID(ImpulsesGridView); //расчет количества импульсов по HWID
                                 }
                             }

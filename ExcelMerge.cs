@@ -457,6 +457,9 @@ namespace ImpHoleCalculation
                             rowList(file, excelRowsHours);
                         }
                     }
+                    sortByDate(excelRowsDays);
+                    sortByDate(excelRowsHours);
+
                     save(hole.name, excelRowsDays, "days");
                     save(hole.name, excelRowsHours, "hours");
                 }
@@ -464,7 +467,11 @@ namespace ImpHoleCalculation
             }
         }
 
-
+        //сортировка по дате (если строки записались не по порядку)
+        public static void sortByDate(List<ExcelRow> excelRows)
+        {
+            excelRows.Sort((x, y) =>x.date.CompareTo(y.date));
+        }
 
         public static void start(String server, String db, String login, String password, DataGridView TempHoleGridView)
         {
