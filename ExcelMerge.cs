@@ -175,9 +175,10 @@ namespace ImpHoleCalculation
                 //int hwidImp = int.Parse(ImpulsesGridView.Rows[i].Cells[2].Value.ToString());
                 String name = reverseFormat(element.name);
                 int hwidImp = int.Parse(name);
+                DateTime dateElementAfter = element.date.AddDays(1); //т к промежуток даты - день
                 //if (hwidImp == hwidInHole && dateBeforeLeftBorder <= element.date && element.date <= dateAfterRightBorder)
                 //{
-                    if (hwidImp == hwidInHole && dateBefore <= element.date && element.date <= dateAfter)
+                    if (hwidImp == hwidInHole && dateBefore <= element.date && dateElementAfter <= dateAfter)
                     {
 
                         holeName = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
@@ -265,7 +266,7 @@ namespace ImpHoleCalculation
             return list;
         }
 
-        public static void setAllFilesHWID(String server, String db, String login, String password, DataGridView TempHoleGridView)
+        public static void setAllFilesHWID(String server, String db, String login, String password, DataGridView TempHoleGridView, Label progressLabel)
         {
 
             
@@ -284,7 +285,8 @@ namespace ImpHoleCalculation
                 }
 
             }
-            mergeHWID(holes);
+
+            mergeHWID(holes, progressLabel);
             //return list;
         }
 
@@ -436,7 +438,7 @@ namespace ImpHoleCalculation
         }
 
         //объединение файлов датчиков
-        public static void mergeHWID(List<ListHoles> holes)
+        public static void mergeHWID(List<ListHoles> holes, Label progressLabel)
         {
 
             foreach (ListHoles hole in holes)
@@ -445,6 +447,7 @@ namespace ImpHoleCalculation
                 List<ExcelRow> excelRowsHours = new List<ExcelRow>();
                 if (hole.excelRows.Count!= 0)
                 {
+                    progressLabel.Text = "Текущая скважина: " + hole.name;
                     foreach (ExcelMerge file in hole.excelRows)
                     {
 
@@ -463,7 +466,7 @@ namespace ImpHoleCalculation
                     save(hole.name, excelRowsDays, "days");
                     save(hole.name, excelRowsHours, "hours");
                 }
-
+                progressLabel.Text = "Закончено";
             }
         }
 
@@ -473,13 +476,13 @@ namespace ImpHoleCalculation
             excelRows.Sort((x, y) =>x.date.CompareTo(y.date));
         }
 
-        public static void start(String server, String db, String login, String password, DataGridView TempHoleGridView)
+        public static void start(String server, String db, String login, String password, DataGridView TempHoleGridView, Label progressLabel)
         {
             createResultFolder();
             //получить хронологию скважин в лист? а потом смотреть по дате в параметрах класса?
             
             //setAllFilesHoles();
-            setAllFilesHWID(server, db, login, password, TempHoleGridView);
+            setAllFilesHWID(server, db, login, password, TempHoleGridView, progressLabel);
             MessageBox.Show("Файлы объединены");
 
             

@@ -2194,8 +2194,9 @@ namespace ImpHoleCalculation
 
         private void ExcelMergeButton_Click(object sender, EventArgs e)
         {
+            progressLabel.Text = "";
             getAllHole();
-            ExcelMerge.start(server, db, login, password, TempHoleGridView);
+            ExcelMerge.start(server, db, login, password, TempHoleGridView, progressLabel);
         }
     }
 }

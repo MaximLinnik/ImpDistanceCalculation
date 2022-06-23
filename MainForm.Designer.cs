@@ -257,10 +257,11 @@
             this.dataGridViewTextBoxColumn10,
             this.Column20,
             this.Column17});
-            this.filtrationDataGridView.Location = new System.Drawing.Point(710, 387);
+            this.filtrationDataGridView.Location = new System.Drawing.Point(961, 546);
             this.filtrationDataGridView.Name = "filtrationDataGridView";
-            this.filtrationDataGridView.Size = new System.Drawing.Size(295, 155);
+            this.filtrationDataGridView.Size = new System.Drawing.Size(40, 10);
             this.filtrationDataGridView.TabIndex = 46;
+            this.filtrationDataGridView.Visible = false;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -317,9 +318,9 @@
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            this.ImpulseHoleGridView2.Location = new System.Drawing.Point(569, 548);
+            this.ImpulseHoleGridView2.Location = new System.Drawing.Point(646, 548);
             this.ImpulseHoleGridView2.Name = "ImpulseHoleGridView2";
-            this.ImpulseHoleGridView2.Size = new System.Drawing.Size(254, 15);
+            this.ImpulseHoleGridView2.Size = new System.Drawing.Size(177, 10);
             this.ImpulseHoleGridView2.TabIndex = 45;
             this.ImpulseHoleGridView2.Visible = false;
             // 
@@ -350,7 +351,7 @@
             this.Column12});
             this.HoleListGridView.Location = new System.Drawing.Point(6, 6);
             this.HoleListGridView.Name = "HoleListGridView";
-            this.HoleListGridView.Size = new System.Drawing.Size(989, 376);
+            this.HoleListGridView.Size = new System.Drawing.Size(989, 536);
             this.HoleListGridView.TabIndex = 44;
             this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
             // 
@@ -381,7 +382,7 @@
             this.Column9,
             this.Column10,
             this.Column11});
-            this.TempHoleGridView.Location = new System.Drawing.Point(544, 531);
+            this.TempHoleGridView.Location = new System.Drawing.Point(580, 545);
             this.TempHoleGridView.Name = "TempHoleGridView";
             this.TempHoleGridView.Size = new System.Drawing.Size(43, 11);
             this.TempHoleGridView.TabIndex = 4;
@@ -433,10 +434,11 @@
             this.Column19,
             this.Column16,
             this.Column21});
-            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 388);
+            this.ImpulsesGridView.Location = new System.Drawing.Point(6, 547);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
-            this.ImpulsesGridView.Size = new System.Drawing.Size(532, 165);
+            this.ImpulsesGridView.Size = new System.Drawing.Size(532, 10);
             this.ImpulsesGridView.TabIndex = 3;
+            this.ImpulsesGridView.Visible = false;
             // 
             // Column18
             // 
@@ -784,7 +786,7 @@
             // progressLabel
             // 
             this.progressLabel.AutoSize = true;
-            this.progressLabel.Location = new System.Drawing.Point(7, 611);
+            this.progressLabel.Location = new System.Drawing.Point(7, 616);
             this.progressLabel.Name = "progressLabel";
             this.progressLabel.Size = new System.Drawing.Size(81, 13);
             this.progressLabel.TabIndex = 47;
@@ -908,7 +910,7 @@
         private System.Windows.Forms.RadioButton hwidRadioButton;
         private System.Windows.Forms.RadioButton holeRadioButton;
         private System.Windows.Forms.CheckBox filtrationCheckBox;
-        private System.Windows.Forms.Label progressLabel;
+        public System.Windows.Forms.Label progressLabel;
         private System.Windows.Forms.Button excelMergeButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;

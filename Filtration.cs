@@ -259,7 +259,7 @@ namespace ImpHoleCalculation
             return row;
         }
 
-        public static DataGridViewRow filtrationDrillingFirstStepX(String name, DataGridView ImpulsesGridView, DataGridView filtrationDataGridView, DataGridViewRow lastRow, int position, ref int rowCounter)
+        public static DataGridViewRow filtrationDrillingFirstStepOld2(String name, DataGridView ImpulsesGridView, DataGridView filtrationDataGridView, DataGridViewRow lastRow, int position, ref int rowCounter)
         {
             DataGridViewRow row = null, firstImp = null, secondImp = null, prevImp = null;
             int countImp = 0, i = 0, checkFirst = 0;
@@ -296,12 +296,13 @@ namespace ImpHoleCalculation
 
                             double secFirst = TimeSpan.FromTicks(long.Parse(firstImp.Cells[7].Value.ToString())).TotalSeconds;
                             double secSecond = TimeSpan.FromTicks(long.Parse(secondImp.Cells[7].Value.ToString())).TotalSeconds;
+                            /*
                             double durationFirst = double.Parse(firstImp.Cells[6].Value.ToString());
                             if (durationFirst < 0) // для отриц длительности
                             {
                                 durationFirst = 65536 + durationFirst;
                             }
-
+                            */
                             positionSecond = i;
                             countImp++;
                             break;
@@ -338,6 +339,7 @@ namespace ImpHoleCalculation
                         double deltaDur1 = 0, deltaDur2 = 0, deltaRes = 0;
                         // кванты/40 = мс
                         //65536 + длит
+                        /*
                         if (durationFirst < 0)  // для отриц длительности
                         {
                             durationFirst = 65536 + durationFirst;
@@ -346,6 +348,7 @@ namespace ImpHoleCalculation
                         {
                             durationPrev = 65536 + durationPrev;
                         }
+                        */
                         //double quants1 = (durationFirst / 40) * (0.001);
                         //deltaDur1 = (secSecond - secFirst) + quants1;
                         deltaDur1 = secSecond - secFirst;
@@ -434,7 +437,7 @@ namespace ImpHoleCalculation
                 //ImpulsesGridView.Rows.RemoveAt(positionSecond);
             }
             if (row == null) row = lastRow; // для случая, когда в текущей итерации было ничего не найдено
-            rowCounter += filtrationDataGridView.RowCount;
+            rowCounter = filtrationDataGridView.RowCount;
             return row;
         }
 
@@ -490,7 +493,7 @@ namespace ImpHoleCalculation
                     if (countImp == 2)
                     {
 
-                        //расчеты (если предыдущий был одобрен до этого, то он не отбрасывается)
+                       
                         DateTime dateFirst = DateTime.Parse(firstImp.Cells[3].Value.ToString());
                         DateTime dateSecond = DateTime.Parse(secondImp.Cells[3].Value.ToString());
 
@@ -541,9 +544,9 @@ namespace ImpHoleCalculation
                             deltaRes = deltaDur1;
                         }
 
-                        if (deltaAmpl >= 2 || deltaRes >= (100 * 0.001))
+                        if (deltaAmpl >= 2 || deltaRes >= (100 * 0.001)) // пару импульсов не надо фильтровать
                         {
-                            // добавл в отфильтр табл
+                            
                             //filtrationDataGridView.Rows.Add(firstImp);
 
 
@@ -572,7 +575,7 @@ namespace ImpHoleCalculation
                             //firstApprove = true;
                         }
                         
-                        else if (firstApprove) // если импульс до этого был одобрен
+                        else if (firstApprove) // если импульс до этого был отфильтрован 
                         {
                             addToFiltrationGrid(filtrationDataGridView, firstImp); //сбросить в отфильтр табл импульс, котор прошел до этого
                             ImpulsesGridView.Rows.RemoveAt(firstImp.Index);
@@ -617,7 +620,7 @@ namespace ImpHoleCalculation
                 //ImpulsesGridView.Rows.RemoveAt(positionSecond);
             }
             if (row == null) row = lastRow; // для случая, когда в текущей итерации было ничего не найдено
-            rowCounter += filtrationDataGridView.RowCount;
+            rowCounter = filtrationDataGridView.RowCount;
             return row;
         }
 
