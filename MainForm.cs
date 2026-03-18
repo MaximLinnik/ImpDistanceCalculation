@@ -114,6 +114,7 @@ namespace ImpHoleCalculation
         public void start_Imp()
         {
             getAllImpulses();
+
         }
 
             //общая работа всей формы (скважины)
@@ -1282,6 +1283,27 @@ namespace ImpHoleCalculation
 
         }
 
+        //выбор и подчет всех переборов импульсов по 4 элемента
+        private void combinationCalc(DataGridView impulseGrid, int velocityBefore, int velocityAfter, int step)
+        {
+            int length = impulseGrid.RowCount - 1; // количество строчек в таблице выбранных импульсов 
+            // цикл для перебора комбинаций по 4 (заменить на рекурсию?)
+            for (int i = 0; i < length - 3; i++)
+            {
+                for (int j = i + 1; j < length - 2; j++)
+                {
+                    for (int k = j + 1; k < length - 1; k++)
+                    {
+                        for (int l = k + 1; l < length; l++)
+                        {
+                            // расчет?
+                        }
+                    }
+                }
+            }
+
+        }
+
         //получение всех импульсов в таблицу (для скважин)
         private void getAllImpulses()
         {
@@ -2129,6 +2151,12 @@ namespace ImpHoleCalculation
             //HoleForm = new HoleForm(this, ImpulsesGridView, DateTime.Parse(dateBeforeText.Text), DateTime.Parse(dateAfterText.Text), id, 4, server, db, login, password);
 
             MessageBox.Show("Выбрано строк: " + rows.Count);
+        }
+
+        private void CalcButton_Click(object sender, EventArgs e)
+        {
+            //combinationCalc(DataGridView impulseGrid, int velocityBefore, int velocityAfter, int step);
+            combinationCalc(dataGridView_Imp, 0, 0, 0);
         }
     }
 }
