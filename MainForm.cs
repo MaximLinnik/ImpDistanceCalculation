@@ -642,7 +642,8 @@ namespace ImpHoleCalculation
         //получение и запись импульсов 
         private int setImpulsesByDate()
         {
-            int holeName = 0; //имя скважины, если нашлась
+            //int holeName = 0; //имя скважины, если нашлась
+            HoleParametrs holeName; //имя скважины, если нашлась
 
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             SqlConnection con = new SqlConnection(connectionString);
@@ -703,10 +704,14 @@ namespace ImpHoleCalculation
                 ImpulsesGridView.Rows[i].Cells[1].Value = double.Parse(impID);
                 ImpulsesGridView.Rows[i].Cells[2].Value = double.Parse(hwid);
                 ImpulsesGridView.Rows[i].Cells[3].Value = DateTime.Parse(impDate);
-                ImpulsesGridView.Rows[i].Cells[4].Value = holeName; // имя скважины
+                ImpulsesGridView.Rows[i].Cells[4].Value = holeName.getName(); // имя скважины
                 ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(amplitude); // амплитуда
                 ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(duration); // длительность
                 ImpulsesGridView.Rows[i].Cells[7].Value = long.Parse(reader[2].ToString()); // тики
+                //координаты скважины
+                ImpulsesGridView.Rows[i].Cells[10].Value = holeName.getX();
+                ImpulsesGridView.Rows[i].Cells[11].Value = holeName.getY();
+                ImpulsesGridView.Rows[i].Cells[12].Value = holeName.getZ(); 
                 /*
                 ImpulsesGridView.Rows[i].Cells[8].Value = 0; // чекбокс true hwid
                 ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0; // чек
@@ -823,7 +828,8 @@ namespace ImpHoleCalculation
         //получение и запись импульсов (несколько отдельных запросов (по месяцам))
         private int setImpulsesSeparateQuery()
         {
-            int holeName = 0; //имя скважины, если нашлась
+            //int holeName = 0; //имя скважины, если нашлась
+            HoleParametrs holeName; //имя скважины, если нашлась
             int i = 0, counter = 0;
             DateTime dateB = Convert.ToDateTime(dateBeforeText.Text);
             DateTime dateA = Convert.ToDateTime(dateAfterText.Text);
@@ -877,7 +883,8 @@ namespace ImpHoleCalculation
                     */
                     //оптимизация, чтобы записывалось только если входит в скважину
                     holeName = checkHoleImp(hwid, dt);
-                    if (holeName == 0) continue;
+                    //if (holeName == 0) continue;
+                    if (holeName.getName() == 0) continue;
 
                     ImpulsesGridView.Rows.Add();
                     int colCount = ImpulsesGridView.ColumnCount;
@@ -986,7 +993,8 @@ namespace ImpHoleCalculation
         //получение импульсов по скважинам по дням для каскадной записи по дням 
         private int getAllImpulsesByDay(DateTime dateB, DateTime dateA)
         {
-            int holeName = 0; //имя скважины, если нашлась
+            //int holeName = 0; //имя скважины, если нашлась
+            HoleParametrs holeName = new HoleParametrs(); //имя скважины, если нашлась
             int i = 0, counter = 0;
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
 
@@ -1034,7 +1042,7 @@ namespace ImpHoleCalculation
                 */
                 //оптимизация, чтобы записывалось только если входит в скважину
                 holeName = checkHoleImp(hwid, dt);
-                if (holeName == 0) continue;
+                if (holeName.getName() == 0) continue;
 
                 ImpulsesGridView.Rows.Add();
                 int colCount = ImpulsesGridView.ColumnCount;
@@ -1133,9 +1141,12 @@ namespace ImpHoleCalculation
         }
 
         // проверка на соответсвие скважины на этапе получения результата запроса
-        public int checkHoleImp(String hwid, DateTime dateImp)
+        //public int checkHoleImp(String hwid, DateTime dateImp)
+        public HoleParametrs checkHoleImp(String hwid, DateTime dateImp)
         {
             int result = 0;
+            double X = 0, Y = 0, Z = 0;
+            HoleParametrs hole = new HoleParametrs();
 
             int rowCountHoleImp = TempHoleGridView.Rows.Count;
 
@@ -1153,12 +1164,17 @@ namespace ImpHoleCalculation
                     int name = int.Parse(listComboBox.Text); // имя скважины из комбобокса
                     int holeName = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
                     //ImpulsesGridView.Rows[i].Cells[4].Value = TempHoleGridView.Rows[j].Cells[1].Value.ToString();
+                    
                     result = int.Parse(TempHoleGridView.Rows[j].Cells[1].Value.ToString());
+                    //координаты скважины
+                    X = double.Parse(TempHoleGridView.Rows[j].Cells[6].Value.ToString());
+                    Y = double.Parse(TempHoleGridView.Rows[j].Cells[7].Value.ToString());
+                    Z = double.Parse(TempHoleGridView.Rows[j].Cells[8].Value.ToString());
+                    hole.setHoleParametrs(result, X, Y, Z);
                     break;
                 }
             }
-
-            return result;
+            return hole;
         }
 
         // проверка на соответсвие скважины на этапе получения результата запроса
@@ -1201,7 +1217,7 @@ namespace ImpHoleCalculation
 
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             SqlConnection con = new SqlConnection(connectionString);
-            String query = @"select SensorHole.HoleID, Holes.Name, SensorHole.SensorID, Sensors.HWID, SensorHole.BeginTime, SensorHole.EndTime 
+            String query = @"select SensorHole.HoleID, Holes.Name, SensorHole.SensorID, Sensors.HWID, SensorHole.BeginTime, SensorHole.EndTime, Holes.X, Holes.Y, Holes.Z 
                             from SensorHole, Sensors, Holes
                             where Sensors.ID = SensorHole.SensorID 
                             AND Holes.ID = SensorHole.HoleID
@@ -1226,6 +1242,10 @@ namespace ImpHoleCalculation
                 String holeName = reader[1].ToString();
                 String sensorID = reader[2].ToString();
                 String hwid = reader[3].ToString();
+                // координаты скважины
+                double X = Double.Parse(reader[6].ToString());
+                double Y = Double.Parse(reader[7].ToString());
+                double Z = Double.Parse(reader[8].ToString());
 
                 //DateTime dateBefore = DateTime.Parse(reader[4].ToString());
                 //DateTime dateAfter = DateTime.Parse(reader[5].ToString());
@@ -1240,6 +1260,9 @@ namespace ImpHoleCalculation
                 catch { TempHoleGridView.Rows[i].Cells[4].Value = DateTime.MaxValue; }
                 try { TempHoleGridView.Rows[i].Cells[5].Value = DateTime.Parse(reader[5].ToString()); }
                 catch { TempHoleGridView.Rows[i].Cells[5].Value = DateTime.MaxValue; }
+                TempHoleGridView.Rows[i].Cells[6].Value = X;
+                TempHoleGridView.Rows[i].Cells[7].Value = Y;
+                TempHoleGridView.Rows[i].Cells[8].Value = Z;
                 i++;
             }
             con.Close();
@@ -1448,41 +1471,53 @@ namespace ImpHoleCalculation
                             @"  ";
                             */
 
-            String query = @"select Holes.Name
+            /*
+             String query = @"select Holes.Name
+                from Holes
+                " +
+    @"  ";
+    */
+
+            String query = @"select Holes.Name, Holes.X, Holes.Y, Holes.Z  
                             from Holes
                             " +
                 @"  ";
-
             if (oneRowParametr) // булева переменная, проставляемая по чекбоксу
-            {
-                String hole = "where Holes.Name =" + listComboBox.Text;
-                query += hole;
-            }
+{
+    String hole = "where Holes.Name =" + listComboBox.Text;
+    query += hole;
+}
 
-            con.Open();
-            SqlCommand command = new SqlCommand(query, con);
-            SqlDataReader reader = command.ExecuteReader();
-            int i = 0;
+con.Open();
+SqlCommand command = new SqlCommand(query, con);
+SqlDataReader reader = command.ExecuteReader();
+int i = 0;
 
-            while (reader.Read())
-            {
-                HoleListGridView.Rows.Add();
+while (reader.Read())
+{
+    HoleListGridView.Rows.Add();
 
 
-                int colCount = HoleListGridView.ColumnCount;
+    int colCount = HoleListGridView.ColumnCount;
 
-                HoleListGridView.Rows[i].Cells[0].Value = i + 1;
-                HoleListGridView.Rows[i].Cells[1].Value = double.Parse(reader[0].ToString());
-                HoleListGridView.Rows[i].Cells[2].Value = 0;
-                /*
-                HoleListGridView.Rows[i].Cells[3].Value = DateTime.Parse(reader[1].ToString());
-                try { HoleListGridView.Rows[i].Cells[4].Value = DateTime.Parse(reader[2].ToString()); }
-                catch { HoleListGridView.Rows[i].Cells[4].Value = null; }
-                HoleListGridView.Rows[i].Cells[5].Value = double.Parse(reader[3].ToString());
-                HoleListGridView.Rows[i].Cells[6].Value = double.Parse(reader[4].ToString());
-                HoleListGridView.Rows[i].Cells[7].Value = double.Parse(reader[5].ToString());
-                HoleListGridView.Rows[i].Cells[8].Value = reader[6].ToString();
-                */
+    HoleListGridView.Rows[i].Cells[0].Value = i + 1;
+    HoleListGridView.Rows[i].Cells[1].Value = double.Parse(reader[0].ToString());
+    HoleListGridView.Rows[i].Cells[2].Value = 0;
+
+    /*
+    HoleListGridView.Rows[i].Cells[3].Value = DateTime.Parse(reader[1].ToString());
+    try { HoleListGridView.Rows[i].Cells[4].Value = DateTime.Parse(reader[2].ToString()); }
+    catch { HoleListGridView.Rows[i].Cells[4].Value = null; }
+    HoleListGridView.Rows[i].Cells[5].Value = double.Parse(reader[3].ToString());
+    HoleListGridView.Rows[i].Cells[6].Value = double.Parse(reader[4].ToString());
+    HoleListGridView.Rows[i].Cells[7].Value = double.Parse(reader[5].ToString());
+    HoleListGridView.Rows[i].Cells[8].Value = reader[6].ToString();
+    */
+
+            //новое (координаты)
+            HoleListGridView.Rows[i].Cells[5].Value = double.Parse(reader[1].ToString());
+                HoleListGridView.Rows[i].Cells[6].Value = double.Parse(reader[2].ToString());
+                HoleListGridView.Rows[i].Cells[7].Value = double.Parse(reader[3].ToString());
 
                 i++;
 

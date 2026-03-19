@@ -70,6 +70,7 @@
       <DependentUpon>AutorizeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Calc30_adaptation.cs" />
+    <Compile Include="HoleParametrs.cs" />
     <Compile Include="ExcelMerge.cs" />
     <Compile Include="ExcelRow.cs" />
     <Compile Include="Filtration.cs" />
