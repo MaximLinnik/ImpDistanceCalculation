@@ -1307,25 +1307,7 @@ namespace ImpHoleCalculation
         }
 
         //выбор и подчет всех переборов импульсов по 4 элемента
-        private void combinationCalc(DataGridView impulseGrid, int velocityBefore, int velocityAfter, int step)
-        {
-            int length = impulseGrid.RowCount - 1; // количество строчек в таблице выбранных импульсов 
-            // цикл для перебора комбинаций по 4 (заменить на рекурсию?)
-            for (int i = 0; i < length - 3; i++)
-            {
-                for (int j = i + 1; j < length - 2; j++)
-                {
-                    for (int k = j + 1; k < length - 1; k++)
-                    {
-                        for (int l = k + 1; l < length; l++)
-                        {
-                            // расчет?
-                        }
-                    }
-                }
-            }
 
-        }
 
         //получение всех импульсов в таблицу (для скважин)
         private void getAllImpulses()
@@ -2191,7 +2173,13 @@ while (reader.Read())
         private void CalcButton_Click(object sender, EventArgs e)
         {
             //combinationCalc(DataGridView impulseGrid, int velocityBefore, int velocityAfter, int step);
-            combinationCalc(dataGridView_Imp, 0, 0, 0);
+            Alg30 alg30= new Alg30();
+            //Coordinates []coordinates = alg30.getImpulsesCoordinates(dataGridView_Imp);
+            //double []DT = alg30.getDT(dataGridView_Imp);
+            Impulse[] antenna = alg30.setAntenna(dataGridView_Imp);
+            Coordinates AE = alg30.getAECoordinates(antenna, 5000);
+            MessageBox.Show("Окончание расчета");
+            //alg30.combinationCalc(dataGridView_Imp, 0, 0, 0);
         }
     }
 }

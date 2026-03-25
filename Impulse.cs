@@ -18,6 +18,10 @@ namespace ImpHoleCalculation
         public double position;
         public DataGridViewRow row;// для таблицы
 
+        //для алг30
+        public double DT;
+        public Coordinates coordinates;
+
         public Impulse(double id, String hwid, DateTime date, String holeName, double amplitude, double duration, DataGridViewRow row)
         {
             this.id = id;
@@ -27,6 +31,19 @@ namespace ImpHoleCalculation
             this.amplitude = amplitude;
             this.duration = duration;
             this.row = row;
+        }
+
+        //для алг 30
+        public Impulse(double id, String hwid, DateTime date, String holeName, double amplitude, double duration, Coordinates coordinates, double DT)
+        {
+            this.id = id;
+            this.hwid = hwid;
+            this.date = date;
+            this.holeName = holeName;
+            this.amplitude = amplitude;
+            this.duration = duration;
+            this.coordinates = coordinates;
+            this.DT = DT;
         }
 
         public Impulse(DataGridViewRow row)

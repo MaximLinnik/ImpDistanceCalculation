@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alg30.cs" />
     <Compile Include="AutorizeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +71,7 @@
       <DependentUpon>AutorizeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Calc30_adaptation.cs" />
+    <Compile Include="Coordinates.cs" />
     <Compile Include="HoleParametrs.cs" />
     <Compile Include="ExcelMerge.cs" />
     <Compile Include="ExcelRow.cs" />
