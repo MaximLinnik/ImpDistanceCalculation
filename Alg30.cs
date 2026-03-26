@@ -1,4 +1,5 @@
 ﻿using Common.MathEx.Algebra;
+using GCS.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,17 +26,44 @@ namespace ImpHoleCalculation
             return DT;
         }
 
+        public double[] getDT(List<DataGridViewRow> rows)
+        {
+            int count = rows.Count;
+            double[] DT = new double[count];
+            DT[0] = 0;
+            for (int i = 1; i < count; i++)
+            {
+                DT[i] = Math.Abs((long.Parse(rows[0].Cells[7].Value.ToString()) - long.Parse(rows[i].Cells[7].Value.ToString())) / 10);
+            }
+            return DT;
+        }
+
         //получение координат импульсов по скважинам
-        public Coordinates [] getImpulsesCoordinates(DataGridView impulseGrid)
+        public Coordinates[] getImpulsesCoordinates(DataGridView impulseGrid)
         {
             int count = impulseGrid.RowCount - 1;
-            Coordinates []coordinates = new Coordinates [count];
+            Coordinates[] coordinates = new Coordinates[count];
             double x, y, z;
-            for(int i = 0; i<count; i++)
+            for (int i = 0; i < count; i++)
             {
                 x = Double.Parse(impulseGrid.Rows[i].Cells[10].Value.ToString());
                 y = Double.Parse(impulseGrid.Rows[i].Cells[11].Value.ToString());
                 z = Double.Parse(impulseGrid.Rows[i].Cells[12].Value.ToString());
+                coordinates[i] = new Coordinates(x, y, z);
+            }
+            return coordinates;
+        }
+
+        public Coordinates[] getImpulsesCoordinates(List<DataGridViewRow> rows)
+        {
+            int count = rows.Count;
+            Coordinates[] coordinates = new Coordinates[count];
+            double x, y, z;
+            for (int i = 0; i < count; i++)
+            {
+                x = Double.Parse(rows[i].Cells[10].Value.ToString());
+                y = Double.Parse(rows[i].Cells[11].Value.ToString());
+                z = Double.Parse(rows[i].Cells[12].Value.ToString());
                 coordinates[i] = new Coordinates(x, y, z);
             }
             return coordinates;
@@ -48,9 +76,7 @@ namespace ImpHoleCalculation
             Impulse[] antenna = new Impulse[count];
             Coordinates[] coordinates = getImpulsesCoordinates(impulseGrid);
             double[] DT = getDT(impulseGrid);
-
-
-            for (int i = 0; i< count; i++)
+            for (int i = 0; i < count; i++)
             {
 
                 double id = Double.Parse(impulseGrid.Rows[i].Cells[1].Value.ToString());
@@ -59,10 +85,31 @@ namespace ImpHoleCalculation
                 String holeName = impulseGrid.Rows[i].Cells[4].Value.ToString();
                 double amplitude = Double.Parse(impulseGrid.Rows[i].Cells[5].Value.ToString());
                 double duration = Double.Parse(impulseGrid.Rows[i].Cells[6].Value.ToString());
-                antenna[i] = new Impulse(id, hwid, date, holeName, amplitude, duration, coordinates [i], DT [i]);
+                antenna[i] = new Impulse(id, hwid, date, holeName, amplitude, duration, coordinates[i], DT[i]);
             }
             return antenna;
         }
+
+        //вариант для случая конкретных (четырех) строк
+        public Impulse[] setAntenna(List<DataGridViewRow> rows)
+        {
+            int count = rows.Count;
+            Impulse[] antenna = new Impulse[count];
+            Coordinates[] coordinates = getImpulsesCoordinates(rows);
+            double[] DT = getDT(rows);
+            for (int i = 0; i < count; i++)
+            {
+                double id = Double.Parse(rows[i].Cells[1].Value.ToString());
+                String hwid = rows[i].Cells[2].Value.ToString();
+                DateTime date = DateTime.Parse(rows[i].Cells[3].Value.ToString());
+                String holeName = rows[i].Cells[4].Value.ToString();
+                double amplitude = Double.Parse(rows[i].Cells[5].Value.ToString());
+                double duration = Double.Parse(rows[i].Cells[6].Value.ToString());
+                antenna[i] = new Impulse(id, hwid, date, holeName, amplitude, duration, coordinates[i], DT[i]);
+            }
+            return antenna;
+        }
+
 
         //вычисление AE_X, AE_Y, AE_Z (из Calc30 -> CalcAlgorithm30main)
         public Coordinates getAECoordinates(Impulse[] antenna, double velocity)
@@ -117,7 +164,7 @@ namespace ImpHoleCalculation
             decision1 = Matrix.Gause(matrix33a, right1);
             if (decision1 == null)
             {
-                MessageBox.Show("Ошибка решения СЛАУ");
+                //MessageBox.Show("Ошибка решения СЛАУ");
                 return null;
             }
 
@@ -126,7 +173,7 @@ namespace ImpHoleCalculation
             decision2 = Matrix.Gause(matrix33b, right2);
             if (decision2 == null)
             {
-                MessageBox.Show("Ошибка решения СЛАУ");
+                //MessageBox.Show("Ошибка решения СЛАУ");
                 return null;
             }
 
@@ -153,7 +200,7 @@ namespace ImpHoleCalculation
                 if (D < 0)
                 {
 
-                    MessageBox.Show("Дискриминант квадратного уравнения < 0. Решение отсутствует! ");
+                    //MessageBox.Show("Дискриминант квадратного уравнения < 0. Решение отсутствует! ");
                     return null;
                 }
                 else if (D == 0)
@@ -165,7 +212,7 @@ namespace ImpHoleCalculation
                     }
                     catch
                     {
-                        MessageBox.Show("Дискриминант квадратного уравнения = 0. Ошибка деления на a!");
+                        //MessageBox.Show("Дискриминант квадратного уравнения = 0. Ошибка деления на a!");
                         return null;
 
                     }
@@ -188,7 +235,7 @@ namespace ImpHoleCalculation
                         }
                         else
                         {
-                            MessageBox.Show("Задан неверный номер решения!");
+                            //MessageBox.Show("Задан неверный номер решения!");
                             return null;
                         }
                     }
@@ -209,20 +256,6 @@ namespace ImpHoleCalculation
                                     antenna[0].coordinates.z, 3);
             /*
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-           
 
             // Вычисление РВП от полученного решения (обратный рассчет)
             // Вычисляем РВП всегда (независимо от "GlbVars.MySettings.UseSphereModelRestriction")
@@ -251,163 +284,147 @@ namespace ImpHoleCalculation
 
         }
 
-        //вычисление итогового алгоритма 30
-
-
-        //
-
-        /*
-        public List<string> debugArray;
-
-        public int Lenght;              // Длина массива скважин
-        public Hole[] HolesArray;       // Массив скважин       
-
-        public string AntennaName;      // Имя антенны (по порядку прихода сигналов на скважины).
-                                        // Состоит из имен скважин, разделенных символом '-'.
-        public int AntennaLenght;       // Кол-во скважин в антенне (длина антенны) (либо количество используемых скважин)
-        public int RealAntennaLenght;   // Кол-во скважин в антенне (длина антенны) (реальное количество, заполняется, если исопльзуютсяне все)
-        // Дополнительные параметры, определяющие строку в таблице событий и расчетов
-        public long EventDateTime;       // Время события в тиках системных (100 нсек.)
-        public DateTime ImportDateTime;  // Время импорта (подкачки) события
-        public DateTime? CalcDateTime;   // Время расчета результата
-        public short Velocity;           // Скорость звука в м/сек.
-        public double? AE_X;             // Координата X рассчитанного ИАЭ
-        public double? AE_Y;             // Координата Y рассчитанного ИАЭ
-        public double? AE_Z;             // Координата Z рассчитанного ИАЭ
-        public float? Energy;            // Энергия события АЭ решения
-        public float Kyc;                // Коэффициент усиления. Используется при расчете энергии
-        public float? TimeError;         // Невязка в мкс. Это квадратный корень из суммы по всем скважинам антенны
-                                         // квадратов разниц измеренных и вычисленных РВП, 
-                                         // деленный на длину антенны минус 1
-        public byte? Algorithm;          // Номер алгоритма расчета
-        public double Rmin;              // Мин. расстояние от ИАЭ и скважинами в текущей антенне.
-
-
-        public static void CalcAlgorithm30(GCSDataSet.AE_EventsRow rowAE_Events, GCSDataSet gcsDataSet)
-        {
-
-            //if (GlbDefs.MySettings.UseCalc30 == 0) return;
-            //if (GlbDefs.MySettings.UseCalc30InMin == 0 && GlbDefs.allHoles.AntennaLenght < 5) return;
-           // if (GlbDefs.allHoles.AntennaLenght > 8) return;// Данный алгоритм плохо работает для длинных серий
-
-           // GlbDefs.allHoles.ClearCalculation(); // Очистка результатов вычислений
-
-            string strProtocol = string.Empty;
-            long EventID = rowAE_Events.EventID;
-            byte NumberOfDecisions = 0;
-
-            try
-            {
-                if (CalcAlgorithm30main(GlbDefs.eAlgorithm.МНК_для_РВП, rowAE_Events.EnergyParamsType,
-                                        out strProtocol, 1, out NumberOfDecisions))
-                {
-                    // Запись в таблицу "Решений" AE_XYZ (добавление новой записи)
-                    bool Success = DoOneEventGridViewSelectedRow.WriteTableXYZ(EventID, gcsDataSet, ref strProtocol);
-
-
-                    if (GlbDefs.MySettings.WriteNotes == 1)
-                    {
-                        if (Success)
-                        {
-                            rowAE_Events.Details += "Расчет по алгоритму \"" + GlbDefs.eAlgorithm.МНК_для_РВП +
-                                                    "\" успешно завершен! Длина антенны = " + GlbDefs.allHoles.AntennaLenght.ToString() + GlbDefs.NL;
-                        }
-                        else
-                        {
-                            rowAE_Events.Details += "Решение по алгоритму \"" + GlbDefs.eAlgorithm.МНК_для_РВП +
-                                                    "\" отфиьтровано :" + strProtocol + " Длина антенны = " + GlbDefs.allHoles.AntennaLenght.ToString() + GlbDefs.NL;
-                        }
-                    }
-                }
-                else
-                {
-                    if (GlbDefs.MySettings.WriteNotes == 1)
-                    {
-                        rowAE_Events.Details += "Расчет по алгоритму \"" + GlbDefs.eAlgorithm.МНК_для_РВП +
-                                                "\" завершен с ошибкой! Длинна антенны = " + GlbDefs.allHoles.AntennaLenght.ToString() + GlbDefs.NL;
-                    }
-                    // Запись информации о плохом решении в таблицу "Решений"
-                    DoOneEventGridViewSelectedRow.WriteTableXYZ_Bad_Calculation(EventID, gcsDataSet, strProtocol,
-                                                                                (byte)GlbDefs.eAlgorithm.МНК_для_РВП);
-                    if (GlbDefs.MySettings.EventLogWriteEntry == 1)
-                    {
-                        EventLog.WriteEntry(Application.ProductName,
-                                             "Расчет по алгоритму \"" + GlbDefs.eAlgorithm.МНК_для_РВП +
-                                             "\" завершен с ошибкой! Длинна антенны = " + GlbDefs.allHoles.AntennaLenght.ToString(),
-                                             EventLogEntryType.Error,
-                                             (int)GlbDefs.eventID.Error,
-                                             (int)GlbDefs.eCategory.AlgorithmsError);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                if (GlbDefs.MySettings.WriteProtocol == 1)
-                {
-                    strProtocol += GlbDefs.NL + "Непредвиденная ошибка расчета при использовании алгоритма " +
-                                    ((byte)GlbDefs.eAlgorithm.МНК_для_РВП).ToString() + " -> " +
-                                    GlbDefs.eAlgorithm.МНК_для_РВП + " : " + ex.Message + GlbDefs.NL;
-                    if (GlbDefs.MySettings.EventLogWriteEntry == 1)
-                    {
-                        EventLog.WriteEntry(Application.ProductName,
-                                            "Непредвиденная ошибка расчета при использовании алгоритма " +
-                                            ((byte)GlbDefs.eAlgorithm.МНК_для_РВП).ToString() + " -> " +
-                                            GlbDefs.eAlgorithm.МНК_для_РВП + " : " + ex.Message,
-                                            EventLogEntryType.Error,
-                                            (int)GlbDefs.eventID.Error,
-                                            (int)GlbDefs.eCategory.AlgorithmsError);
-                    }
-                    if (GlbDefs.MySettings.WriteNotes == 1)
-                    {
-                        rowAE_Events.Details += "Непредвиденная ошибка расчета при использовании алгоритма " +
-                                                ((byte)GlbDefs.eAlgorithm.МНК_для_РВП).ToString() + " -> " +
-                                                GlbDefs.eAlgorithm.МНК_для_РВП + " : " + ex.Message + GlbDefs.NL;
-                    }
-                    // Запись информации о плохом решении в таблицу "Решений"
-                    DoOneEventGridViewSelectedRow.WriteTableXYZ_Bad_Calculation(EventID, gcsDataSet, strProtocol,
-                                                                               (byte)GlbDefs.eAlgorithm.МНК_для_РВП);
-                }
-            }
-        }
-
-        public bool DirectData(bool UseSphereModelRestriction)
+        public bool DirectData(bool UseSphereModelRestriction, Impulse[] antenna, Coordinates AE_result, double Velocity)
         {
             // Определяем расстояние (в метрах), соответствующее параметру S0TimeError и
             // текущей скорости сигнала АЭ
             // Необходимо учесть, что S0TimeError задается в микросекундах...
+            /*
             double mS0TimeErrorDistance = ((double)GlbDefs.MySettings.S0TimeError / 1000000.0) * Velocity;
 
-            Rmin = double.MaxValue;
-            Point3 AE = new Point3((double)AE_X, (double)AE_Y, (double)AE_Z);
+
 
 
             // Определяем расстояния между найденным решением и скважинами и (если задано)
             // проверяем на соответствие ограничениям сферической модели распространения сигнала АЭ
-            HolesArray[0].Ri = Point3.DistancePoints(new Point3(HolesArray[0].X, HolesArray[0].Y, HolesArray[0].Z),
+
+            */
+            if (AE_result == null)
+            {
+                return false;
+             } 
+            double Rmin = double.MaxValue;
+            int AntennaLenght = antenna.Length - 1;
+            Point3 AE = new Point3((double)AE_result.x, (double)AE_result.y, (double)AE_result.z);
+
+            antenna[0].Ri = Point3.DistancePoints(new Point3(antenna[0].coordinates.x, antenna[0].coordinates.y, antenna[0].coordinates.z),
                                                      AE);
             for (int i = 1; i < AntennaLenght; i++)
             {
-                HolesArray[i].Ri = Point3.DistancePoints(new Point3(HolesArray[i].X, HolesArray[i].Y, HolesArray[i].Z),
-                                                         AE);
-                if (UseSphereModelRestriction && HolesArray[i].Ri < HolesArray[i - 1].Ri - mS0TimeErrorDistance)
-                {
-                    GlbDefs.NumberOfBadPoints++;
-                    return false;
-                }
+                antenna[i].Ri = Point3.DistancePoints(new Point3(antenna[i].coordinates.x, antenna[i].coordinates.y, antenna[i].coordinates.z), AE);
             }
+
 
             // Определяем минимальное расстояние между найденным решением и скважинами
             for (int i = 0; i < AntennaLenght; i++)
-                Rmin = Math.Min(Rmin, (double)HolesArray[i].Ri);
+                Rmin = Math.Min(Rmin, (double)antenna[i].Ri);
 
             // Определяем РВП
             for (int i = 0; i < AntennaLenght; i++)
-                HolesArray[i].DTd = (float)Math.Round((double)(((HolesArray[i].Ri - Rmin) / Velocity) * 1000000.0), 0);
+                antenna[i].DTd = (float)Math.Round((double)(((antenna[i].Ri - Rmin) / Velocity) * 1000000.0), 0);
 
-            debugArray.Add(HolesArray[1].DTd.ToString());
+            //debugArray.Add(antenna[1].DTd.ToString());
 
             return true;
         }
-        */
+
+        public float TimeErrorClassic(Impulse[] antenna)
+        {
+            double Temp = 0;
+            int AntennaLenght = antenna.Length - 1;
+            Temp = 0;
+            for (int i = 0; i < AntennaLenght; i++)
+                Temp += Math.Pow((double)(antenna[i].DT - antenna[i].DTd), 2);
+
+            //return (float)Math.Round((Math.Sqrt(Temp) / (AntennaLenght - 1)), 0);  // Было до 12.07.2009
+            return (float)(Math.Sqrt(Temp) / (AntennaLenght /*- 1 было до 25.01.2014*/));
+        }
+
+        //вычисление расстояния между вычисленными координатами и искомыми 
+        public double deltaR(Coordinates location, Coordinates AE)
+        {
+            if (AE == null)
+            {
+                return Double.MaxValue;
+            }
+            else
+            {
+                double R = Math.Sqrt(Math.Pow(location.x - AE.x, 2) + Math.Pow(location.y - AE.y, 2) + Math.Pow(location.z - AE.z, 2));
+                return R;
+            }
+
+
+        }
+
+        //вычисление по комбинациям по 4 элемента
+        public void combinationCalc(DataGridView impulseGrid, DataGridView resultGrid, decimal velocityBefore, decimal velocityAfter, decimal step, Coordinates location)
+        {
+
+            resultGrid.Rows.Clear();
+
+            int n = impulseGrid.RowCount - 1;
+            int s = 0;
+            //int count = (int)((velocityAfter - velocityBefore) / step); //чтобы не было моментов типа 0000000000.1
+            //int before = (int)(velocityBefore * 10);         // 5000 → 50000
+            //int after  = (int)(velocityAfter * 10);        // 5010 → 50100
+            DateTime firstImp = DateTime.MinValue;
+            for (int i = 0; i < n - 3; i++)
+            {
+                for (int j = i + 1; j < n - 2; j++)
+                {
+                    for (int k = j + 1; k < n - 1; k++)
+                    {
+                        for (int l = k + 1; l < n; l++)
+                        {
+                            var indexes = new List<int> { i, j, k, l };
+                            var selectedRows = indexes
+                                .Select(index => impulseGrid.Rows[index])
+                                .Where(r => !r.IsNewRow)
+                                .ToList();
+                            Impulse[] antenna = setAntenna(selectedRows);
+                            //for (double velocity = velocityBefore; velocity < velocityAfter; velocity += step)
+                            decimal velocity = velocityBefore;
+                            double Rmin = Double.MaxValue, AE_Xmin = 0, AE_Ymin = 0, AE_Zmin = 0, X0 = 0, Y0 = 0, Z0 = 0;
+                            decimal velocityMin = 0;
+                            float minTimeError = 0;
+                            String antennaName = "";
+                            //while (velocity <= velocityAfter)
+                            //while (s <= count)
+                            //while (before <= after)
+                            while (velocity <= velocityAfter)
+                            {
+                                //velocity = velocityBefore + k * step; //чтобы не было моментов типа 0000000000.1
+                                //velocity = before/10; //чтобы не было моментов типа 0000000000.1
+                                //алг 30
+                                Coordinates AE = getAECoordinates(antenna, (double)velocity);
+                                DirectData(false, antenna, AE, (double)velocity);
+                                float TimeError = TimeErrorClassic(antenna);
+                                double R = deltaR(location, AE);
+                                if (R < Rmin)
+                                {
+                                    firstImp = antenna[0].date;
+                                    Rmin = R;
+                                    AE_Xmin = AE.x;
+                                    AE_Ymin = AE.y;
+                                    AE_Zmin = AE.z;
+                                    X0 = location.x;
+                                    Y0 = location.y;
+                                    Z0 = location.z;
+                                    velocityMin = velocity;
+                                    minTimeError = TimeError;
+                                    antennaName = antenna[0].holeName+"-"+ antenna[1].holeName + "-" + antenna[2].holeName + "-" + antenna[3].holeName;
+                                }
+                                //velocity += step;
+                                //s++; //чтобы не было моментов типа 0000000000.1
+                                velocity += step;
+                            }
+                            //сохранение названия антенны, значений скорости, Rмин, координат AE
+                            if(antennaName!="")
+                                resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

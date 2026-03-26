@@ -20,7 +20,9 @@ namespace ImpHoleCalculation
 
         //для алг30
         public double DT;
+        public double DTd;
         public Coordinates coordinates;
+        public double Ri;
 
         public Impulse(double id, String hwid, DateTime date, String holeName, double amplitude, double duration, DataGridViewRow row)
         {

@@ -2172,14 +2172,24 @@ while (reader.Read())
 
         private void CalcButton_Click(object sender, EventArgs e)
         {
-            //combinationCalc(DataGridView impulseGrid, int velocityBefore, int velocityAfter, int step);
+            
             Alg30 alg30= new Alg30();
+            /*
             //Coordinates []coordinates = alg30.getImpulsesCoordinates(dataGridView_Imp);
             //double []DT = alg30.getDT(dataGridView_Imp);
             Impulse[] antenna = alg30.setAntenna(dataGridView_Imp);
             Coordinates AE = alg30.getAECoordinates(antenna, 5000);
+
+            */
+            decimal before = Decimal.Parse(velocityBefore.Text);
+            decimal after = Decimal.Parse(velocityAfter.Text);
+            decimal step = Decimal.Parse(velocityStep.Text);
+            double locationX = Double.Parse(real_X.Text);
+            double locationY = Double.Parse(real_Y.Text);
+            double locationZ = Double.Parse(real_Z.Text);
+            Coordinates location = new Coordinates(locationX, locationY, locationZ);
+            alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location);
             MessageBox.Show("Окончание расчета");
-            //alg30.combinationCalc(dataGridView_Imp, 0, 0, 0);
         }
     }
 }

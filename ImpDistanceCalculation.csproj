@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="Matrix.cs" />
     <Compile Include="Point3DExtensions.cs" />
+    <Compile Include="Points.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AutorizeForm.resx">
