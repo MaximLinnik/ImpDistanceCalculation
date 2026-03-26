@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ImpHoleCalculation.Properties {
+namespace ImpDistanceCalculation.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -236,6 +236,78 @@ namespace ImpHoleCalculation.Properties {
             }
             set {
                 this["Filtration"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string vBefore {
+            get {
+                return ((string)(this["vBefore"]));
+            }
+            set {
+                this["vBefore"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string vAfter {
+            get {
+                return ((string)(this["vAfter"]));
+            }
+            set {
+                this["vAfter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string vStep {
+            get {
+                return ((string)(this["vStep"]));
+            }
+            set {
+                this["vStep"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string trueX {
+            get {
+                return ((string)(this["trueX"]));
+            }
+            set {
+                this["trueX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string trueY {
+            get {
+                return ((string)(this["trueY"]));
+            }
+            set {
+                this["trueY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string trueZ {
+            get {
+                return ((string)(this["trueZ"]));
+            }
+            set {
+                this["trueZ"] = value;
             }
         }
     }

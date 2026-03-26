@@ -1,4 +1,4 @@
-﻿namespace ImpHoleCalculation
+﻿namespace ImpDistanceCalculation
 {
     partial class AutorizeForm
     {

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BE079E7C-EA6F-4C2A-8152-EC4665D63561}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ImpHoleCalculation</RootNamespace>
-    <AssemblyName>ImpHoleCalculation</AssemblyName>
+    <RootNamespace>ImpDistanceCalculation</RootNamespace>
+    <AssemblyName>ImpDistanceCalculation</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

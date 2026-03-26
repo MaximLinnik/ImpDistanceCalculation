@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 using System.Data.SqlClient;
 
-namespace ImpHoleCalculation
+namespace ImpDistanceCalculation
 {
     public partial class AutorizeForm : Form
     {

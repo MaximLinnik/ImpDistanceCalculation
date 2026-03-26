@@ -13,7 +13,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Threading;
 using System.IO;
 
-namespace ImpHoleCalculation
+namespace ImpDistanceCalculation
 {
 
     public partial class MainForm : Form
@@ -62,6 +62,9 @@ namespace ImpHoleCalculation
         {
             Properties.Settings.Default.DateBef = dateBeforeText.Text;
             Properties.Settings.Default.DateAft = dateAfterText.Text;
+            Properties.Settings.Default.vBefore = velocityBefore.Text;
+            Properties.Settings.Default.vAfter = velocityAfter.Text;
+            Properties.Settings.Default.vStep = velocityStep.Text;
             if (OneRowCheckBox.Checked) Properties.Settings.Default.OneHoleCheck = true;//выбр одна скважина
             else Properties.Settings.Default.OneHoleCheck = false;
             if (autosaveCheckBox.Checked) Properties.Settings.Default.AutoSaveExcel = true;//автосохр в эксель
@@ -2051,6 +2054,7 @@ while (reader.Read())
 
         private void AllClustersForm_Load(object sender, EventArgs e)
         {
+            
             dateBeforeText.Text = Properties.Settings.Default.DateBef;
             dateAfterText.Text = Properties.Settings.Default.DateAft;
             OneRowCheckBox.Checked = Properties.Settings.Default.OneHoleCheck;// выбрана одна скважина
@@ -2197,6 +2201,11 @@ while (reader.Read())
             res = res +"\\" +"result.xlsx";
             excel("Антенны",dataGridResult, res);
             MessageBox.Show("Окончание расчета");
+        }
+
+        private void DataGridView_Imp_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

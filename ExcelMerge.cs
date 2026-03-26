@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 using Excel = Microsoft.Office.Interop.Excel;
 
-namespace ImpHoleCalculation
+namespace ImpDistanceCalculation
 {
     class ExcelMerge
     {

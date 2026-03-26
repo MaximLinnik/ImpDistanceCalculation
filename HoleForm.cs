@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Excel = Microsoft.Office.Interop.Excel;
 
-namespace ImpHoleCalculation
+namespace ImpDistanceCalculation
 {
     public partial class HoleForm : Form
     {
