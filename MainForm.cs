@@ -1939,7 +1939,8 @@ while (reader.Read())
                 {
                     for (int j = 0; j < dataGridView.Columns.Count; j++)
                     {
-                        worksheet.Cells[cellRowIndex, cellColumnIndex] = dataGridView.Rows[i].Cells[j].Value.ToString();
+                        //worksheet.Cells[cellRowIndex, cellColumnIndex] = dataGridView.Rows[i].Cells[j].Value.ToString();
+                        worksheet.Cells[cellRowIndex, cellColumnIndex] = dataGridView.Rows[i].Cells[j].Value;
                         cellColumnIndex++;
                     }
                     cellColumnIndex = 1;
@@ -2189,6 +2190,12 @@ while (reader.Read())
             double locationZ = Double.Parse(real_Z.Text);
             Coordinates location = new Coordinates(locationX, locationY, locationZ);
             alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location);
+
+            string res = "";
+            string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
+            res = System.IO.Path.GetDirectoryName(strExeFilePath); //папка
+            res = res +"\\" +"result.xlsx";
+            excel("Антенны",dataGridResult, res);
             MessageBox.Show("Окончание расчета");
         }
     }
