@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace ImpDistanceCalculation
 {
@@ -33,7 +34,7 @@ namespace ImpDistanceCalculation
             DT[0] = 0;
             for (int i = 1; i < count; i++)
             {
-                DT[i] = Math.Abs((long.Parse(rows[0].Cells[7].Value.ToString()) - long.Parse(rows[i].Cells[7].Value.ToString())) / 10);
+                DT[i] = Math.Abs((long.Parse(rows[0].Cells[8].Value.ToString()) - long.Parse(rows[i].Cells[8].Value.ToString())) / 10);
             }
             return DT;
         }
@@ -61,9 +62,9 @@ namespace ImpDistanceCalculation
             double x, y, z;
             for (int i = 0; i < count; i++)
             {
-                x = Double.Parse(rows[i].Cells[10].Value.ToString());
-                y = Double.Parse(rows[i].Cells[11].Value.ToString());
-                z = Double.Parse(rows[i].Cells[12].Value.ToString());
+                x = Double.Parse(rows[i].Cells[11].Value.ToString());
+                y = Double.Parse(rows[i].Cells[12].Value.ToString());
+                z = Double.Parse(rows[i].Cells[13].Value.ToString());
                 coordinates[i] = new Coordinates(x, y, z);
             }
             return coordinates;
@@ -101,7 +102,13 @@ namespace ImpDistanceCalculation
             {
                 double id = Double.Parse(rows[i].Cells[1].Value.ToString());
                 String hwid = rows[i].Cells[2].Value.ToString();
-                DateTime date = DateTime.Parse(rows[i].Cells[3].Value.ToString());
+                DateTime date1 = (DateTime)rows[i].Cells[3].Value;
+                string testWithMs = date1.ToString("dd.MM.yyyy HH:mm:ss.fff");
+                DateTime date = DateTime.ParseExact(
+    testWithMs,
+    "dd.MM.yyyy HH:mm:ss.fff",
+    CultureInfo.InvariantCulture
+);
                 String holeName = rows[i].Cells[4].Value.ToString();
                 double amplitude = Double.Parse(rows[i].Cells[5].Value.ToString());
                 double duration = Double.Parse(rows[i].Cells[6].Value.ToString());
@@ -361,6 +368,7 @@ namespace ImpDistanceCalculation
         {
 
             resultGrid.Rows.Clear();
+            resultGrid.Columns[1].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
 
             int n = impulseGrid.RowCount - 1;
             int s = 0;
@@ -419,8 +427,11 @@ namespace ImpDistanceCalculation
                                 velocity += step;
                             }
                             //сохранение названия антенны, значений скорости, Rмин, координат AE
-                            if(antennaName!="")
-                                resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0);
+                            if (antennaName != "")
+                            {
+                                double RtoX0 = deltaR(location, antenna[0].coordinates);
+                                resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0, RtoX0);
+                            }
                         }
                     }
                 }

@@ -65,6 +65,9 @@ namespace ImpDistanceCalculation
             Properties.Settings.Default.vBefore = velocityBefore.Text;
             Properties.Settings.Default.vAfter = velocityAfter.Text;
             Properties.Settings.Default.vStep = velocityStep.Text;
+            Properties.Settings.Default.trueX = real_X.Text;
+            Properties.Settings.Default.trueY = real_Y.Text;
+            Properties.Settings.Default.trueZ = real_Z.Text;
             if (OneRowCheckBox.Checked) Properties.Settings.Default.OneHoleCheck = true;//выбр одна скважина
             else Properties.Settings.Default.OneHoleCheck = false;
             if (autosaveCheckBox.Checked) Properties.Settings.Default.AutoSaveExcel = true;//автосохр в эксель
@@ -650,6 +653,7 @@ namespace ImpDistanceCalculation
 
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             SqlConnection con = new SqlConnection(connectionString);
+            SqlConnection con2 = new SqlConnection(connectionString);
             String query = @"select Impulses.ID, Impulses.HWID, Impulses.ImpulseTime, Impulses.Amplitude, Impulses.Duration  
                             from Impulses
                              " +
@@ -677,7 +681,7 @@ namespace ImpDistanceCalculation
 
                 //тики в дату
                 DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
-                String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
+                String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 String amplitude = reader[3].ToString();
                 String duration = reader[4].ToString();
 
@@ -706,15 +710,19 @@ namespace ImpDistanceCalculation
                 ImpulsesGridView.Rows[i].Cells[0].Value = i + 1;
                 ImpulsesGridView.Rows[i].Cells[1].Value = double.Parse(impID);
                 ImpulsesGridView.Rows[i].Cells[2].Value = double.Parse(hwid);
+                ImpulsesGridView.Columns[3].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
                 ImpulsesGridView.Rows[i].Cells[3].Value = DateTime.Parse(impDate);
                 ImpulsesGridView.Rows[i].Cells[4].Value = holeName.getName(); // имя скважины
                 ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(amplitude); // амплитуда
                 ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(duration); // длительность
-                ImpulsesGridView.Rows[i].Cells[7].Value = long.Parse(reader[2].ToString()); // тики
+                double freq = Impulse.CalcFrequencyNew(con2, impID);
+                ImpulsesGridView.Rows[i].Cells[7].Value = freq;
+                ImpulsesGridView.Rows[i].Cells[8].Value = long.Parse(reader[2].ToString()); // тики
+
                 //координаты скважины
-                ImpulsesGridView.Rows[i].Cells[10].Value = holeName.getX();
-                ImpulsesGridView.Rows[i].Cells[11].Value = holeName.getY();
-                ImpulsesGridView.Rows[i].Cells[12].Value = holeName.getZ(); 
+                ImpulsesGridView.Rows[i].Cells[11].Value = holeName.getX();
+                ImpulsesGridView.Rows[i].Cells[12].Value = holeName.getY();
+                ImpulsesGridView.Rows[i].Cells[13].Value = holeName.getZ(); 
                 /*
                 ImpulsesGridView.Rows[i].Cells[8].Value = 0; // чекбокс true hwid
                 ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0; // чек
@@ -778,7 +786,7 @@ namespace ImpDistanceCalculation
 
                 //тики в дату
                 DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
-                String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
+                String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 String amplitude = reader[3].ToString();
                 String duration = reader[4].ToString();
 
@@ -871,7 +879,7 @@ namespace ImpDistanceCalculation
 
                     //тики в дату
                     DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
-                    String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
+                    String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     String amplitude = reader[3].ToString();
                     String duration = reader[4].ToString();
 
@@ -962,7 +970,7 @@ namespace ImpDistanceCalculation
 
                     //тики в дату
                     DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
-                    String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
+                    String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     String amplitude = reader[3].ToString();
                     String duration = reader[4].ToString();
 
@@ -1027,7 +1035,7 @@ namespace ImpDistanceCalculation
 
                     //тики в дату
                     DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
-                    String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
+                    String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     String amplitude = reader[3].ToString();
                     String duration = reader[4].ToString();
 
@@ -1106,7 +1114,7 @@ namespace ImpDistanceCalculation
 
                 //тики в дату
                 DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
-                String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss");
+                String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 String amplitude = reader[3].ToString();
                 String duration = reader[4].ToString();
 
@@ -1942,8 +1950,16 @@ while (reader.Read())
                 {
                     for (int j = 0; j < dataGridView.Columns.Count; j++)
                     {
-                        //worksheet.Cells[cellRowIndex, cellColumnIndex] = dataGridView.Rows[i].Cells[j].Value.ToString();
-                        worksheet.Cells[cellRowIndex, cellColumnIndex] = dataGridView.Rows[i].Cells[j].Value;
+                        var value = dataGridView.Rows[i].Cells[j].Value;
+                        if (value is DateTime dt)
+                        {
+                            // Формат с миллисекундами
+                            worksheet.Cells[cellRowIndex, cellColumnIndex] = dt.ToString("dd.MM.yyyy HH:mm:ss.fff");
+                        }
+                        else
+                        {
+                            worksheet.Cells[cellRowIndex, cellColumnIndex] = value;
+                        }
                         cellColumnIndex++;
                     }
                     cellColumnIndex = 1;
@@ -2057,6 +2073,12 @@ while (reader.Read())
             
             dateBeforeText.Text = Properties.Settings.Default.DateBef;
             dateAfterText.Text = Properties.Settings.Default.DateAft;
+            velocityBefore.Text = Properties.Settings.Default.vBefore;
+            velocityAfter.Text = Properties.Settings.Default.vAfter;
+            velocityStep.Text = Properties.Settings.Default.vStep;
+            real_X.Text = Properties.Settings.Default.trueX;
+            real_Y.Text = Properties.Settings.Default.trueY;
+            real_Z.Text = Properties.Settings.Default.trueZ;
             OneRowCheckBox.Checked = Properties.Settings.Default.OneHoleCheck;// выбрана одна скважина
             autosaveCheckBox.Checked = Properties.Settings.Default.AutoSaveExcel; //автосохр в эксель
             doubleExcelCheckBox.Checked = Properties.Settings.Default.AutoSaveExcelBothFiles; //сохр обоих файлов
@@ -2150,6 +2172,7 @@ while (reader.Read())
         {
 
             dataGridView_Imp.Rows.Clear();
+            dataGridView_Imp.Columns[3].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
 
             foreach (DataGridViewRow row in ImpulsesGridView.SelectedRows)
@@ -2161,10 +2184,10 @@ while (reader.Read())
 
             foreach (DataGridViewRow row in rows)
             {
-                string[] rowData = new string[row.Cells.Count];
+                object[] rowData = new object[row.Cells.Count];
 
                 for (int i = 0; i < row.Cells.Count; i++)
-                    rowData[i] = row.Cells[i].Value?.ToString();
+                    rowData[i] = row.Cells[i].Value;
 
                 dataGridView_Imp.Rows.Add(rowData);
             }

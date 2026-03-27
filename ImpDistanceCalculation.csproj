@@ -92,6 +92,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Matrix.cs" />
+    <Compile Include="Pack.cs" />
     <Compile Include="Point3DExtensions.cs" />
     <Compile Include="Points.cs" />
     <Compile Include="Program.cs" />
