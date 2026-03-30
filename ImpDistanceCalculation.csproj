@@ -72,6 +72,12 @@
     </Compile>
     <Compile Include="Calc30_adaptation.cs" />
     <Compile Include="Coordinates.cs" />
+    <Compile Include="CoordinatesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CoordinatesForm.Designer.cs">
+      <DependentUpon>CoordinatesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HoleParametrs.cs" />
     <Compile Include="ExcelMerge.cs" />
     <Compile Include="ExcelRow.cs" />
@@ -99,6 +105,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AutorizeForm.resx">
       <DependentUpon>AutorizeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CoordinatesForm.resx">
+      <DependentUpon>CoordinatesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HoleForm.resx">
       <DependentUpon>HoleForm.cs</DependentUpon>

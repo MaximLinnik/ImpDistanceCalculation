@@ -65,9 +65,11 @@ namespace ImpDistanceCalculation
             Properties.Settings.Default.vBefore = velocityBefore.Text;
             Properties.Settings.Default.vAfter = velocityAfter.Text;
             Properties.Settings.Default.vStep = velocityStep.Text;
+            /*
             Properties.Settings.Default.trueX = real_X.Text;
             Properties.Settings.Default.trueY = real_Y.Text;
             Properties.Settings.Default.trueZ = real_Z.Text;
+            */
             if (OneRowCheckBox.Checked) Properties.Settings.Default.OneHoleCheck = true;//выбр одна скважина
             else Properties.Settings.Default.OneHoleCheck = false;
             if (autosaveCheckBox.Checked) Properties.Settings.Default.AutoSaveExcel = true;//автосохр в эксель
@@ -2076,9 +2078,11 @@ while (reader.Read())
             velocityBefore.Text = Properties.Settings.Default.vBefore;
             velocityAfter.Text = Properties.Settings.Default.vAfter;
             velocityStep.Text = Properties.Settings.Default.vStep;
+            /*
             real_X.Text = Properties.Settings.Default.trueX;
             real_Y.Text = Properties.Settings.Default.trueY;
             real_Z.Text = Properties.Settings.Default.trueZ;
+            */
             OneRowCheckBox.Checked = Properties.Settings.Default.OneHoleCheck;// выбрана одна скважина
             autosaveCheckBox.Checked = Properties.Settings.Default.AutoSaveExcel; //автосохр в эксель
             doubleExcelCheckBox.Checked = Properties.Settings.Default.AutoSaveExcelBothFiles; //сохр обоих файлов
@@ -2209,13 +2213,24 @@ while (reader.Read())
             Coordinates AE = alg30.getAECoordinates(antenna, 5000);
 
             */
+            Coordinates location = null;
+            CoordinatesForm coordinateForm = new CoordinatesForm();
+            if (coordinateForm.ShowDialog() == DialogResult.OK)
+            {
+                //coordinateForm.Show();
+                location = coordinateForm.location;
+            }
+            else { return; }
+
             decimal before = Decimal.Parse(velocityBefore.Text);
             decimal after = Decimal.Parse(velocityAfter.Text);
             decimal step = Decimal.Parse(velocityStep.Text);
+            /*
             double locationX = Double.Parse(real_X.Text);
             double locationY = Double.Parse(real_Y.Text);
             double locationZ = Double.Parse(real_Z.Text);
             Coordinates location = new Coordinates(locationX, locationY, locationZ);
+            */
             alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location);
 
             string res = "";

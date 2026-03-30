@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ImpDistanceCalculation
 {
-    class Coordinates
+    public class Coordinates
     {
         public double x;
         public double y;

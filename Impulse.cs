@@ -24,6 +24,7 @@ namespace ImpDistanceCalculation
         public double DTd;
         public Coordinates coordinates;
         public double Ri;
+        public double freq;
 
         public Impulse(double id, String hwid, DateTime date, String holeName, double amplitude, double duration, DataGridViewRow row)
         {
@@ -37,7 +38,7 @@ namespace ImpDistanceCalculation
         }
 
         //для алг 30
-        public Impulse(double id, String hwid, DateTime date, String holeName, double amplitude, double duration, Coordinates coordinates, double DT)
+        public Impulse(double id, String hwid, DateTime date, String holeName, double amplitude, double duration, double freq, Coordinates coordinates, double DT)
         {
             this.id = id;
             this.hwid = hwid;
@@ -45,6 +46,7 @@ namespace ImpDistanceCalculation
             this.holeName = holeName;
             this.amplitude = amplitude;
             this.duration = duration;
+            this.freq = freq;
             this.coordinates = coordinates;
             this.DT = DT;
         }

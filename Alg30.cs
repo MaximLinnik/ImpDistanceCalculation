@@ -86,7 +86,8 @@ namespace ImpDistanceCalculation
                 String holeName = impulseGrid.Rows[i].Cells[4].Value.ToString();
                 double amplitude = Double.Parse(impulseGrid.Rows[i].Cells[5].Value.ToString());
                 double duration = Double.Parse(impulseGrid.Rows[i].Cells[6].Value.ToString());
-                antenna[i] = new Impulse(id, hwid, date, holeName, amplitude, duration, coordinates[i], DT[i]);
+                double freq = Double.Parse(impulseGrid.Rows[i].Cells[7].Value.ToString());
+                antenna[i] = new Impulse(id, hwid, date, holeName, amplitude, duration, freq, coordinates[i], DT[i]);
             }
             return antenna;
         }
@@ -112,10 +113,12 @@ namespace ImpDistanceCalculation
                 String holeName = rows[i].Cells[4].Value.ToString();
                 double amplitude = Double.Parse(rows[i].Cells[5].Value.ToString());
                 double duration = Double.Parse(rows[i].Cells[6].Value.ToString());
-                antenna[i] = new Impulse(id, hwid, date, holeName, amplitude, duration, coordinates[i], DT[i]);
+                double freq = Double.Parse(rows[i].Cells[7].Value.ToString());
+                antenna[i] = new Impulse(id, hwid, date, holeName, amplitude, duration, freq, coordinates[i], DT[i]);
             }
             return antenna;
         }
+
 
 
         //вычисление AE_X, AE_Y, AE_Z (из Calc30 -> CalcAlgorithm30main)
@@ -359,9 +362,37 @@ namespace ImpDistanceCalculation
                 double R = Math.Sqrt(Math.Pow(location.x - AE.x, 2) + Math.Pow(location.y - AE.y, 2) + Math.Pow(location.z - AE.z, 2));
                 return R;
             }
-
-
         }
+
+        //среднее расстояние до датчиков
+        public double avgDeltaR(Impulse[] antenna, Coordinates location)
+        {
+            double R = 0; 
+            for(int i = 0; i< antenna.Length; i++)
+            {
+                R+= Math.Sqrt(Math.Pow(location.x - antenna[i].coordinates.x, 2) + Math.Pow(location.y - antenna[i].coordinates.y, 2) + Math.Pow(location.z - antenna[i].coordinates.z, 2));
+            }
+
+            double avg = R / antenna.Length;
+            return avg;
+        }
+
+
+        //вычисление среднегеометрического значения частоты
+        public double avgFreq(Impulse[] antenna)
+        {
+            double avg = 0;
+            double length = antenna.Length;
+            double freqMult = 1;
+            for (int i = 0; i < length; i++)
+            {
+                freqMult *= antenna[i].freq;
+            }
+            avg = Math.Pow(freqMult, 1.0/length);
+            return avg;
+        }
+
+
 
         //вычисление по комбинациям по 4 элемента
         public void combinationCalc(DataGridView impulseGrid, DataGridView resultGrid, decimal velocityBefore, decimal velocityAfter, decimal step, Coordinates location)
@@ -430,7 +461,9 @@ namespace ImpDistanceCalculation
                             if (antennaName != "")
                             {
                                 double RtoX0 = deltaR(location, antenna[0].coordinates);
-                                resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0, RtoX0);
+                                double freqGeom = avgFreq(antenna);
+                                double avgDistance = avgDeltaR(antenna, location);
+                                resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0, RtoX0, freqGeom, avgDistance);
                             }
                         }
                     }
