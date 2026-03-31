@@ -716,7 +716,7 @@ namespace ImpDistanceCalculation
                 ImpulsesGridView.Columns["ImpDate_DB_Akaike"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff";
                 DateTime dateImpulse = DateTime.Parse(impDate);
                 ImpulsesGridView.Rows[i].Cells["ImpDate_DB"].Value = dateImpulse;
-                double aic = Impulse.AIC(this.connectionString, impID);
+                double aic = Akaike.AIC(this.connectionString, impID);
                 DateTime dateImpulseAIC = dateImpulse.AddMilliseconds(-aic);
                 ImpulsesGridView.Rows[i].Cells["ImpDate_DB_Akaike"].Value = dateImpulseAIC;
                 ImpulsesGridView.Rows[i].Cells["HoleName"].Value = holeName.getName(); // имя скважины
@@ -2260,7 +2260,7 @@ while (reader.Read())
             byte []data = Impulse.frontData(con, "1");
             double[] waveform = Impulse.UnpackSignal(data);
             double[]xp = Impulse.getTimeX(data);
-            double time = Impulse.calculationAIC(waveform, xp);
+            double time = Akaike.calculationAIC(waveform, xp);
         }
     }
 }

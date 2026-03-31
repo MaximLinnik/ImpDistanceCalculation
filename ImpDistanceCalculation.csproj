@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Akaike.cs" />
     <Compile Include="Alg30.cs" />
     <Compile Include="AutorizeForm.cs">
       <SubType>Form</SubType>
