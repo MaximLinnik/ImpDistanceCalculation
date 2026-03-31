@@ -288,6 +288,130 @@ namespace ImpDistanceCalculation
             return Freq;
         }
 
+        //получение данных с фронта импульсов
+        public static byte[] frontData(SqlConnection con, String imp)
+        {
+            //byte[] data = new byte[256];
+            byte[] frontData = null;
+            byte []impulsesData = null;
+            byte[] data = null;
+            int id = int.Parse(imp);
+            String query = @"select Fronts.Data, ImpulsesData.Data
+                            from  Impulses, ImpulsesData, Fronts
+                            where  Impulses.FrontID = Fronts.ID AND Impulses.ImpulseDataID = ImpulsesData.ID AND Impulses.ID = " + imp;
+
+
+            con.Open();
+            SqlCommand command = new SqlCommand(query, con);
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+
+                frontData = (byte[])reader[0];
+                impulsesData = (byte[])reader[1];
+            }
+            con.Close();
+            //data = frontData.Concat(impulsesData).ToArray();
+            data = frontData;
+            return data;
+        }
+
+        //для Акаике
+        //получение амплитуд, как на графике фронтов
+        public static double[] UnpackSignal(byte[] signal_data)
+        {
+            
+            var waveform = new double[signal_data.Length / 2];
+
+            for (var i = 0; i < waveform.Length; ++i)
+            {
+                waveform[i] = TrembleMeasureSystem.Moxa.CPack.UnPack((ushort)((ushort)(signal_data[2 * i] << 8) | (ushort)signal_data[2 * i + 1]), 2);
+                waveform[i] = (double)(waveform[i] * 3.18E-06 /*<- QuantumV*/);
+            }
+
+            return waveform;
+        }
+
+        //получение координат OX (время) относительно фронта
+        public static double[] getTimeX(byte[] signal_data)
+        {
+            var XP = new double[signal_data.Length / 2];
+            ushort QuantumT = 25;
+            for (var i = 0; i < XP.Length; ++i)
+            {
+                XP[i] = (double)(i * QuantumT / 1000.0);
+            }
+            return XP;
+        }
+
+        //расчет по самой формуле Акаике
+        public static double calculationAIC(double[] waveform, double[] XP)
+        {
+            int n = waveform.Length;
+
+            // формула из двух частей. Они считаются отдельно
+            // Префиксные суммы
+            double[] prefixSum = new double[n + 1];
+            double[] prefixSumSq = new double[n + 1];
+
+            for (int i = 0; i < n; i++)
+            {
+                prefixSum[i + 1] = prefixSum[i] + waveform[i];
+                prefixSumSq[i + 1] = prefixSumSq[i] + waveform[i] * waveform[i];
+            }
+
+            double minAIC = double.MaxValue;
+            int bestK = -1;
+
+            // k — точка разделения
+            for (int k = 1; k < n - 1; k++)
+            {
+                // --- Левая часть [0, k-1] 
+                int len1 = k;
+                double sum1 = prefixSum[k] - prefixSum[0];
+                double sumSq1 = prefixSumSq[k] - prefixSumSq[0];
+
+                double mean1 = sum1 / len1;
+                double var1 = (sumSq1 / len1) - (mean1 * mean1);
+
+                // --- Правая часть [k, n-1]
+                int len2 = n - k;
+                double sum2 = prefixSum[n] - prefixSum[k];
+                double sumSq2 = prefixSumSq[n] - prefixSumSq[k];
+
+                double mean2 = sum2 / len2;
+                double var2 = (sumSq2 / len2) - (mean2 * mean2);
+
+                // защита от log(0)
+                if (var1 <= 0) var1 = 1e-12;
+                if (var2 <= 0) var2 = 1e-12;
+
+                double aic = len1 * Math.Log(var1) + len2 * Math.Log(var2);
+
+                if (minAIC > aic)
+                {
+                    minAIC = aic;
+                    bestK = k;
+                }
+            }
+
+            double time = XP[bestK]; //результирующее значение, от которого отнимается
+            return time;
+        }
+
+        //полное вычисление по алгоритму Акаике
+        public static double AIC(String connectionString, String impulseID)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            byte[] rawData = Impulse.frontData(con, impulseID);
+            double[] waveform = Impulse.UnpackSignal(rawData);
+            double[] xp = Impulse.getTimeX(rawData);
+            double time = Impulse.calculationAIC(waveform, xp);
+            return time;
+        }
+
+
         static public int GetHWIDVersion(int mHWID, long ImpulseTime)
         {
             int mPackVersion;
@@ -346,10 +470,12 @@ namespace ImpDistanceCalculation
             */
             //else // Новый датчик
             // {
-            mPackVersion = 2;
+                mPackVersion = 2;
             //}
             return mPackVersion;
         }
+
+
     }
 
 

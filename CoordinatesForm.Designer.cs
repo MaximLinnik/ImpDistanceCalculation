@@ -127,7 +127,6 @@
             this.Controls.Add(this.locationX);
             this.Controls.Add(this.startButtonTest);
             this.Name = "CoordinatesForm";
-            this.Text = "CoordinatesForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CoordinatesForm_FormClosed);
             this.Load += new System.EventHandler(this.CoordinatesForm_Load);
             this.ResumeLayout(false);

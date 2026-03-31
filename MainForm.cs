@@ -2201,6 +2201,8 @@ while (reader.Read())
 
             MessageBox.Show("Выбрано строк: " + rows.Count);
         }
+        //получение фронта импульса
+
 
         private void CalcButton_Click(object sender, EventArgs e)
         {
@@ -2244,6 +2246,16 @@ while (reader.Read())
         private void DataGridView_Imp_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void Test_button_Click(object sender, EventArgs e)
+        {
+            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+            SqlConnection con = new SqlConnection(connectionString);
+            byte []data = Impulse.frontData(con, "1");
+            double[] waveform = Impulse.UnpackSignal(data);
+            double[]xp = Impulse.getTimeX(data);
+            double time = Impulse.calculationAIC(waveform, xp);
         }
     }
 }
