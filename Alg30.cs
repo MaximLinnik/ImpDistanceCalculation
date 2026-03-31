@@ -22,7 +22,7 @@ namespace ImpDistanceCalculation
             DT[0] = 0;
             for(int i = 1; i < count; i++)
             {
-                DT[i] = Math.Abs((long.Parse(impulseGrid.Rows[0].Cells[7].Value.ToString()) - long.Parse(impulseGrid.Rows[i].Cells[7].Value.ToString()))/10);
+                DT[i] = Math.Abs((long.Parse(impulseGrid.Rows[0].Cells["data_Date_Ticks"].Value.ToString()) - long.Parse(impulseGrid.Rows[i].Cells["data_Date_Ticks"].Value.ToString()))/10);
             }
             return DT;
         }
@@ -34,7 +34,7 @@ namespace ImpDistanceCalculation
             DT[0] = 0;
             for (int i = 1; i < count; i++)
             {
-                DT[i] = Math.Abs((long.Parse(rows[0].Cells[8].Value.ToString()) - long.Parse(rows[i].Cells[8].Value.ToString())) / 10);
+                DT[i] = Math.Abs((long.Parse(rows[0].Cells["data_Date_Ticks"].Value.ToString()) - long.Parse(rows[i].Cells["data_Date_Ticks"].Value.ToString())) / 10);
             }
             return DT;
         }
@@ -47,9 +47,9 @@ namespace ImpDistanceCalculation
             double x, y, z;
             for (int i = 0; i < count; i++)
             {
-                x = Double.Parse(impulseGrid.Rows[i].Cells[10].Value.ToString());
-                y = Double.Parse(impulseGrid.Rows[i].Cells[11].Value.ToString());
-                z = Double.Parse(impulseGrid.Rows[i].Cells[12].Value.ToString());
+                x = Double.Parse(impulseGrid.Rows[i].Cells["data_X"].Value.ToString());
+                y = Double.Parse(impulseGrid.Rows[i].Cells["data_Y"].Value.ToString());
+                z = Double.Parse(impulseGrid.Rows[i].Cells["data_Z"].Value.ToString());
                 coordinates[i] = new Coordinates(x, y, z);
             }
             return coordinates;
@@ -62,9 +62,9 @@ namespace ImpDistanceCalculation
             double x, y, z;
             for (int i = 0; i < count; i++)
             {
-                x = Double.Parse(rows[i].Cells[11].Value.ToString());
-                y = Double.Parse(rows[i].Cells[12].Value.ToString());
-                z = Double.Parse(rows[i].Cells[13].Value.ToString());
+                x = Double.Parse(rows[i].Cells["data_X"].Value.ToString());
+                y = Double.Parse(rows[i].Cells["data_Y"].Value.ToString());
+                z = Double.Parse(rows[i].Cells["data_Z"].Value.ToString());
                 coordinates[i] = new Coordinates(x, y, z);
             }
             return coordinates;
@@ -80,13 +80,13 @@ namespace ImpDistanceCalculation
             for (int i = 0; i < count; i++)
             {
 
-                double id = Double.Parse(impulseGrid.Rows[i].Cells[1].Value.ToString());
-                String hwid = impulseGrid.Rows[i].Cells[2].Value.ToString();
-                DateTime date = DateTime.Parse(impulseGrid.Rows[i].Cells[3].Value.ToString());
-                String holeName = impulseGrid.Rows[i].Cells[4].Value.ToString();
-                double amplitude = Double.Parse(impulseGrid.Rows[i].Cells[5].Value.ToString());
-                double duration = Double.Parse(impulseGrid.Rows[i].Cells[6].Value.ToString());
-                double freq = Double.Parse(impulseGrid.Rows[i].Cells[7].Value.ToString());
+                double id = Double.Parse(impulseGrid.Rows[i].Cells["data_ID"].Value.ToString());
+                String hwid = impulseGrid.Rows[i].Cells["data_HWID"].Value.ToString();
+                DateTime date = DateTime.Parse(impulseGrid.Rows[i].Cells["data_ImpDate_DB"].Value.ToString());
+                String holeName = impulseGrid.Rows[i].Cells["data_HoleName"].Value.ToString();
+                double amplitude = Double.Parse(impulseGrid.Rows[i].Cells["data_Amplitude"].Value.ToString());
+                double duration = Double.Parse(impulseGrid.Rows[i].Cells["data_Duration"].Value.ToString());
+                double freq = Double.Parse(impulseGrid.Rows[i].Cells["data_Freq"].Value.ToString());
                 antenna[i] = new Impulse(id, hwid, date, holeName, amplitude, duration, freq, coordinates[i], DT[i]);
             }
             return antenna;
@@ -101,19 +101,19 @@ namespace ImpDistanceCalculation
             double[] DT = getDT(rows);
             for (int i = 0; i < count; i++)
             {
-                double id = Double.Parse(rows[i].Cells[1].Value.ToString());
-                String hwid = rows[i].Cells[2].Value.ToString();
-                DateTime date1 = (DateTime)rows[i].Cells[3].Value;
+                double id = Double.Parse(rows[i].Cells["data_ID"].Value.ToString());
+                String hwid = rows[i].Cells["data_HWID"].Value.ToString();
+                DateTime date1 = (DateTime)rows[i].Cells["data_ImpDate_DB"].Value;
                 string testWithMs = date1.ToString("dd.MM.yyyy HH:mm:ss.fff");
                 DateTime date = DateTime.ParseExact(
     testWithMs,
     "dd.MM.yyyy HH:mm:ss.fff",
     CultureInfo.InvariantCulture
 );
-                String holeName = rows[i].Cells[4].Value.ToString();
-                double amplitude = Double.Parse(rows[i].Cells[5].Value.ToString());
-                double duration = Double.Parse(rows[i].Cells[6].Value.ToString());
-                double freq = Double.Parse(rows[i].Cells[7].Value.ToString());
+                String holeName = rows[i].Cells["data_HoleName"].Value.ToString();
+                double amplitude = Double.Parse(rows[i].Cells["data_Amplitude"].Value.ToString());
+                double duration = Double.Parse(rows[i].Cells["data_Duration"].Value.ToString());
+                double freq = Double.Parse(rows[i].Cells["data_Freq"].Value.ToString());
                 antenna[i] = new Impulse(id, hwid, date, holeName, amplitude, duration, freq, coordinates[i], DT[i]);
             }
             return antenna;

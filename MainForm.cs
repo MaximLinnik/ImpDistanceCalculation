@@ -709,22 +709,22 @@ namespace ImpDistanceCalculation
                 ImpulsesGridView.Rows.Add();
                 int colCount = ImpulsesGridView.ColumnCount;
 
-                ImpulsesGridView.Rows[i].Cells[0].Value = i + 1;
-                ImpulsesGridView.Rows[i].Cells[1].Value = double.Parse(impID);
-                ImpulsesGridView.Rows[i].Cells[2].Value = double.Parse(hwid);
-                ImpulsesGridView.Columns[3].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
-                ImpulsesGridView.Rows[i].Cells[3].Value = DateTime.Parse(impDate);
-                ImpulsesGridView.Rows[i].Cells[4].Value = holeName.getName(); // имя скважины
-                ImpulsesGridView.Rows[i].Cells[5].Value = double.Parse(amplitude); // амплитуда
-                ImpulsesGridView.Rows[i].Cells[6].Value = double.Parse(duration); // длительность
+                ImpulsesGridView.Rows[i].Cells["No"].Value = i + 1;
+                ImpulsesGridView.Rows[i].Cells["ID"].Value = double.Parse(impID);
+                ImpulsesGridView.Rows[i].Cells["HWID"].Value = double.Parse(hwid);
+                ImpulsesGridView.Columns["ImpDate_DB"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
+                ImpulsesGridView.Rows[i].Cells["ImpDate_DB"].Value = DateTime.Parse(impDate);
+                ImpulsesGridView.Rows[i].Cells["HoleName"].Value = holeName.getName(); // имя скважины
+                ImpulsesGridView.Rows[i].Cells["Amplitude"].Value = double.Parse(amplitude); // амплитуда
+                ImpulsesGridView.Rows[i].Cells["Duration"].Value = double.Parse(duration); // длительность
                 double freq = Impulse.CalcFrequencyNew(con2, impID);
-                ImpulsesGridView.Rows[i].Cells[7].Value = freq;
-                ImpulsesGridView.Rows[i].Cells[8].Value = long.Parse(reader[2].ToString()); // тики
+                ImpulsesGridView.Rows[i].Cells["Freq"].Value = freq;
+                ImpulsesGridView.Rows[i].Cells["Date_Ticks"].Value = long.Parse(reader[2].ToString()); // тики
 
                 //координаты скважины
-                ImpulsesGridView.Rows[i].Cells[11].Value = holeName.getX();
-                ImpulsesGridView.Rows[i].Cells[12].Value = holeName.getY();
-                ImpulsesGridView.Rows[i].Cells[13].Value = holeName.getZ(); 
+                ImpulsesGridView.Rows[i].Cells["X"].Value = holeName.getX();
+                ImpulsesGridView.Rows[i].Cells["Y"].Value = holeName.getY();
+                ImpulsesGridView.Rows[i].Cells["Z"].Value = holeName.getZ(); 
                 /*
                 ImpulsesGridView.Rows[i].Cells[8].Value = 0; // чекбокс true hwid
                 ImpulsesGridView.Rows[i].Cells[colCount - 1].Value = 0; // чек

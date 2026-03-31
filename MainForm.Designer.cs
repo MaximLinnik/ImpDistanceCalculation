@@ -41,20 +41,6 @@
             this.startButtonTest = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView_Imp = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column45 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.filtrationDataGridView = new System.Windows.Forms.DataGridView();
@@ -150,21 +136,35 @@
             this.label8 = new System.Windows.Forms.Label();
             this.calcButton = new System.Windows.Forms.Button();
             this.dataGridResult = new System.Windows.Forms.DataGridView();
-            this.Column32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column39 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column33 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column40 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column35 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column36 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column37 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column38 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column41 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column42 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column43 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column46 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column47 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.test_button = new System.Windows.Forms.Button();
+            this.Antenna = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TimeFirst = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Velocity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TimeError = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rmin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.X_calc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Y_calc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Z_calc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.X0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Y0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Z0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RtoFirst = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AvgGeomFreq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AvgR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_No = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_HWID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_ImpDate_DB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_HoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_Amplitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_Freq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_Date_Ticks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_X = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_Z = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Imp)).BeginInit();
@@ -323,20 +323,20 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView_Imp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Imp.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn11,
-            this.dataGridViewTextBoxColumn12,
-            this.dataGridViewTextBoxColumn13,
-            this.dataGridViewTextBoxColumn14,
-            this.dataGridViewTextBoxColumn15,
-            this.dataGridViewTextBoxColumn16,
-            this.dataGridViewTextBoxColumn17,
-            this.Column45,
-            this.dataGridViewTextBoxColumn18,
+            this.data_No,
+            this.data_ID,
+            this.data_HWID,
+            this.data_ImpDate_DB,
+            this.data_HoleName,
+            this.data_Amplitude,
+            this.data_Duration,
+            this.data_Freq,
+            this.data_Date_Ticks,
             this.dataGridViewTextBoxColumn19,
             this.dataGridViewTextBoxColumn20,
-            this.dataGridViewTextBoxColumn24,
-            this.dataGridViewTextBoxColumn25,
-            this.dataGridViewTextBoxColumn26});
+            this.data_X,
+            this.data_Y,
+            this.data_Z});
             this.dataGridView_Imp.ContextMenuStrip = this.contextMenuStrip1;
             this.dataGridView_Imp.Location = new System.Drawing.Point(4, 420);
             this.dataGridView_Imp.Margin = new System.Windows.Forms.Padding(4);
@@ -345,108 +345,6 @@
             this.dataGridView_Imp.Size = new System.Drawing.Size(1319, 271);
             this.dataGridView_Imp.TabIndex = 47;
             this.dataGridView_Imp.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_Imp_CellContentClick);
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            this.dataGridViewTextBoxColumn11.HeaderText = "№";
-            this.dataGridViewTextBoxColumn11.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn12.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            this.dataGridViewTextBoxColumn12.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.HeaderText = "HWID";
-            this.dataGridViewTextBoxColumn13.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.Visible = false;
-            this.dataGridViewTextBoxColumn13.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.HeaderText = "Дата (импульс)";
-            this.dataGridViewTextBoxColumn14.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            this.dataGridViewTextBoxColumn14.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn15
-            // 
-            this.dataGridViewTextBoxColumn15.HeaderText = "Имя скважины";
-            this.dataGridViewTextBoxColumn15.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            this.dataGridViewTextBoxColumn15.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn16
-            // 
-            this.dataGridViewTextBoxColumn16.HeaderText = "Амплитуда";
-            this.dataGridViewTextBoxColumn16.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            this.dataGridViewTextBoxColumn16.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            this.dataGridViewTextBoxColumn17.HeaderText = "Длительность";
-            this.dataGridViewTextBoxColumn17.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            this.dataGridViewTextBoxColumn17.Width = 125;
-            // 
-            // Column45
-            // 
-            this.Column45.HeaderText = "Частота";
-            this.Column45.MinimumWidth = 6;
-            this.Column45.Name = "Column45";
-            this.Column45.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            this.dataGridViewTextBoxColumn18.HeaderText = "Дата (тики)";
-            this.dataGridViewTextBoxColumn18.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            this.dataGridViewTextBoxColumn18.Visible = false;
-            this.dataGridViewTextBoxColumn18.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn19
-            // 
-            this.dataGridViewTextBoxColumn19.HeaderText = "HWID (прав имя)";
-            this.dataGridViewTextBoxColumn19.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            this.dataGridViewTextBoxColumn19.Visible = false;
-            this.dataGridViewTextBoxColumn19.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn20
-            // 
-            this.dataGridViewTextBoxColumn20.HeaderText = "Чек фильтр";
-            this.dataGridViewTextBoxColumn20.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
-            this.dataGridViewTextBoxColumn20.Visible = false;
-            this.dataGridViewTextBoxColumn20.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn24
-            // 
-            this.dataGridViewTextBoxColumn24.HeaderText = "X";
-            this.dataGridViewTextBoxColumn24.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
-            this.dataGridViewTextBoxColumn24.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn25
-            // 
-            this.dataGridViewTextBoxColumn25.HeaderText = "Y";
-            this.dataGridViewTextBoxColumn25.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
-            this.dataGridViewTextBoxColumn25.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn26
-            // 
-            this.dataGridViewTextBoxColumn26.HeaderText = "Z";
-            this.dataGridViewTextBoxColumn26.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
-            this.dataGridViewTextBoxColumn26.Width = 125;
             // 
             // contextMenuStrip1
             // 
@@ -1360,20 +1258,20 @@
             // 
             this.dataGridResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column32,
-            this.Column39,
-            this.Column33,
-            this.Column40,
-            this.Column35,
-            this.Column36,
-            this.Column37,
-            this.Column38,
-            this.Column41,
-            this.Column42,
-            this.Column43,
-            this.dataGridViewTextBoxColumn27,
-            this.Column46,
-            this.Column47});
+            this.Antenna,
+            this.TimeFirst,
+            this.Velocity,
+            this.TimeError,
+            this.Rmin,
+            this.X_calc,
+            this.Y_calc,
+            this.Z_calc,
+            this.X0,
+            this.Y0,
+            this.Z0,
+            this.RtoFirst,
+            this.AvgGeomFreq,
+            this.AvgR});
             this.dataGridResult.Location = new System.Drawing.Point(-14, 668);
             this.dataGridResult.Name = "dataGridResult";
             this.dataGridResult.RowHeadersWidth = 51;
@@ -1381,104 +1279,6 @@
             this.dataGridResult.Size = new System.Drawing.Size(1564, 107);
             this.dataGridResult.TabIndex = 48;
             this.dataGridResult.Visible = false;
-            // 
-            // Column32
-            // 
-            this.Column32.HeaderText = "Антенна";
-            this.Column32.MinimumWidth = 6;
-            this.Column32.Name = "Column32";
-            this.Column32.Width = 125;
-            // 
-            // Column39
-            // 
-            this.Column39.HeaderText = "Время первого сигнала";
-            this.Column39.MinimumWidth = 6;
-            this.Column39.Name = "Column39";
-            this.Column39.Width = 125;
-            // 
-            // Column33
-            // 
-            this.Column33.HeaderText = "Скорость";
-            this.Column33.MinimumWidth = 6;
-            this.Column33.Name = "Column33";
-            this.Column33.Width = 125;
-            // 
-            // Column40
-            // 
-            this.Column40.HeaderText = "Невязка";
-            this.Column40.MinimumWidth = 6;
-            this.Column40.Name = "Column40";
-            this.Column40.Width = 125;
-            // 
-            // Column35
-            // 
-            this.Column35.HeaderText = "Rmin";
-            this.Column35.MinimumWidth = 6;
-            this.Column35.Name = "Column35";
-            this.Column35.Width = 125;
-            // 
-            // Column36
-            // 
-            this.Column36.HeaderText = "X";
-            this.Column36.MinimumWidth = 6;
-            this.Column36.Name = "Column36";
-            this.Column36.Width = 125;
-            // 
-            // Column37
-            // 
-            this.Column37.HeaderText = "Y";
-            this.Column37.MinimumWidth = 6;
-            this.Column37.Name = "Column37";
-            this.Column37.Width = 125;
-            // 
-            // Column38
-            // 
-            this.Column38.HeaderText = "Z";
-            this.Column38.MinimumWidth = 6;
-            this.Column38.Name = "Column38";
-            this.Column38.Width = 125;
-            // 
-            // Column41
-            // 
-            this.Column41.HeaderText = "X0";
-            this.Column41.MinimumWidth = 6;
-            this.Column41.Name = "Column41";
-            this.Column41.Width = 125;
-            // 
-            // Column42
-            // 
-            this.Column42.HeaderText = "Y0";
-            this.Column42.MinimumWidth = 6;
-            this.Column42.Name = "Column42";
-            this.Column42.Width = 125;
-            // 
-            // Column43
-            // 
-            this.Column43.HeaderText = "Z0";
-            this.Column43.MinimumWidth = 6;
-            this.Column43.Name = "Column43";
-            this.Column43.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn27
-            // 
-            this.dataGridViewTextBoxColumn27.HeaderText = "R до первого датчика";
-            this.dataGridViewTextBoxColumn27.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
-            this.dataGridViewTextBoxColumn27.Width = 125;
-            // 
-            // Column46
-            // 
-            this.Column46.HeaderText = "Среднегеом. зн-е частоты";
-            this.Column46.MinimumWidth = 6;
-            this.Column46.Name = "Column46";
-            this.Column46.Width = 125;
-            // 
-            // Column47
-            // 
-            this.Column47.HeaderText = "Среднее расстояние до датчиков";
-            this.Column47.MinimumWidth = 6;
-            this.Column47.Name = "Column47";
-            this.Column47.Width = 125;
             // 
             // test_button
             // 
@@ -1489,6 +1289,206 @@
             this.test_button.Text = "Тест";
             this.test_button.UseVisualStyleBackColor = true;
             this.test_button.Click += new System.EventHandler(this.Test_button_Click);
+            // 
+            // Antenna
+            // 
+            this.Antenna.HeaderText = "Антенна";
+            this.Antenna.MinimumWidth = 6;
+            this.Antenna.Name = "Antenna";
+            this.Antenna.Width = 125;
+            // 
+            // TimeFirst
+            // 
+            this.TimeFirst.HeaderText = "Время первого сигнала";
+            this.TimeFirst.MinimumWidth = 6;
+            this.TimeFirst.Name = "TimeFirst";
+            this.TimeFirst.Width = 125;
+            // 
+            // Velocity
+            // 
+            this.Velocity.HeaderText = "Скорость";
+            this.Velocity.MinimumWidth = 6;
+            this.Velocity.Name = "Velocity";
+            this.Velocity.Width = 125;
+            // 
+            // TimeError
+            // 
+            this.TimeError.HeaderText = "Невязка";
+            this.TimeError.MinimumWidth = 6;
+            this.TimeError.Name = "TimeError";
+            this.TimeError.Width = 125;
+            // 
+            // Rmin
+            // 
+            this.Rmin.HeaderText = "Rmin";
+            this.Rmin.MinimumWidth = 6;
+            this.Rmin.Name = "Rmin";
+            this.Rmin.Width = 125;
+            // 
+            // X_calc
+            // 
+            this.X_calc.HeaderText = "X";
+            this.X_calc.MinimumWidth = 6;
+            this.X_calc.Name = "X_calc";
+            this.X_calc.Width = 125;
+            // 
+            // Y_calc
+            // 
+            this.Y_calc.HeaderText = "Y";
+            this.Y_calc.MinimumWidth = 6;
+            this.Y_calc.Name = "Y_calc";
+            this.Y_calc.Width = 125;
+            // 
+            // Z_calc
+            // 
+            this.Z_calc.HeaderText = "Z";
+            this.Z_calc.MinimumWidth = 6;
+            this.Z_calc.Name = "Z_calc";
+            this.Z_calc.Width = 125;
+            // 
+            // X0
+            // 
+            this.X0.HeaderText = "X0";
+            this.X0.MinimumWidth = 6;
+            this.X0.Name = "X0";
+            this.X0.Width = 125;
+            // 
+            // Y0
+            // 
+            this.Y0.HeaderText = "Y0";
+            this.Y0.MinimumWidth = 6;
+            this.Y0.Name = "Y0";
+            this.Y0.Width = 125;
+            // 
+            // Z0
+            // 
+            this.Z0.HeaderText = "Z0";
+            this.Z0.MinimumWidth = 6;
+            this.Z0.Name = "Z0";
+            this.Z0.Width = 125;
+            // 
+            // RtoFirst
+            // 
+            this.RtoFirst.HeaderText = "R до первого датчика";
+            this.RtoFirst.MinimumWidth = 6;
+            this.RtoFirst.Name = "RtoFirst";
+            this.RtoFirst.Width = 125;
+            // 
+            // AvgGeomFreq
+            // 
+            this.AvgGeomFreq.HeaderText = "Среднегеом. зн-е частоты";
+            this.AvgGeomFreq.MinimumWidth = 6;
+            this.AvgGeomFreq.Name = "AvgGeomFreq";
+            this.AvgGeomFreq.Width = 125;
+            // 
+            // AvgR
+            // 
+            this.AvgR.HeaderText = "Среднее расстояние до датчиков";
+            this.AvgR.MinimumWidth = 6;
+            this.AvgR.Name = "AvgR";
+            this.AvgR.Width = 125;
+            // 
+            // data_No
+            // 
+            this.data_No.HeaderText = "№";
+            this.data_No.MinimumWidth = 6;
+            this.data_No.Name = "data_No";
+            this.data_No.Width = 125;
+            // 
+            // data_ID
+            // 
+            this.data_ID.HeaderText = "ID";
+            this.data_ID.MinimumWidth = 6;
+            this.data_ID.Name = "data_ID";
+            this.data_ID.Width = 125;
+            // 
+            // data_HWID
+            // 
+            this.data_HWID.HeaderText = "HWID";
+            this.data_HWID.MinimumWidth = 6;
+            this.data_HWID.Name = "data_HWID";
+            this.data_HWID.Visible = false;
+            this.data_HWID.Width = 125;
+            // 
+            // data_ImpDate_DB
+            // 
+            this.data_ImpDate_DB.HeaderText = "Дата (импульс)";
+            this.data_ImpDate_DB.MinimumWidth = 6;
+            this.data_ImpDate_DB.Name = "data_ImpDate_DB";
+            this.data_ImpDate_DB.Width = 125;
+            // 
+            // data_HoleName
+            // 
+            this.data_HoleName.HeaderText = "Имя скважины";
+            this.data_HoleName.MinimumWidth = 6;
+            this.data_HoleName.Name = "data_HoleName";
+            this.data_HoleName.Width = 125;
+            // 
+            // data_Amplitude
+            // 
+            this.data_Amplitude.HeaderText = "Амплитуда";
+            this.data_Amplitude.MinimumWidth = 6;
+            this.data_Amplitude.Name = "data_Amplitude";
+            this.data_Amplitude.Width = 125;
+            // 
+            // data_Duration
+            // 
+            this.data_Duration.HeaderText = "Длительность";
+            this.data_Duration.MinimumWidth = 6;
+            this.data_Duration.Name = "data_Duration";
+            this.data_Duration.Width = 125;
+            // 
+            // data_Freq
+            // 
+            this.data_Freq.HeaderText = "Частота";
+            this.data_Freq.MinimumWidth = 6;
+            this.data_Freq.Name = "data_Freq";
+            this.data_Freq.Width = 125;
+            // 
+            // data_Date_Ticks
+            // 
+            this.data_Date_Ticks.HeaderText = "Дата (тики)";
+            this.data_Date_Ticks.MinimumWidth = 6;
+            this.data_Date_Ticks.Name = "data_Date_Ticks";
+            this.data_Date_Ticks.Visible = false;
+            this.data_Date_Ticks.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            this.dataGridViewTextBoxColumn19.HeaderText = "HWID (прав имя)";
+            this.dataGridViewTextBoxColumn19.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            this.dataGridViewTextBoxColumn19.Visible = false;
+            this.dataGridViewTextBoxColumn19.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn20
+            // 
+            this.dataGridViewTextBoxColumn20.HeaderText = "Чек фильтр";
+            this.dataGridViewTextBoxColumn20.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
+            this.dataGridViewTextBoxColumn20.Visible = false;
+            this.dataGridViewTextBoxColumn20.Width = 125;
+            // 
+            // data_X
+            // 
+            this.data_X.HeaderText = "X";
+            this.data_X.MinimumWidth = 6;
+            this.data_X.Name = "data_X";
+            this.data_X.Width = 125;
+            // 
+            // data_Y
+            // 
+            this.data_Y.HeaderText = "Y";
+            this.data_Y.MinimumWidth = 6;
+            this.data_Y.Name = "data_Y";
+            this.data_Y.Width = 125;
+            // 
+            // data_Z
+            // 
+            this.data_Z.HeaderText = "Z";
+            this.data_Z.MinimumWidth = 6;
+            this.data_Z.Name = "data_Z";
+            this.data_Z.Width = 125;
             // 
             // MainForm
             // 
@@ -1656,34 +1656,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column30;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column31;
         private System.Windows.Forms.DataGridView dataGridResult;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column45;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column32;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column39;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column33;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column40;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column35;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column36;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column37;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column38;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column41;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column42;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column43;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column46;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column47;
         private System.Windows.Forms.DataGridViewTextBoxColumn No;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn HWID;
@@ -1699,5 +1671,33 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Y;
         private System.Windows.Forms.DataGridViewTextBoxColumn Z;
         private System.Windows.Forms.Button test_button;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Antenna;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TimeFirst;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Velocity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TimeError;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Rmin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn X_calc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Y_calc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Z_calc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn X0;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Y0;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Z0;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RtoFirst;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AvgGeomFreq;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AvgR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_No;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_HWID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_ImpDate_DB;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_HoleName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_Amplitude;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_Duration;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_Freq;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_Date_Ticks;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_X;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_Y;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_Z;
     }
 }
