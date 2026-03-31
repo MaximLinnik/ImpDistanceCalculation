@@ -713,7 +713,12 @@ namespace ImpDistanceCalculation
                 ImpulsesGridView.Rows[i].Cells["ID"].Value = double.Parse(impID);
                 ImpulsesGridView.Rows[i].Cells["HWID"].Value = double.Parse(hwid);
                 ImpulsesGridView.Columns["ImpDate_DB"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
-                ImpulsesGridView.Rows[i].Cells["ImpDate_DB"].Value = DateTime.Parse(impDate);
+                ImpulsesGridView.Columns["ImpDate_DB_Akaike"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff";
+                DateTime dateImpulse = DateTime.Parse(impDate);
+                ImpulsesGridView.Rows[i].Cells["ImpDate_DB"].Value = dateImpulse;
+                double aic = Impulse.AIC(this.connectionString, impID);
+                DateTime dateImpulseAIC = dateImpulse.AddMilliseconds(-aic);
+                ImpulsesGridView.Rows[i].Cells["ImpDate_DB_Akaike"].Value = dateImpulseAIC;
                 ImpulsesGridView.Rows[i].Cells["HoleName"].Value = holeName.getName(); // имя скважины
                 ImpulsesGridView.Rows[i].Cells["Amplitude"].Value = double.Parse(amplitude); // амплитуда
                 ImpulsesGridView.Rows[i].Cells["Duration"].Value = double.Parse(duration); // длительность
