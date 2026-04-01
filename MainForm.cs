@@ -716,9 +716,12 @@ namespace ImpDistanceCalculation
                 ImpulsesGridView.Columns["ImpDate_DB_Akaike"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff";
                 DateTime dateImpulse = DateTime.Parse(impDate);
                 ImpulsesGridView.Rows[i].Cells["ImpDate_DB"].Value = dateImpulse;
-                double aic = Akaike.AIC(this.connectionString, impID);
+                Akaike akaike = new Akaike();
+                double aic = akaike.AIC(this.connectionString, impID);
                 DateTime dateImpulseAIC = dateImpulse.AddMilliseconds(-aic);
                 ImpulsesGridView.Rows[i].Cells["ImpDate_DB_Akaike"].Value = dateImpulseAIC;
+                ImpulsesGridView.Rows[i].Cells["pointX_Akaike"].Value = akaike.xPointAkaike;
+                ImpulsesGridView.Rows[i].Cells["ms_Akaike"].Value = aic;
                 ImpulsesGridView.Rows[i].Cells["HoleName"].Value = holeName.getName(); // имя скважины
                 ImpulsesGridView.Rows[i].Cells["Amplitude"].Value = double.Parse(amplitude); // амплитуда
                 ImpulsesGridView.Rows[i].Cells["Duration"].Value = double.Parse(duration); // длительность
@@ -2181,7 +2184,8 @@ while (reader.Read())
         {
 
             dataGridView_Imp.Rows.Clear();
-            dataGridView_Imp.Columns[3].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
+            dataGridView_Imp.Columns["data_ImpDate_DB"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
+            dataGridView_Imp.Columns["data_ImpDate_DB_Akaike"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
 
             foreach (DataGridViewRow row in ImpulsesGridView.SelectedRows)
@@ -2229,6 +2233,17 @@ while (reader.Read())
             }
             else { return; }
 
+            int parametrTime = 0; //параметр для способва вычисления время импульса
+
+            if (radioButtonStdTime.Checked)
+            {
+                parametrTime = 1;
+            }
+            else if (radioButtonAkaike.Checked)
+            {
+                parametrTime = 2;
+            }
+
             decimal before = Decimal.Parse(velocityBefore.Text);
             decimal after = Decimal.Parse(velocityAfter.Text);
             decimal step = Decimal.Parse(velocityStep.Text);
@@ -2238,7 +2253,7 @@ while (reader.Read())
             double locationZ = Double.Parse(real_Z.Text);
             Coordinates location = new Coordinates(locationX, locationY, locationZ);
             */
-            alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location);
+            alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
 
             string res = "";
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
@@ -2260,7 +2275,8 @@ while (reader.Read())
             byte []data = Impulse.frontData(con, "1");
             double[] waveform = Impulse.UnpackSignal(data);
             double[]xp = Impulse.getTimeX(data);
-            double time = Akaike.calculationAIC(waveform, xp);
+            Akaike akaike = new Akaike();
+            double time = akaike.calculationAIC(waveform, xp);
         }
     }
 }

@@ -122,7 +122,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.calcButton = new System.Windows.Forms.Button();
             this.dataGridResult = new System.Windows.Forms.DataGridView();
-            this.test_button = new System.Windows.Forms.Button();
             this.Antenna = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TimeFirst = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Velocity = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -137,26 +136,17 @@
             this.RtoFirst = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AvgGeomFreq = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AvgR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.No = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HWID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ImpDate_DB = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ImpDate_DB_Akaike = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Amplitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Freq = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Date_ticks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HWID_true = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Z = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.test_button = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.radioButtonStdTime = new System.Windows.Forms.RadioButton();
+            this.radioButtonAkaike = new System.Windows.Forms.RadioButton();
             this.data_No = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_HWID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_ImpDate_DB = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_ImpDate_DB_Akaike = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_pointX_Akaike = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.data_ms_Akaike = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_HoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_Amplitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -167,6 +157,23 @@
             this.data_X = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_Z = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.No = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HWID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImpDate_DB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImpDate_DB_Akaike = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pointX_Akaike = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ms_Akaike = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Amplitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Freq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Date_ticks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HWID_true = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Z = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Imp)).BeginInit();
@@ -183,6 +190,7 @@
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // dateBeforeText
@@ -293,7 +301,7 @@
             // 
             // startButtonTest
             // 
-            this.startButtonTest.Location = new System.Drawing.Point(14, 460);
+            this.startButtonTest.Location = new System.Drawing.Point(7, 531);
             this.startButtonTest.Margin = new System.Windows.Forms.Padding(4);
             this.startButtonTest.Name = "startButtonTest";
             this.startButtonTest.Size = new System.Drawing.Size(100, 28);
@@ -330,6 +338,8 @@
             this.data_HWID,
             this.data_ImpDate_DB,
             this.data_ImpDate_DB_Akaike,
+            this.data_pointX_Akaike,
+            this.data_ms_Akaike,
             this.data_HoleName,
             this.data_Amplitude,
             this.data_Duration,
@@ -462,6 +472,8 @@
             this.HWID,
             this.ImpDate_DB,
             this.ImpDate_DB_Akaike,
+            this.pointX_Akaike,
+            this.ms_Akaike,
             this.HoleName,
             this.Amplitude,
             this.Duration,
@@ -791,7 +803,7 @@
             this.groupBox2.Controls.Add(this.OneRowCheckBox);
             this.groupBox2.Controls.Add(this.labelTypeCalc);
             this.groupBox2.Controls.Add(this.listComboBox);
-            this.groupBox2.Location = new System.Drawing.Point(13, 522);
+            this.groupBox2.Location = new System.Drawing.Point(4, 608);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
@@ -1088,7 +1100,7 @@
             // 
             // real_X
             // 
-            this.real_X.Location = new System.Drawing.Point(12, 407);
+            this.real_X.Location = new System.Drawing.Point(12, 579);
             this.real_X.Name = "real_X";
             this.real_X.Size = new System.Drawing.Size(67, 22);
             this.real_X.TabIndex = 54;
@@ -1096,7 +1108,7 @@
             // 
             // real_Y
             // 
-            this.real_Y.Location = new System.Drawing.Point(93, 407);
+            this.real_Y.Location = new System.Drawing.Point(93, 579);
             this.real_Y.Name = "real_Y";
             this.real_Y.Size = new System.Drawing.Size(67, 22);
             this.real_Y.TabIndex = 55;
@@ -1104,7 +1116,7 @@
             // 
             // real_Z
             // 
-            this.real_Z.Location = new System.Drawing.Point(176, 407);
+            this.real_Z.Location = new System.Drawing.Point(176, 579);
             this.real_Z.Name = "real_Z";
             this.real_Z.Size = new System.Drawing.Size(67, 22);
             this.real_Z.TabIndex = 56;
@@ -1148,7 +1160,7 @@
             // 
             // calcButton
             // 
-            this.calcButton.Location = new System.Drawing.Point(135, 460);
+            this.calcButton.Location = new System.Drawing.Point(128, 531);
             this.calcButton.Name = "calcButton";
             this.calcButton.Size = new System.Drawing.Size(101, 31);
             this.calcButton.TabIndex = 61;
@@ -1181,16 +1193,6 @@
             this.dataGridResult.Size = new System.Drawing.Size(1564, 107);
             this.dataGridResult.TabIndex = 48;
             this.dataGridResult.Visible = false;
-            // 
-            // test_button
-            // 
-            this.test_button.Location = new System.Drawing.Point(93, 358);
-            this.test_button.Name = "test_button";
-            this.test_button.Size = new System.Drawing.Size(79, 26);
-            this.test_button.TabIndex = 51;
-            this.test_button.Text = "Тест";
-            this.test_button.UseVisualStyleBackColor = true;
-            this.test_button.Click += new System.EventHandler(this.Test_button_Click);
             // 
             // Antenna
             // 
@@ -1290,114 +1292,48 @@
             this.AvgR.Name = "AvgR";
             this.AvgR.Width = 125;
             // 
-            // No
+            // test_button
             // 
-            this.No.HeaderText = "№";
-            this.No.MinimumWidth = 6;
-            this.No.Name = "No";
-            this.No.Width = 125;
+            this.test_button.Location = new System.Drawing.Point(93, 358);
+            this.test_button.Name = "test_button";
+            this.test_button.Size = new System.Drawing.Size(79, 26);
+            this.test_button.TabIndex = 51;
+            this.test_button.Text = "Тест";
+            this.test_button.UseVisualStyleBackColor = true;
+            this.test_button.Click += new System.EventHandler(this.Test_button_Click);
             // 
-            // ID
+            // groupBox6
             // 
-            this.ID.HeaderText = "ID";
-            this.ID.MinimumWidth = 6;
-            this.ID.Name = "ID";
-            this.ID.Width = 125;
+            this.groupBox6.Controls.Add(this.radioButtonAkaike);
+            this.groupBox6.Controls.Add(this.radioButtonStdTime);
+            this.groupBox6.Location = new System.Drawing.Point(12, 397);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(244, 84);
+            this.groupBox6.TabIndex = 62;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Способ вычисления времени";
             // 
-            // HWID
+            // radioButtonStdTime
             // 
-            this.HWID.HeaderText = "HWID";
-            this.HWID.MinimumWidth = 6;
-            this.HWID.Name = "HWID";
-            this.HWID.Visible = false;
-            this.HWID.Width = 125;
+            this.radioButtonStdTime.AutoSize = true;
+            this.radioButtonStdTime.Checked = true;
+            this.radioButtonStdTime.Location = new System.Drawing.Point(10, 22);
+            this.radioButtonStdTime.Name = "radioButtonStdTime";
+            this.radioButtonStdTime.Size = new System.Drawing.Size(160, 21);
+            this.radioButtonStdTime.TabIndex = 0;
+            this.radioButtonStdTime.TabStop = true;
+            this.radioButtonStdTime.Text = "Стандартное время";
+            this.radioButtonStdTime.UseVisualStyleBackColor = true;
             // 
-            // ImpDate_DB
+            // radioButtonAkaike
             // 
-            this.ImpDate_DB.HeaderText = "Время импульса";
-            this.ImpDate_DB.MinimumWidth = 6;
-            this.ImpDate_DB.Name = "ImpDate_DB";
-            this.ImpDate_DB.Width = 125;
-            // 
-            // ImpDate_DB_Akaike
-            // 
-            this.ImpDate_DB_Akaike.HeaderText = "Время (Акаике)";
-            this.ImpDate_DB_Akaike.MinimumWidth = 6;
-            this.ImpDate_DB_Akaike.Name = "ImpDate_DB_Akaike";
-            this.ImpDate_DB_Akaike.Width = 125;
-            // 
-            // HoleName
-            // 
-            this.HoleName.HeaderText = "Имя скважины";
-            this.HoleName.MinimumWidth = 6;
-            this.HoleName.Name = "HoleName";
-            this.HoleName.Width = 125;
-            // 
-            // Amplitude
-            // 
-            this.Amplitude.HeaderText = "Амплитуда";
-            this.Amplitude.MinimumWidth = 6;
-            this.Amplitude.Name = "Amplitude";
-            this.Amplitude.Width = 125;
-            // 
-            // Duration
-            // 
-            this.Duration.HeaderText = "Длительность";
-            this.Duration.MinimumWidth = 6;
-            this.Duration.Name = "Duration";
-            this.Duration.Width = 125;
-            // 
-            // Freq
-            // 
-            this.Freq.HeaderText = "Частота";
-            this.Freq.MinimumWidth = 6;
-            this.Freq.Name = "Freq";
-            this.Freq.Width = 125;
-            // 
-            // Date_ticks
-            // 
-            this.Date_ticks.HeaderText = "Дата (тики)";
-            this.Date_ticks.MinimumWidth = 6;
-            this.Date_ticks.Name = "Date_ticks";
-            this.Date_ticks.Visible = false;
-            this.Date_ticks.Width = 125;
-            // 
-            // HWID_true
-            // 
-            this.HWID_true.HeaderText = "HWID (прав имя)";
-            this.HWID_true.MinimumWidth = 6;
-            this.HWID_true.Name = "HWID_true";
-            this.HWID_true.Visible = false;
-            this.HWID_true.Width = 125;
-            // 
-            // Column21
-            // 
-            this.Column21.HeaderText = "Чек фильтр";
-            this.Column21.MinimumWidth = 6;
-            this.Column21.Name = "Column21";
-            this.Column21.Visible = false;
-            this.Column21.Width = 125;
-            // 
-            // X
-            // 
-            this.X.HeaderText = "X";
-            this.X.MinimumWidth = 6;
-            this.X.Name = "X";
-            this.X.Width = 125;
-            // 
-            // Y
-            // 
-            this.Y.HeaderText = "Y";
-            this.Y.MinimumWidth = 6;
-            this.Y.Name = "Y";
-            this.Y.Width = 125;
-            // 
-            // Z
-            // 
-            this.Z.HeaderText = "Z";
-            this.Z.MinimumWidth = 6;
-            this.Z.Name = "Z";
-            this.Z.Width = 125;
+            this.radioButtonAkaike.AutoSize = true;
+            this.radioButtonAkaike.Location = new System.Drawing.Point(10, 49);
+            this.radioButtonAkaike.Name = "radioButtonAkaike";
+            this.radioButtonAkaike.Size = new System.Drawing.Size(142, 21);
+            this.radioButtonAkaike.TabIndex = 1;
+            this.radioButtonAkaike.Text = "Алгоритм Акаике";
+            this.radioButtonAkaike.UseVisualStyleBackColor = true;
             // 
             // data_No
             // 
@@ -1434,6 +1370,20 @@
             this.data_ImpDate_DB_Akaike.MinimumWidth = 6;
             this.data_ImpDate_DB_Akaike.Name = "data_ImpDate_DB_Akaike";
             this.data_ImpDate_DB_Akaike.Width = 125;
+            // 
+            // data_pointX_Akaike
+            // 
+            this.data_pointX_Akaike.HeaderText = "Точка ОХ (Акаике)";
+            this.data_pointX_Akaike.MinimumWidth = 6;
+            this.data_pointX_Akaike.Name = "data_pointX_Akaike";
+            this.data_pointX_Akaike.Width = 125;
+            // 
+            // data_ms_Akaike
+            // 
+            this.data_ms_Akaike.HeaderText = "Корректировка мс (Акаике)";
+            this.data_ms_Akaike.MinimumWidth = 6;
+            this.data_ms_Akaike.Name = "data_ms_Akaike";
+            this.data_ms_Akaike.Width = 125;
             // 
             // data_HoleName
             // 
@@ -1508,12 +1458,136 @@
             this.data_Z.Name = "data_Z";
             this.data_Z.Width = 125;
             // 
+            // No
+            // 
+            this.No.HeaderText = "№";
+            this.No.MinimumWidth = 6;
+            this.No.Name = "No";
+            this.No.Width = 125;
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.MinimumWidth = 6;
+            this.ID.Name = "ID";
+            this.ID.Width = 125;
+            // 
+            // HWID
+            // 
+            this.HWID.HeaderText = "HWID";
+            this.HWID.MinimumWidth = 6;
+            this.HWID.Name = "HWID";
+            this.HWID.Visible = false;
+            this.HWID.Width = 125;
+            // 
+            // ImpDate_DB
+            // 
+            this.ImpDate_DB.HeaderText = "Время импульса";
+            this.ImpDate_DB.MinimumWidth = 6;
+            this.ImpDate_DB.Name = "ImpDate_DB";
+            this.ImpDate_DB.Width = 125;
+            // 
+            // ImpDate_DB_Akaike
+            // 
+            this.ImpDate_DB_Akaike.HeaderText = "Время (Акаике)";
+            this.ImpDate_DB_Akaike.MinimumWidth = 6;
+            this.ImpDate_DB_Akaike.Name = "ImpDate_DB_Akaike";
+            this.ImpDate_DB_Akaike.Width = 125;
+            // 
+            // pointX_Akaike
+            // 
+            this.pointX_Akaike.HeaderText = "Точка OX (Акаике)";
+            this.pointX_Akaike.MinimumWidth = 6;
+            this.pointX_Akaike.Name = "pointX_Akaike";
+            this.pointX_Akaike.Width = 125;
+            // 
+            // ms_Akaike
+            // 
+            this.ms_Akaike.HeaderText = "Корректировка мс (Акаике)";
+            this.ms_Akaike.MinimumWidth = 6;
+            this.ms_Akaike.Name = "ms_Akaike";
+            this.ms_Akaike.Width = 125;
+            // 
+            // HoleName
+            // 
+            this.HoleName.HeaderText = "Имя скважины";
+            this.HoleName.MinimumWidth = 6;
+            this.HoleName.Name = "HoleName";
+            this.HoleName.Width = 125;
+            // 
+            // Amplitude
+            // 
+            this.Amplitude.HeaderText = "Амплитуда";
+            this.Amplitude.MinimumWidth = 6;
+            this.Amplitude.Name = "Amplitude";
+            this.Amplitude.Width = 125;
+            // 
+            // Duration
+            // 
+            this.Duration.HeaderText = "Длительность";
+            this.Duration.MinimumWidth = 6;
+            this.Duration.Name = "Duration";
+            this.Duration.Width = 125;
+            // 
+            // Freq
+            // 
+            this.Freq.HeaderText = "Частота";
+            this.Freq.MinimumWidth = 6;
+            this.Freq.Name = "Freq";
+            this.Freq.Width = 125;
+            // 
+            // Date_ticks
+            // 
+            this.Date_ticks.HeaderText = "Дата (тики)";
+            this.Date_ticks.MinimumWidth = 6;
+            this.Date_ticks.Name = "Date_ticks";
+            this.Date_ticks.Visible = false;
+            this.Date_ticks.Width = 125;
+            // 
+            // HWID_true
+            // 
+            this.HWID_true.HeaderText = "HWID (прав имя)";
+            this.HWID_true.MinimumWidth = 6;
+            this.HWID_true.Name = "HWID_true";
+            this.HWID_true.Visible = false;
+            this.HWID_true.Width = 125;
+            // 
+            // Column21
+            // 
+            this.Column21.HeaderText = "Чек фильтр";
+            this.Column21.MinimumWidth = 6;
+            this.Column21.Name = "Column21";
+            this.Column21.Visible = false;
+            this.Column21.Width = 125;
+            // 
+            // X
+            // 
+            this.X.HeaderText = "X";
+            this.X.MinimumWidth = 6;
+            this.X.Name = "X";
+            this.X.Width = 125;
+            // 
+            // Y
+            // 
+            this.Y.HeaderText = "Y";
+            this.Y.MinimumWidth = 6;
+            this.Y.Name = "Y";
+            this.Y.Width = 125;
+            // 
+            // Z
+            // 
+            this.Z.HeaderText = "Z";
+            this.Z.MinimumWidth = 6;
+            this.Z.Name = "Z";
+            this.Z.Width = 125;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1628, 785);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.test_button);
             this.Controls.Add(this.dataGridResult);
             this.Controls.Add(this.calcButton);
@@ -1575,6 +1649,8 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1689,11 +1765,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn RtoFirst;
         private System.Windows.Forms.DataGridViewTextBoxColumn AvgGeomFreq;
         private System.Windows.Forms.DataGridViewTextBoxColumn AvgR;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.RadioButton radioButtonAkaike;
+        private System.Windows.Forms.RadioButton radioButtonStdTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn data_No;
         private System.Windows.Forms.DataGridViewTextBoxColumn data_ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn data_HWID;
         private System.Windows.Forms.DataGridViewTextBoxColumn data_ImpDate_DB;
         private System.Windows.Forms.DataGridViewTextBoxColumn data_ImpDate_DB_Akaike;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_pointX_Akaike;
+        private System.Windows.Forms.DataGridViewTextBoxColumn data_ms_Akaike;
         private System.Windows.Forms.DataGridViewTextBoxColumn data_HoleName;
         private System.Windows.Forms.DataGridViewTextBoxColumn data_Amplitude;
         private System.Windows.Forms.DataGridViewTextBoxColumn data_Duration;
@@ -1709,6 +1790,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn HWID;
         private System.Windows.Forms.DataGridViewTextBoxColumn ImpDate_DB;
         private System.Windows.Forms.DataGridViewTextBoxColumn ImpDate_DB_Akaike;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pointX_Akaike;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ms_Akaike;
         private System.Windows.Forms.DataGridViewTextBoxColumn HoleName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Amplitude;
         private System.Windows.Forms.DataGridViewTextBoxColumn Duration;

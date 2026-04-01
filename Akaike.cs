@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace ImpDistanceCalculation
 {
-    public static class Akaike
+    public class Akaike
     {
+        public int xPointAkaike = 0;
+
         //расчет по самой формуле Акаике
-        public static double calculationAIC(double[] waveform, double[] XP)
+        public double calculationAIC(double[] waveform, double[] XP)
         {
             int n = waveform.Length;
 
@@ -60,12 +62,14 @@ namespace ImpDistanceCalculation
                 }
             }
 
-            double time = XP[bestK]; //результирующее значение, от которого отнимается
+            double time = XP[128 - bestK]; //результирующее значение, от которого отнимается
+            this.xPointAkaike = bestK;
+            //this.xPointAkaike = bestK;
             return time;
         }
 
         //полное вычисление по алгоритму Акаике
-        public static double AIC(String connectionString, String impulseID)
+        public double AIC(String connectionString, String impulseID)
         {
             SqlConnection con = new SqlConnection(connectionString);
             byte[] rawData = Impulse.frontData(con, impulseID);

@@ -27,15 +27,28 @@ namespace ImpDistanceCalculation
             return DT;
         }
 
-        public double[] getDT(List<DataGridViewRow> rows)
+        public double[] getDT(List<DataGridViewRow> rows, int parametrTime)
         {
             int count = rows.Count;
             double[] DT = new double[count];
             DT[0] = 0;
             for (int i = 1; i < count; i++)
             {
-                DT[i] = Math.Abs((long.Parse(rows[0].Cells["data_Date_Ticks"].Value.ToString()) - long.Parse(rows[i].Cells["data_Date_Ticks"].Value.ToString())) / 10);
-            }
+                if (parametrTime == 1)
+                {
+                    DT[i] = Math.Abs((long.Parse(rows[0].Cells["data_Date_Ticks"].Value.ToString()) - long.Parse(rows[i].Cells["data_Date_Ticks"].Value.ToString())) / 10);
+                }
+                else if (parametrTime == 2)
+                {
+                    double ms0 = double.Parse(rows[0].Cells["data_ms_Akaike"].Value.ToString());
+                    double ms_i = double.Parse(rows[i].Cells["data_ms_Akaike"].Value.ToString());
+                    long date0 = long.Parse(rows[0].Cells["data_Date_Ticks"].Value.ToString());
+                    long date_i = long.Parse(rows[i].Cells["data_Date_Ticks"].Value.ToString());
+                    long res0 = date0 - (long)Math.Round(ms0 * TimeSpan.TicksPerMillisecond);
+                    long res_i = date_i - (long)Math.Round(ms_i * TimeSpan.TicksPerMillisecond);
+                    DT[i] = Math.Abs((res0 - res_i) / 10);
+                }
+             }
             return DT;
         }
 
@@ -71,7 +84,7 @@ namespace ImpDistanceCalculation
         }
 
         //создание массива выбранных импульсов (антенна) с необходимыми для расчета параметрами
-        public Impulse[] setAntenna(DataGridView impulseGrid)
+        public Impulse[] setAntenna(DataGridView impulseGrid, int parametrTime)
         {
             int count = impulseGrid.RowCount - 1;
             Impulse[] antenna = new Impulse[count];
@@ -82,7 +95,15 @@ namespace ImpDistanceCalculation
 
                 double id = Double.Parse(impulseGrid.Rows[i].Cells["data_ID"].Value.ToString());
                 String hwid = impulseGrid.Rows[i].Cells["data_HWID"].Value.ToString();
-                DateTime date = DateTime.Parse(impulseGrid.Rows[i].Cells["data_ImpDate_DB"].Value.ToString());
+                DateTime date = default;
+                if (parametrTime == 1)//стд время
+                {
+                    date = DateTime.Parse(impulseGrid.Rows[i].Cells["data_ImpDate_DB"].Value.ToString());
+                }
+                else if (parametrTime == 2) //Акаике
+                {
+                    date = DateTime.Parse(impulseGrid.Rows[i].Cells["ImpDate_DB_Akaike"].Value.ToString());
+                }
                 String holeName = impulseGrid.Rows[i].Cells["data_HoleName"].Value.ToString();
                 double amplitude = Double.Parse(impulseGrid.Rows[i].Cells["data_Amplitude"].Value.ToString());
                 double duration = Double.Parse(impulseGrid.Rows[i].Cells["data_Duration"].Value.ToString());
@@ -93,17 +114,25 @@ namespace ImpDistanceCalculation
         }
 
         //вариант для случая конкретных (четырех) строк
-        public Impulse[] setAntenna(List<DataGridViewRow> rows)
+        public Impulse[] setAntenna(List<DataGridViewRow> rows, int parametrTime)
         {
             int count = rows.Count;
             Impulse[] antenna = new Impulse[count];
             Coordinates[] coordinates = getImpulsesCoordinates(rows);
-            double[] DT = getDT(rows);
+            double[] DT = getDT(rows, parametrTime);
             for (int i = 0; i < count; i++)
             {
                 double id = Double.Parse(rows[i].Cells["data_ID"].Value.ToString());
                 String hwid = rows[i].Cells["data_HWID"].Value.ToString();
-                DateTime date1 = (DateTime)rows[i].Cells["data_ImpDate_DB"].Value;
+                DateTime date1 = default;
+                if (parametrTime == 1)//стд время
+                {
+                    date1 = (DateTime)rows[i].Cells["data_ImpDate_DB"].Value;
+                }
+                else if (parametrTime == 2) //Акаике
+                {
+                    date1 = (DateTime)rows[i].Cells["data_ImpDate_DB_Akaike"].Value;
+                }
                 string testWithMs = date1.ToString("dd.MM.yyyy HH:mm:ss.fff");
                 DateTime date = DateTime.ParseExact(
     testWithMs,
@@ -395,7 +424,9 @@ namespace ImpDistanceCalculation
 
 
         //вычисление по комбинациям по 4 элемента
-        public void combinationCalc(DataGridView impulseGrid, DataGridView resultGrid, decimal velocityBefore, decimal velocityAfter, decimal step, Coordinates location)
+        //parametrTime - способ вычисления времени импульса
+        //1 - стандарт, 2 - по Акаике
+        public void combinationCalc(DataGridView impulseGrid, DataGridView resultGrid, decimal velocityBefore, decimal velocityAfter, decimal step, Coordinates location, int parametrTime)
         {
 
             resultGrid.Rows.Clear();
@@ -420,7 +451,7 @@ namespace ImpDistanceCalculation
                                 .Select(index => impulseGrid.Rows[index])
                                 .Where(r => !r.IsNewRow)
                                 .ToList();
-                            Impulse[] antenna = setAntenna(selectedRows);
+                            Impulse[] antenna = setAntenna(selectedRows, parametrTime);
                             //for (double velocity = velocityBefore; velocity < velocityAfter; velocity += step)
                             decimal velocity = velocityBefore;
                             double Rmin = Double.MaxValue, AE_Xmin = 0, AE_Ymin = 0, AE_Zmin = 0, X0 = 0, Y0 = 0, Z0 = 0;
