@@ -754,6 +754,96 @@ namespace ImpDistanceCalculation
             return i;
         }
 
+        //получение и запись импульсов по их ID
+        private AntennaCalculation getImpulsesByID(String[] data)
+        {
+            HoleParametrs holeName; //имя скважины, если нашлась
+
+            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlConnection con2 = new SqlConnection(connectionString);
+            String query = @"select Impulses.ID, Impulses.HWID, Impulses.ImpulseTime, Impulses.Amplitude, Impulses.Duration  
+                            from Impulses
+                             " +
+                            @"  ";
+
+            String idBefore = data[0];
+            String idAfter = data[data.Length - 1];
+
+            String setID = @"  where 
+                         (Impulses.ID BETWEEN '" + idBefore + "' AND '" +
+                  idAfter + "')";
+
+            con.Open();
+            SqlCommand command = new SqlCommand(query, con);
+            SqlDataReader reader = command.ExecuteReader();
+            int i = 0, counter = 0;
+            AntennaCalculation antenna = new AntennaCalculation();
+            while (reader.Read())
+            {
+
+                String impID = reader[0].ToString();
+                String hwid = reader[1].ToString();
+
+                //тики в дату
+                DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
+                String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                String amplitude = reader[3].ToString();
+                String duration = reader[4].ToString();
+
+                //оптимизация, чтобы записывалось только если входит в скважину
+                //if (oneHoleParametr)
+                //{
+
+                //progressBar1.Value += 1; // увел счетчика прогресс бара
+
+                /*
+                counter++;
+                
+                double percentage = (double)counter / progressBar1.Maximum;
+                labelNumbImpAll.Text = percentage.ToString();
+                labelNumbImpAll.Refresh();
+                */
+                ///
+                holeName = checkHoleImp(hwid, dt);
+                //if (holeName == 0) continue;
+                //}
+                // */
+
+                ImpulsesGridView.Rows.Add();
+                int colCount = ImpulsesGridView.ColumnCount;
+
+                antenna.no = i + 1;
+                antenna.id = double.Parse(impID);
+                antenna.hwid = double.Parse(hwid);
+                DateTime dateImpulse = DateTime.Parse(impDate);
+                antenna.date = dateImpulse;
+                Akaike akaike = new Akaike();
+                double aic = akaike.AIC(this.connectionString, impID);
+                DateTime dateImpulseAIC = dateImpulse.AddMilliseconds(-aic);
+                antenna.dateAkaike = dateImpulseAIC;
+                antenna.pointAkaike = akaike.xPointAkaike;
+                antenna.msAkaike = aic;
+                antenna.holeName = holeName.getName(); // имя скважины
+                antenna.amplitude = double.Parse(amplitude); // амплитуда
+                antenna.duration = double.Parse(duration); // длительность
+                double freq = Impulse.CalcFrequencyNew(con2, impID);
+                antenna.freq = freq;
+                antenna.dateTicks = long.Parse(reader[2].ToString()); // тики
+                
+                //координаты скважины
+                double X = holeName.getX();
+                double Y = holeName.getY();
+                double Z = holeName.getZ();
+                antenna.coordinates =new Coordinates(X, Y, Z);
+                i++;
+            }
+            con.Close();
+
+            
+            return antenna;
+        }
+
         //получение и запись импульсов по HWID
         private int setImpulsesByDateHWID()
         {
@@ -2205,7 +2295,11 @@ while (reader.Read())
                 dataGridView_Imp.Rows.Add(rowData);
             }
 
+            String dateBefore = rows[0].Cells["ImpDate_DB"].Value.ToString(); //дата первого импульса в выборке
+            String dateAfter = rows[rows.Count-1].Cells["ImpDate_DB"].Value.ToString(); //дата последнего импульса в выборке
 
+            AntennaCalculation[] dataEvents = AntennaCalculation.getAntennaImpulses(rows);
+            AntennaCalculation.setEvents(rows, dataGridView_Events, dateBefore, dateAfter);
             //HoleForm = new HoleForm(this, ImpulsesGridView, DateTime.Parse(dateBeforeText.Text), DateTime.Parse(dateAfterText.Text), id, 4, server, db, login, password);
 
             MessageBox.Show("Выбрано строк: " + rows.Count);

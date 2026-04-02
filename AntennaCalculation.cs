@@ -2,19 +2,133 @@
 using GCS.Mathematics;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Globalization;
+using System.Windows.Forms.VisualStyles;
 
 namespace ImpDistanceCalculation
 {
     class AntennaCalculation
     {
+        public int no { get; set; }
+        public double id { get; set; }
+        public double hwid { get; set; }
+        public DateTime date { get; set; }
+        public DateTime dateAkaike { get; set; }
+        public int pointAkaike { get; set; }
+        public double msAkaike { get; set; }
+        public int holeName { get; set; }
+        public double amplitude { get; set; }
+        public double duration { get; set; }
+        public double freq { get; set; }
+        public long dateTicks { get; set; }
+        public Coordinates coordinates { get; set; }
+
+        public AntennaCalculation(int no, double id, double hwid, DateTime date, int holeName, double amplitude, double duration, double freq, Coordinates coordinates)
+        {
+            this.no = no;
+            this.id = id;
+            this.hwid = hwid;
+            this.date = date;
+            this.holeName = holeName;
+            this.amplitude = amplitude;
+            this.duration = duration;
+            this.freq = freq;
+            this.coordinates = coordinates;
+        }
+
+        public AntennaCalculation() { }
 
 
-        //вычисление и получение массива невязок
+
+
+        //получение массива импульсов и занесение строки в DataGrid
+        public static void setEvents(List<DataGridViewRow> rows, DataGridView EventGrid, String dateBefore, String dateAfter)
+        {
+            String antennaName = setEventsName(rows);
+            int numberOfEvents = 1;
+            int lastRowIndex = EventGrid.Rows.Count - 1;
+            //for (int i = lastRowIndex; i < numberOfEvents; i++)
+            //{
+                EventGrid.Rows.Add();
+                EventGrid.Rows[lastRowIndex].Cells["No_Events"].Value = lastRowIndex + 1;
+                EventGrid.Rows[lastRowIndex].Cells["Antenna_Events"].Value = antennaName;
+                EventGrid.Rows[lastRowIndex].Cells["Imp_Events"].Value = setImpulses(rows);
+                EventGrid.Rows[lastRowIndex].Cells["DateBefore_Events"].Value = dateBefore;
+                EventGrid.Rows[lastRowIndex].Cells["DateAfter_Events"].Value = dateAfter;
+
+            //}
+        }
+
+        //для класса антенн
+        public static AntennaCalculation [] getAntennaImpulses(List<DataGridViewRow> rows)
+        {
+            int count = rows.Count;
+            AntennaCalculation []data = new AntennaCalculation [count]; 
+            for (int i = 0; i < count; i++)
+            {
+                AntennaCalculation antenna = new AntennaCalculation();
+                antenna.no = i + 1;
+                antenna.id = double.Parse(rows[i].Cells["ID"].Value.ToString());
+                antenna.hwid = double.Parse(rows[i].Cells["HWID"].Value.ToString());
+                antenna.date = DateTime.Parse(rows[i].Cells["ImpDate_DB"].Value.ToString());
+                antenna.dateAkaike = DateTime.Parse(rows[i].Cells["ImpDate_DB_Akaike"].Value.ToString());
+                antenna.pointAkaike = int.Parse(rows[i].Cells["pointX_Akaike"].Value.ToString());
+                antenna.msAkaike = double.Parse(rows[i].Cells["ms_Akaike"].Value.ToString());
+                antenna.holeName = int.Parse(rows[i].Cells["HoleName"].Value.ToString()); ; // имя скважины
+                antenna.amplitude = double.Parse(rows[i].Cells["Amplitude"].Value.ToString()); // амплитуда
+                antenna.duration = double.Parse(rows[i].Cells["Duration"].Value.ToString());// длительность
+                antenna.freq = double.Parse(rows[i].Cells["Freq"].Value.ToString());
+                antenna.dateTicks = long.Parse(rows[i].Cells["Date_ticks"].Value.ToString()); // тики
+
+                //координаты скважины
+                double X = double.Parse(rows[i].Cells["X"].Value.ToString());
+                double Y = double.Parse(rows[i].Cells["Y"].Value.ToString());
+                double Z = double.Parse(rows[i].Cells["Z"].Value.ToString());
+                antenna.coordinates = new Coordinates(X, Y, Z);
+                data[i] = antenna;
+            }
+            return data;
+        }
+
+        //сохранение массива импульсов в событии
+        public static String [] setImpulses(List<DataGridViewRow> rows)
+        {
+
+            int count = rows.Count;
+            String[] data = new String[count];
+            for (int i = 0; i < count; i++)
+            {
+                data[i] = rows[i].Cells["ID"].Value.ToString();
+            
+            }
+            return data;
+        }
+
+
+        //задание имени импульсов (название события)
+        public static String setEventsName(List<DataGridViewRow> rows)
+        {
+            String name = "";
+            int count = rows.Count;
+            for (int i = 0; i < count-1; i++)
+            {
+                name+= rows[i].Cells["HoleName"].Value.ToString();
+                name += "-";
+            }
+            name += rows[count - 1].Cells["HoleName"].Value.ToString();
+            return name;
+        }
+
+
+        
+        
+        //вычисление и получение массива невязок (вариант с DataGrid)
         public double[] getDT(DataGridView impulseGrid)
         {
             int count = impulseGrid.RowCount - 1;
@@ -27,6 +141,7 @@ namespace ImpDistanceCalculation
             return DT;
         }
 
+        //вычисление и получение массива невязок (вариант со строками таблицы)
         public double[] getDT(List<DataGridViewRow> rows, int parametrTime)
         {
             int count = rows.Count;
@@ -52,7 +167,7 @@ namespace ImpDistanceCalculation
             return DT;
         }
 
-        //получение координат импульсов по скважинам
+        //получение координат импульсов (вариант с DataGrid)
         public Coordinates[] getImpulsesCoordinates(DataGridView impulseGrid)
         {
             int count = impulseGrid.RowCount - 1;
@@ -68,6 +183,7 @@ namespace ImpDistanceCalculation
             return coordinates;
         }
 
+        //получение координат импульсов (вариант со строками табл)
         public Coordinates[] getImpulsesCoordinates(List<DataGridViewRow> rows)
         {
             int count = rows.Count;
@@ -83,7 +199,7 @@ namespace ImpDistanceCalculation
             return coordinates;
         }
 
-        //создание массива выбранных импульсов (антенна) с необходимыми для расчета параметрами
+        //создание массива выбранных импульсов (антенна) с необходимыми для расчета параметрами (вариант с DataGrid)
         public Impulse[] setAntenna(DataGridView impulseGrid, int parametrTime)
         {
             int count = impulseGrid.RowCount - 1;
@@ -113,7 +229,7 @@ namespace ImpDistanceCalculation
             return antenna;
         }
 
-        //вариант для случая конкретных (четырех) строк
+        //вариант для случая конкретных (четырех) строк (вариант со строками табл)
         public Impulse[] setAntenna(List<DataGridViewRow> rows, int parametrTime)
         {
             int count = rows.Count;
