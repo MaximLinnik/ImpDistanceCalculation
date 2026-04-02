@@ -2216,7 +2216,7 @@ while (reader.Read())
         private void CalcButton_Click(object sender, EventArgs e)
         {
             
-            Alg30 alg30= new Alg30();
+            AntennaCalculation alg30= new AntennaCalculation();
             /*
             //Coordinates []coordinates = alg30.getImpulsesCoordinates(dataGridView_Imp);
             //double []DT = alg30.getDT(dataGridView_Imp);
