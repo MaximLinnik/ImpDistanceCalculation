@@ -755,6 +755,7 @@ namespace ImpDistanceCalculation
         }
 
         //получение и запись импульсов по их ID
+        //вариант, когда между импульсами есть промежутки
         private AntennaCalculation []getImpulsesByID(String[] data)
         {
             HoleParametrs holeName; //имя скважины, если нашлась
@@ -766,7 +767,7 @@ namespace ImpDistanceCalculation
                             from Impulses
                              " +
                             @"  ";
-
+            
             String idBefore = data[0];
             String idAfter = data[data.Length - 1];
 
@@ -823,6 +824,71 @@ namespace ImpDistanceCalculation
                 
             }
             con.Close();  
+            return antennaData;
+        }
+
+        //вариант, когда между импульсами есть промежутки
+        private AntennaCalculation[] getImpulsesByID_withGap(String[] data)
+        {
+            HoleParametrs holeName; //имя скважины, если нашлась
+            AntennaCalculation[] antennaData = new AntennaCalculation[data.Length];
+            this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
+            for(int i = 0; i < data.Length; i++)
+            {
+                SqlConnection con = new SqlConnection(connectionString);
+                SqlConnection con2 = new SqlConnection(connectionString);
+                String query = @"select Impulses.ID, Impulses.HWID, Impulses.ImpulseTime, Impulses.Amplitude, Impulses.Duration  
+                            from Impulses
+                             " +
+                @"  ";
+
+                String setID = @"  where Impulses.ID ='" + data[i] + "'";
+                query += setID;
+                con.Open();
+                SqlCommand command = new SqlCommand(query, con);
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    String impID = reader[0].ToString();
+                    String hwid = reader[1].ToString();
+
+                    //тики в дату
+                    DateTime dt = new DateTime(long.Parse(reader[2].ToString()));
+                    String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    String amplitude = reader[3].ToString();
+                    String duration = reader[4].ToString();
+
+                    holeName = checkHoleImp(hwid, dt);
+
+                    AntennaCalculation antenna = new AntennaCalculation();
+                    antenna.no = i + 1;
+                    antenna.id = double.Parse(impID);
+                    antenna.hwid = double.Parse(hwid);
+                    DateTime dateImpulse = DateTime.Parse(impDate);
+                    antenna.date = dateImpulse;
+                    Akaike akaike = new Akaike();
+                    double aic = akaike.AIC(this.connectionString, impID);
+                    DateTime dateImpulseAIC = dateImpulse.AddMilliseconds(-aic);
+                    antenna.dateAkaike = dateImpulseAIC;
+                    antenna.pointAkaike = akaike.xPointAkaike;
+                    antenna.msAkaike = aic;
+                    antenna.holeName = holeName.getName(); // имя скважины
+                    antenna.amplitude = double.Parse(amplitude); // амплитуда
+                    antenna.duration = double.Parse(duration); // длительность
+                    double freq = Impulse.CalcFrequencyNew(con2, impID);
+                    antenna.freq = freq;
+                    antenna.dateTicks = long.Parse(reader[2].ToString()); // тики
+
+                    //координаты скважины
+                    double X = holeName.getX();
+                    double Y = holeName.getY();
+                    double Z = holeName.getZ();
+                    antenna.coordinates = new Coordinates(X, Y, Z);
+                    antennaData[i] = antenna;
+                }
+                con.Close();
+            }
             return antennaData;
         }
 
@@ -2329,13 +2395,21 @@ while (reader.Read())
             double locationZ = Double.Parse(real_Z.Text);
             Coordinates location = new Coordinates(locationX, locationY, locationZ);
             */
-            alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
 
+
+            String[] data = (String[])dataGridView_Events.Rows[0].Cells["Imp_Events"].Value;
+            AntennaCalculation[] impEvent = getImpulsesByID_withGap(data);
+            //alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
+            alg30.combinationCalc(impEvent, dataGridResult, before, after, step, location, parametrTime);
+            
+            /*
+            //Excel
             string res = "";
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
             res = System.IO.Path.GetDirectoryName(strExeFilePath); //папка
             res = res +"\\" +"result.xlsx";
             excel("Антенны",dataGridResult, res);
+            */
             MessageBox.Show("Окончание расчета");
         }
 
@@ -2356,7 +2430,34 @@ while (reader.Read())
             double time = akaike.calculationAIC(waveform, xp);
             */
             String[] data = (String[])dataGridView_Events.Rows[0].Cells["Imp_Events"].Value;
-            AntennaCalculation []test = getImpulsesByID(data);
+            AntennaCalculation []impEvent = getImpulsesByID_withGap(data);
+
+            Coordinates location = null;
+            CoordinatesForm coordinateForm = new CoordinatesForm();
+            if (coordinateForm.ShowDialog() == DialogResult.OK)
+            {
+                //coordinateForm.Show();
+                location = coordinateForm.location;
+            }
+            else { return; }
+
+            int parametrTime = 0; //параметр для способва вычисления время импульса
+
+            if (radioButtonStdTime.Checked)
+            {
+                parametrTime = 1;
+            }
+            else if (radioButtonAkaike.Checked)
+            {
+                parametrTime = 2;
+            }
+
+            decimal before = Decimal.Parse(velocityBefore.Text);
+            decimal after = Decimal.Parse(velocityAfter.Text);
+            decimal step = Decimal.Parse(velocityStep.Text);
+
+            AntennaCalculation test = new AntennaCalculation();
+            test.combinationCalc(impEvent, dataGridResult, before, after, step, location, parametrTime);
             MessageBox.Show("end");
         }
     }

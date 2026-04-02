@@ -127,9 +127,22 @@ namespace ImpDistanceCalculation
             return name;
         }
 
+        public static String setEventsName(AntennaCalculation[] test)
+        {
+            String name = "";
+            int count = test.Length;
+            for (int i = 0; i < count - 1; i++)
+            {
+                name += test[i].holeName;
+                name += "-";
+            }
+            name += test[count - 1].holeName;
+            return name;
+        }
 
-        
-        
+
+
+
         //вычисление и получение массива невязок (вариант с DataGrid)
         public double[] getDT(DataGridView impulseGrid)
         {
@@ -169,6 +182,32 @@ namespace ImpDistanceCalculation
             return DT;
         }
 
+        //вычисление и получение массива невязок (вариант с объектом класса)
+        public double[] getDT(List<int> indexes, AntennaCalculation[] impEvent, int parametrTime)
+        {
+            int count = indexes.Count;
+            double[] DT = new double[count];
+            DT[0] = 0;
+            for (int i = 1; i < count; i++)
+            {
+                if (parametrTime == 1)
+                {
+                    DT[i] = Math.Abs((impEvent[0].dateTicks - impEvent[indexes[i]].dateTicks) / 10);
+                }
+                else if (parametrTime == 2)
+                {
+                    double ms0 = impEvent[0].msAkaike;
+                    double ms_i = impEvent[indexes[i]].msAkaike;
+                    long date0 = impEvent[0].dateTicks;
+                    long date_i = impEvent[indexes[i]].dateTicks;
+                    long res0 = date0 - (long)Math.Round(ms0 * TimeSpan.TicksPerMillisecond);
+                    long res_i = date_i - (long)Math.Round(ms_i * TimeSpan.TicksPerMillisecond);
+                    DT[i] = Math.Abs((res0 - res_i) / 10);
+                }
+            }
+            return DT;
+        }
+
         //получение координат импульсов (вариант с DataGrid)
         public Coordinates[] getImpulsesCoordinates(DataGridView impulseGrid)
         {
@@ -196,6 +235,22 @@ namespace ImpDistanceCalculation
                 x = Double.Parse(rows[i].Cells["data_X"].Value.ToString());
                 y = Double.Parse(rows[i].Cells["data_Y"].Value.ToString());
                 z = Double.Parse(rows[i].Cells["data_Z"].Value.ToString());
+                coordinates[i] = new Coordinates(x, y, z);
+            }
+            return coordinates;
+        }
+
+        //получение координат импульсов (вариант с объектом класса)
+        public Coordinates[] getImpulsesCoordinates(List<int> indexes, AntennaCalculation[] impEvent)
+        {
+            int count = indexes.Count;
+            Coordinates[] coordinates = new Coordinates[count];
+            double x, y, z;
+            for (int i = 0; i < count; i++)
+            {
+                x = impEvent[indexes[i]].coordinates.x;
+                y = impEvent[indexes[i]].coordinates.y;
+                z = impEvent[indexes[i]].coordinates.z;
                 coordinates[i] = new Coordinates(x, y, z);
             }
             return coordinates;
@@ -266,6 +321,41 @@ namespace ImpDistanceCalculation
             return antenna;
         }
 
+        //вариант для случая конкретных (четырех) строк (вариант с объектом класса)
+        public Impulse[] setAntenna(List<int> indexes, AntennaCalculation[] impEvent, int parametrTime)
+        {
+            int count = indexes.Count;
+            Impulse[] antenna = new Impulse[count];
+            Coordinates[] coordinates = getImpulsesCoordinates(indexes, impEvent);
+            double[] DT = getDT(indexes, impEvent, parametrTime);
+            for (int i = 0; i < count; i++)
+            {
+                double id = impEvent[indexes[i]].id;
+                String hwid = impEvent[indexes[i]].hwid.ToString();
+                DateTime date1 = default;
+                if (parametrTime == 1)//стд время
+                {
+                    date1 = (DateTime)impEvent[indexes[i]].date;
+                }
+                else if (parametrTime == 2) //Акаике
+                {
+                    date1 = (DateTime)impEvent[indexes[i]].dateAkaike;
+                }
+                string testWithMs = date1.ToString("dd.MM.yyyy HH:mm:ss.fff");
+                DateTime date = DateTime.ParseExact(
+    testWithMs,
+    "dd.MM.yyyy HH:mm:ss.fff",
+    CultureInfo.InvariantCulture
+);
+                String holeName = impEvent[indexes[i]].holeName.ToString();
+                double amplitude = impEvent[indexes[i]].amplitude;
+                double duration = impEvent[indexes[i]].duration;
+                double freq = impEvent[indexes[i]].freq;
+                antenna[i] = new Impulse(id, hwid, date, holeName, amplitude, duration, freq, coordinates[i], DT[i]);
+            }
+            return antenna;
+        }
+
         //вычисление по комбинациям по 4 элемента
         //parametrTime - способ вычисления времени импульса
         //1 - стандарт, 2 - по Акаике
@@ -326,6 +416,85 @@ namespace ImpDistanceCalculation
                                     velocityMin = velocity;
                                     minTimeError = TimeError;
                                     antennaName = antenna[0].holeName+"-"+ antenna[1].holeName + "-" + antenna[2].holeName + "-" + antenna[3].holeName;
+                                }
+                                //velocity += step;
+                                //s++; //чтобы не было моментов типа 0000000000.1
+                                velocity += step;
+                            }
+                            //сохранение названия антенны, значений скорости, Rмин, координат AE
+                            if (antennaName != "")
+                            {
+                                double RtoX0 = deltaR(location, antenna[0].coordinates);
+                                double freqGeom = avgFreq(antenna);
+                                double avgDistance = avgDeltaR(antenna, location);
+                                resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0, RtoX0, freqGeom, avgDistance);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //расчет через объект класса (по 4 элемента)
+        public void combinationCalc(AntennaCalculation[] impEvent, DataGridView resultGrid, decimal velocityBefore, decimal velocityAfter, decimal step, Coordinates location, int parametrTime)
+        {
+
+            resultGrid.Rows.Clear();
+            resultGrid.Columns[1].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
+
+            int n = impEvent.Length;
+            int s = 0;
+            //int count = (int)((velocityAfter - velocityBefore) / step); //чтобы не было моментов типа 0000000000.1
+            //int before = (int)(velocityBefore * 10);         // 5000 → 50000
+            //int after  = (int)(velocityAfter * 10);        // 5010 → 50100
+            DateTime firstImp = DateTime.MinValue;
+            for (int i = 0; i < n - 3; i++)
+            {
+                for (int j = i + 1; j < n - 2; j++)
+                {
+                    for (int k = j + 1; k < n - 1; k++)
+                    {
+                        for (int l = k + 1; l < n; l++)
+                        {
+                            var indexes = new List<int> { i, j, k, l };
+                            /*
+                            var selectedRows = indexes
+                                .Select(index => impulseGrid.Rows[index])
+                                .Where(r => !r.IsNewRow)
+                                .ToList();
+                            */
+                            Impulse[] antenna = setAntenna(indexes, impEvent, parametrTime);
+                            //for (double velocity = velocityBefore; velocity < velocityAfter; velocity += step)
+                            decimal velocity = velocityBefore;
+                            double Rmin = Double.MaxValue, AE_Xmin = 0, AE_Ymin = 0, AE_Zmin = 0, X0 = 0, Y0 = 0, Z0 = 0;
+                            decimal velocityMin = 0;
+                            float minTimeError = 0;
+                            String antennaName = "";
+                            //while (velocity <= velocityAfter)
+                            //while (s <= count)
+                            //while (before <= after)
+                            while (velocity <= velocityAfter)
+                            {
+                                //velocity = velocityBefore + k * step; //чтобы не было моментов типа 0000000000.1
+                                //velocity = before/10; //чтобы не было моментов типа 0000000000.1
+                                //алг 30
+                                Coordinates AE = Algoritm30.getAECoordinates(antenna, (double)velocity);
+                                Algoritm30.DirectData(false, antenna, AE, (double)velocity);
+                                float TimeError = Algoritm30.TimeErrorClassic(antenna);
+                                double R = deltaR(location, AE);
+                                if (R < Rmin)
+                                {
+                                    firstImp = antenna[0].date;
+                                    Rmin = R;
+                                    AE_Xmin = AE.x;
+                                    AE_Ymin = AE.y;
+                                    AE_Zmin = AE.z;
+                                    X0 = location.x;
+                                    Y0 = location.y;
+                                    Z0 = location.z;
+                                    velocityMin = velocity;
+                                    minTimeError = TimeError;
+                                    antennaName = antenna[0].holeName + "-" + antenna[1].holeName + "-" + antenna[2].holeName + "-" + antenna[3].holeName;
                                 }
                                 //velocity += step;
                                 //s++; //чтобы не было моментов типа 0000000000.1

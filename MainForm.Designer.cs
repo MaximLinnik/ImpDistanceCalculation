@@ -40,6 +40,12 @@
             this.returnButton = new System.Windows.Forms.Button();
             this.startButtonTest = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dataGridView_Events = new System.Windows.Forms.DataGridView();
+            this.No_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Antenna_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Imp_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateBefore_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateAfter_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView_Imp = new System.Windows.Forms.DataGridView();
             this.data_No = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -174,14 +180,9 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.radioButtonAkaike = new System.Windows.Forms.RadioButton();
             this.radioButtonStdTime = new System.Windows.Forms.RadioButton();
-            this.dataGridView_Events = new System.Windows.Forms.DataGridView();
-            this.No_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Antenna_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Imp_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateBefore_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateAfter_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Events)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Imp)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filtrationDataGridView)).BeginInit();
@@ -197,7 +198,6 @@
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).BeginInit();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Events)).BeginInit();
             this.SuspendLayout();
             // 
             // dateBeforeText
@@ -257,7 +257,7 @@
             this.dateCheckBox.Location = new System.Drawing.Point(23, 22);
             this.dateCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.dateCheckBox.Name = "dateCheckBox";
-            this.dateCheckBox.Size = new System.Drawing.Size(164, 21);
+            this.dateCheckBox.Size = new System.Drawing.Size(159, 20);
             this.dateCheckBox.TabIndex = 9;
             this.dateCheckBox.Text = "Вывести по всей БД";
             this.dateCheckBox.UseVisualStyleBackColor = true;
@@ -269,7 +269,7 @@
             this.label4.Location = new System.Drawing.Point(19, 79);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(27, 17);
+            this.label4.Size = new System.Drawing.Size(24, 16);
             this.label4.TabIndex = 8;
             this.label4.Text = "До";
             // 
@@ -279,7 +279,7 @@
             this.label3.Location = new System.Drawing.Point(19, 47);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(26, 17);
+            this.label3.Size = new System.Drawing.Size(24, 16);
             this.label3.TabIndex = 7;
             this.label3.Text = "От";
             // 
@@ -333,6 +333,59 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Импульсы";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView_Events
+            // 
+            this.dataGridView_Events.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.dataGridView_Events.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Events.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.No_Events,
+            this.Antenna_Events,
+            this.Imp_Events,
+            this.DateBefore_Events,
+            this.DateAfter_Events});
+            this.dataGridView_Events.Location = new System.Drawing.Point(0, 420);
+            this.dataGridView_Events.Name = "dataGridView_Events";
+            this.dataGridView_Events.RowHeadersWidth = 51;
+            this.dataGridView_Events.RowTemplate.Height = 24;
+            this.dataGridView_Events.Size = new System.Drawing.Size(875, 202);
+            this.dataGridView_Events.TabIndex = 48;
+            // 
+            // No_Events
+            // 
+            this.No_Events.HeaderText = "№";
+            this.No_Events.MinimumWidth = 6;
+            this.No_Events.Name = "No_Events";
+            this.No_Events.Width = 125;
+            // 
+            // Antenna_Events
+            // 
+            this.Antenna_Events.HeaderText = "Антенна";
+            this.Antenna_Events.MinimumWidth = 6;
+            this.Antenna_Events.Name = "Antenna_Events";
+            this.Antenna_Events.Width = 125;
+            // 
+            // Imp_Events
+            // 
+            this.Imp_Events.HeaderText = "Импульсы";
+            this.Imp_Events.MinimumWidth = 6;
+            this.Imp_Events.Name = "Imp_Events";
+            this.Imp_Events.Width = 125;
+            // 
+            // DateBefore_Events
+            // 
+            this.DateBefore_Events.HeaderText = "Время (от)";
+            this.DateBefore_Events.MinimumWidth = 6;
+            this.DateBefore_Events.Name = "DateBefore_Events";
+            this.DateBefore_Events.Width = 125;
+            // 
+            // DateAfter_Events
+            // 
+            this.DateAfter_Events.HeaderText = "Время (до)";
+            this.DateAfter_Events.MinimumWidth = 6;
+            this.DateAfter_Events.Name = "DateAfter_Events";
+            this.DateAfter_Events.Width = 125;
             // 
             // dataGridView_Imp
             // 
@@ -1009,7 +1062,7 @@
             this.labelNumbImpAll.Location = new System.Drawing.Point(863, 752);
             this.labelNumbImpAll.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelNumbImpAll.Name = "labelNumbImpAll";
-            this.labelNumbImpAll.Size = new System.Drawing.Size(167, 17);
+            this.labelNumbImpAll.Size = new System.Drawing.Size(165, 16);
             this.labelNumbImpAll.TabIndex = 39;
             this.labelNumbImpAll.Text = "Количество импульсов: ";
             this.labelNumbImpAll.Visible = false;
@@ -1033,7 +1086,7 @@
             this.OneRowCheckBox.Location = new System.Drawing.Point(17, 23);
             this.OneRowCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.OneRowCheckBox.Name = "OneRowCheckBox";
-            this.OneRowCheckBox.Size = new System.Drawing.Size(213, 38);
+            this.OneRowCheckBox.Size = new System.Drawing.Size(212, 36);
             this.OneRowCheckBox.TabIndex = 41;
             this.OneRowCheckBox.Text = "Подсчитать импульсы\r\nпо одной скважине/датчику";
             this.OneRowCheckBox.UseVisualStyleBackColor = true;
@@ -1045,7 +1098,7 @@
             this.labelTypeCalc.Location = new System.Drawing.Point(13, 78);
             this.labelTypeCalc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTypeCalc.Name = "labelTypeCalc";
-            this.labelTypeCalc.Size = new System.Drawing.Size(76, 17);
+            this.labelTypeCalc.Size = new System.Drawing.Size(75, 16);
             this.labelTypeCalc.TabIndex = 42;
             this.labelTypeCalc.Text = "Скважина:";
             // 
@@ -1073,7 +1126,7 @@
             this.filtrationCheckBox.Location = new System.Drawing.Point(16, 322);
             this.filtrationCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.filtrationCheckBox.Name = "filtrationCheckBox";
-            this.filtrationCheckBox.Size = new System.Drawing.Size(190, 21);
+            this.filtrationCheckBox.Size = new System.Drawing.Size(186, 20);
             this.filtrationCheckBox.TabIndex = 50;
             this.filtrationCheckBox.Text = "Выполнять фильтрацию";
             this.filtrationCheckBox.UseVisualStyleBackColor = true;
@@ -1100,7 +1153,7 @@
             this.sepQueryRadioButton.Location = new System.Drawing.Point(9, 53);
             this.sepQueryRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.sepQueryRadioButton.Name = "sepQueryRadioButton";
-            this.sepQueryRadioButton.Size = new System.Drawing.Size(181, 21);
+            this.sepQueryRadioButton.Size = new System.Drawing.Size(178, 20);
             this.sepQueryRadioButton.TabIndex = 1;
             this.sepQueryRadioButton.TabStop = true;
             this.sepQueryRadioButton.Text = "разбиение по месяцам";
@@ -1112,7 +1165,7 @@
             this.oneQueryRadioButton.Location = new System.Drawing.Point(9, 25);
             this.oneQueryRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.oneQueryRadioButton.Name = "oneQueryRadioButton";
-            this.oneQueryRadioButton.Size = new System.Drawing.Size(111, 21);
+            this.oneQueryRadioButton.Size = new System.Drawing.Size(110, 20);
             this.oneQueryRadioButton.TabIndex = 0;
             this.oneQueryRadioButton.Text = "один запрос";
             this.oneQueryRadioButton.UseVisualStyleBackColor = true;
@@ -1163,7 +1216,7 @@
             this.hwidRadioButton.Location = new System.Drawing.Point(9, 53);
             this.hwidRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.hwidRadioButton.Name = "hwidRadioButton";
-            this.hwidRadioButton.Size = new System.Drawing.Size(136, 21);
+            this.hwidRadioButton.Size = new System.Drawing.Size(130, 20);
             this.hwidRadioButton.TabIndex = 1;
             this.hwidRadioButton.Text = "Датчики (HWID)";
             this.hwidRadioButton.UseVisualStyleBackColor = true;
@@ -1175,7 +1228,7 @@
             this.holeRadioButton.Location = new System.Drawing.Point(9, 25);
             this.holeRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.holeRadioButton.Name = "holeRadioButton";
-            this.holeRadioButton.Size = new System.Drawing.Size(138, 21);
+            this.holeRadioButton.Size = new System.Drawing.Size(134, 20);
             this.holeRadioButton.TabIndex = 0;
             this.holeRadioButton.TabStop = true;
             this.holeRadioButton.Text = "Скважины (Hole)";
@@ -1189,7 +1242,7 @@
             this.autoFolderCheckBox.Location = new System.Drawing.Point(7, 158);
             this.autoFolderCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.autoFolderCheckBox.Name = "autoFolderCheckBox";
-            this.autoFolderCheckBox.Size = new System.Drawing.Size(175, 21);
+            this.autoFolderCheckBox.Size = new System.Drawing.Size(175, 20);
             this.autoFolderCheckBox.TabIndex = 47;
             this.autoFolderCheckBox.Text = "сохранить в эту папку";
             this.autoFolderCheckBox.UseVisualStyleBackColor = true;
@@ -1200,7 +1253,7 @@
             this.doubleExcelCheckBox.Location = new System.Drawing.Point(423, 747);
             this.doubleExcelCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.doubleExcelCheckBox.Name = "doubleExcelCheckBox";
-            this.doubleExcelCheckBox.Size = new System.Drawing.Size(172, 21);
+            this.doubleExcelCheckBox.Size = new System.Drawing.Size(169, 20);
             this.doubleExcelCheckBox.TabIndex = 46;
             this.doubleExcelCheckBox.Text = "сохранить оба файла";
             this.doubleExcelCheckBox.UseVisualStyleBackColor = true;
@@ -1212,7 +1265,7 @@
             this.daysRadioButton.Location = new System.Drawing.Point(239, 764);
             this.daysRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.daysRadioButton.Name = "daysRadioButton";
-            this.daysRadioButton.Size = new System.Drawing.Size(82, 21);
+            this.daysRadioButton.Size = new System.Drawing.Size(79, 20);
             this.daysRadioButton.TabIndex = 1;
             this.daysRadioButton.Text = "по дням";
             this.daysRadioButton.UseVisualStyleBackColor = true;
@@ -1224,7 +1277,7 @@
             this.autosaveCheckBox.Location = new System.Drawing.Point(669, 738);
             this.autosaveCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.autosaveCheckBox.Name = "autosaveCheckBox";
-            this.autosaveCheckBox.Size = new System.Drawing.Size(151, 38);
+            this.autosaveCheckBox.Size = new System.Drawing.Size(148, 36);
             this.autosaveCheckBox.TabIndex = 45;
             this.autosaveCheckBox.Text = "сохранить данные\r\n автоматически";
             this.autosaveCheckBox.UseVisualStyleBackColor = true;
@@ -1237,7 +1290,7 @@
             this.hoursRadioButton.Location = new System.Drawing.Point(239, 735);
             this.hoursRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.hoursRadioButton.Name = "hoursRadioButton";
-            this.hoursRadioButton.Size = new System.Drawing.Size(89, 21);
+            this.hoursRadioButton.Size = new System.Drawing.Size(87, 20);
             this.hoursRadioButton.TabIndex = 0;
             this.hoursRadioButton.TabStop = true;
             this.hoursRadioButton.Text = "по часам";
@@ -1281,7 +1334,7 @@
             this.persentageLabel.Location = new System.Drawing.Point(244, 710);
             this.persentageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.persentageLabel.Name = "persentageLabel";
-            this.persentageLabel.Size = new System.Drawing.Size(20, 17);
+            this.persentageLabel.Size = new System.Drawing.Size(19, 16);
             this.persentageLabel.TabIndex = 46;
             this.persentageLabel.Text = "%";
             this.persentageLabel.Visible = false;
@@ -1292,7 +1345,7 @@
             this.progressLabel.Location = new System.Drawing.Point(9, 758);
             this.progressLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.progressLabel.Name = "progressLabel";
-            this.progressLabel.Size = new System.Drawing.Size(105, 17);
+            this.progressLabel.Size = new System.Drawing.Size(100, 16);
             this.progressLabel.TabIndex = 47;
             this.progressLabel.Text = "Текущая дата:";
             // 
@@ -1338,7 +1391,7 @@
             this.label1.Location = new System.Drawing.Point(10, 261);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 17);
+            this.label1.Size = new System.Drawing.Size(68, 16);
             this.label1.TabIndex = 51;
             this.label1.Text = "Скорость";
             // 
@@ -1348,7 +1401,7 @@
             this.label2.Location = new System.Drawing.Point(19, 317);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 17);
+            this.label2.Size = new System.Drawing.Size(32, 16);
             this.label2.TabIndex = 53;
             this.label2.Text = "Шаг";
             // 
@@ -1382,7 +1435,7 @@
             this.label5.Location = new System.Drawing.Point(48, 361);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(0, 17);
+            this.label5.Size = new System.Drawing.Size(0, 16);
             this.label5.TabIndex = 57;
             // 
             // label6
@@ -1391,7 +1444,7 @@
             this.label6.Location = new System.Drawing.Point(32, 387);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(0, 17);
+            this.label6.Size = new System.Drawing.Size(0, 16);
             this.label6.TabIndex = 58;
             // 
             // label7
@@ -1400,7 +1453,7 @@
             this.label7.Location = new System.Drawing.Point(125, 387);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(0, 17);
+            this.label7.Size = new System.Drawing.Size(0, 16);
             this.label7.TabIndex = 59;
             // 
             // label8
@@ -1409,7 +1462,7 @@
             this.label8.Location = new System.Drawing.Point(202, 387);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(0, 17);
+            this.label8.Size = new System.Drawing.Size(0, 16);
             this.label8.TabIndex = 60;
             // 
             // calcButton
@@ -1446,7 +1499,6 @@
             this.dataGridResult.RowTemplate.Height = 24;
             this.dataGridResult.Size = new System.Drawing.Size(1564, 107);
             this.dataGridResult.TabIndex = 48;
-            this.dataGridResult.Visible = false;
             // 
             // Antenna
             // 
@@ -1572,7 +1624,7 @@
             this.radioButtonAkaike.AutoSize = true;
             this.radioButtonAkaike.Location = new System.Drawing.Point(10, 49);
             this.radioButtonAkaike.Name = "radioButtonAkaike";
-            this.radioButtonAkaike.Size = new System.Drawing.Size(142, 21);
+            this.radioButtonAkaike.Size = new System.Drawing.Size(141, 20);
             this.radioButtonAkaike.TabIndex = 1;
             this.radioButtonAkaike.Text = "Алгоритм Акаике";
             this.radioButtonAkaike.UseVisualStyleBackColor = true;
@@ -1583,64 +1635,11 @@
             this.radioButtonStdTime.Checked = true;
             this.radioButtonStdTime.Location = new System.Drawing.Point(10, 22);
             this.radioButtonStdTime.Name = "radioButtonStdTime";
-            this.radioButtonStdTime.Size = new System.Drawing.Size(160, 21);
+            this.radioButtonStdTime.Size = new System.Drawing.Size(158, 20);
             this.radioButtonStdTime.TabIndex = 0;
             this.radioButtonStdTime.TabStop = true;
             this.radioButtonStdTime.Text = "Стандартное время";
             this.radioButtonStdTime.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView_Events
-            // 
-            this.dataGridView_Events.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.dataGridView_Events.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Events.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.No_Events,
-            this.Antenna_Events,
-            this.Imp_Events,
-            this.DateBefore_Events,
-            this.DateAfter_Events});
-            this.dataGridView_Events.Location = new System.Drawing.Point(0, 420);
-            this.dataGridView_Events.Name = "dataGridView_Events";
-            this.dataGridView_Events.RowHeadersWidth = 51;
-            this.dataGridView_Events.RowTemplate.Height = 24;
-            this.dataGridView_Events.Size = new System.Drawing.Size(875, 202);
-            this.dataGridView_Events.TabIndex = 48;
-            // 
-            // No_Events
-            // 
-            this.No_Events.HeaderText = "№";
-            this.No_Events.MinimumWidth = 6;
-            this.No_Events.Name = "No_Events";
-            this.No_Events.Width = 125;
-            // 
-            // Antenna_Events
-            // 
-            this.Antenna_Events.HeaderText = "Антенна";
-            this.Antenna_Events.MinimumWidth = 6;
-            this.Antenna_Events.Name = "Antenna_Events";
-            this.Antenna_Events.Width = 125;
-            // 
-            // Imp_Events
-            // 
-            this.Imp_Events.HeaderText = "Импульсы";
-            this.Imp_Events.MinimumWidth = 6;
-            this.Imp_Events.Name = "Imp_Events";
-            this.Imp_Events.Width = 125;
-            // 
-            // DateBefore_Events
-            // 
-            this.DateBefore_Events.HeaderText = "Время (от)";
-            this.DateBefore_Events.MinimumWidth = 6;
-            this.DateBefore_Events.Name = "DateBefore_Events";
-            this.DateBefore_Events.Width = 125;
-            // 
-            // DateAfter_Events
-            // 
-            this.DateAfter_Events.HeaderText = "Время (до)";
-            this.DateAfter_Events.MinimumWidth = 6;
-            this.DateAfter_Events.Name = "DateAfter_Events";
-            this.DateAfter_Events.Width = 125;
             // 
             // MainForm
             // 
@@ -1692,6 +1691,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Events)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Imp)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.filtrationDataGridView)).EndInit();
@@ -1712,7 +1712,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridResult)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Events)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
