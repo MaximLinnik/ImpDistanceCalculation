@@ -52,6 +52,8 @@ namespace ImpDistanceCalculation
         {
             String antennaName = setEventsName(rows);
             int numberOfEvents = 1;
+            EventGrid.Columns["DateBefore_Events"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff";
+            EventGrid.Columns["DateBefore_Events"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff";
             int lastRowIndex = EventGrid.Rows.Count - 1;
             //for (int i = lastRowIndex; i < numberOfEvents; i++)
             //{

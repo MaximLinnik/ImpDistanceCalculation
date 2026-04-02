@@ -755,7 +755,7 @@ namespace ImpDistanceCalculation
         }
 
         //получение и запись импульсов по их ID
-        private AntennaCalculation getImpulsesByID(String[] data)
+        private AntennaCalculation []getImpulsesByID(String[] data)
         {
             HoleParametrs holeName; //имя скважины, если нашлась
 
@@ -773,15 +773,15 @@ namespace ImpDistanceCalculation
             String setID = @"  where 
                          (Impulses.ID BETWEEN '" + idBefore + "' AND '" +
                   idAfter + "')";
-
+            query += setID;
             con.Open();
             SqlCommand command = new SqlCommand(query, con);
             SqlDataReader reader = command.ExecuteReader();
-            int i = 0, counter = 0;
-            AntennaCalculation antenna = new AntennaCalculation();
+
+            AntennaCalculation[] antennaData = new AntennaCalculation[data.Length];
+            int i = 0;
             while (reader.Read())
             {
-
                 String impID = reader[0].ToString();
                 String hwid = reader[1].ToString();
 
@@ -791,28 +791,9 @@ namespace ImpDistanceCalculation
                 String amplitude = reader[3].ToString();
                 String duration = reader[4].ToString();
 
-                //оптимизация, чтобы записывалось только если входит в скважину
-                //if (oneHoleParametr)
-                //{
-
-                //progressBar1.Value += 1; // увел счетчика прогресс бара
-
-                /*
-                counter++;
-                
-                double percentage = (double)counter / progressBar1.Maximum;
-                labelNumbImpAll.Text = percentage.ToString();
-                labelNumbImpAll.Refresh();
-                */
-                ///
                 holeName = checkHoleImp(hwid, dt);
-                //if (holeName == 0) continue;
-                //}
-                // */
 
-                ImpulsesGridView.Rows.Add();
-                int colCount = ImpulsesGridView.ColumnCount;
-
+                AntennaCalculation antenna = new AntennaCalculation();
                 antenna.no = i + 1;
                 antenna.id = double.Parse(impID);
                 antenna.hwid = double.Parse(hwid);
@@ -830,18 +811,19 @@ namespace ImpDistanceCalculation
                 double freq = Impulse.CalcFrequencyNew(con2, impID);
                 antenna.freq = freq;
                 antenna.dateTicks = long.Parse(reader[2].ToString()); // тики
-                
+
                 //координаты скважины
                 double X = holeName.getX();
                 double Y = holeName.getY();
                 double Z = holeName.getZ();
-                antenna.coordinates =new Coordinates(X, Y, Z);
-                i++;
-            }
-            con.Close();
+                antenna.coordinates = new Coordinates(X, Y, Z);
 
-            
-            return antenna;
+                antennaData[i] = antenna;
+                i++;
+                
+            }
+            con.Close();  
+            return antennaData;
         }
 
         //получение и запись импульсов по HWID
@@ -2364,6 +2346,7 @@ while (reader.Read())
 
         private void Test_button_Click(object sender, EventArgs e)
         {
+            /*
             this.connectionString = "Data Source=" + server + ";Initial Catalog=" + db + ";User ID=" + login + ";Password=" + password;
             SqlConnection con = new SqlConnection(connectionString);
             byte []data = Impulse.frontData(con, "1");
@@ -2371,6 +2354,10 @@ while (reader.Read())
             double[]xp = Impulse.getTimeX(data);
             Akaike akaike = new Akaike();
             double time = akaike.calculationAIC(waveform, xp);
+            */
+            String[] data = (String[])dataGridView_Events.Rows[0].Cells["Imp_Events"].Value;
+            AntennaCalculation []test = getImpulsesByID(data);
+            MessageBox.Show("end");
         }
     }
 }
