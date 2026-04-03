@@ -127,16 +127,16 @@ namespace ImpDistanceCalculation
             return name;
         }
 
-        public static String setEventsName(AntennaCalculation[] test)
+        public static String setEventsName(AntennaCalculation[] eventImp)
         {
             String name = "";
-            int count = test.Length;
+            int count = eventImp.Length;
             for (int i = 0; i < count - 1; i++)
             {
-                name += test[i].holeName;
+                name += eventImp[i].holeName;
                 name += "-";
             }
-            name += test[count - 1].holeName;
+            name += eventImp[count - 1].holeName;
             return name;
         }
 
@@ -192,13 +192,13 @@ namespace ImpDistanceCalculation
             {
                 if (parametrTime == 1)
                 {
-                    DT[i] = Math.Abs((impEvent[0].dateTicks - impEvent[indexes[i]].dateTicks) / 10);
+                    DT[i] = Math.Abs((impEvent[indexes[0]].dateTicks - impEvent[indexes[i]].dateTicks) / 10);
                 }
                 else if (parametrTime == 2)
                 {
-                    double ms0 = impEvent[0].msAkaike;
+                    double ms0 = impEvent[indexes[0]].msAkaike;
                     double ms_i = impEvent[indexes[i]].msAkaike;
-                    long date0 = impEvent[0].dateTicks;
+                    long date0 = impEvent[indexes[0]].dateTicks;
                     long date_i = impEvent[indexes[i]].dateTicks;
                     long res0 = date0 - (long)Math.Round(ms0 * TimeSpan.TicksPerMillisecond);
                     long res_i = date_i - (long)Math.Round(ms_i * TimeSpan.TicksPerMillisecond);
@@ -444,10 +444,6 @@ namespace ImpDistanceCalculation
 
             int n = impEvent.Length;
             int s = 0;
-            //int count = (int)((velocityAfter - velocityBefore) / step); //чтобы не было моментов типа 0000000000.1
-            //int before = (int)(velocityBefore * 10);         // 5000 → 50000
-            //int after  = (int)(velocityAfter * 10);        // 5010 → 50100
-            DateTime firstImp = DateTime.MinValue;
             for (int i = 0; i < n - 3; i++)
             {
                 for (int j = i + 1; j < n - 2; j++)
@@ -456,6 +452,7 @@ namespace ImpDistanceCalculation
                     {
                         for (int l = k + 1; l < n; l++)
                         {
+
                             var indexes = new List<int> { i, j, k, l };
                             /*
                             var selectedRows = indexes
@@ -464,19 +461,16 @@ namespace ImpDistanceCalculation
                                 .ToList();
                             */
                             Impulse[] antenna = setAntenna(indexes, impEvent, parametrTime);
+                            DateTime firstImp = DateTime.MinValue;
                             //for (double velocity = velocityBefore; velocity < velocityAfter; velocity += step)
                             decimal velocity = velocityBefore;
                             double Rmin = Double.MaxValue, AE_Xmin = 0, AE_Ymin = 0, AE_Zmin = 0, X0 = 0, Y0 = 0, Z0 = 0;
                             decimal velocityMin = 0;
                             float minTimeError = 0;
                             String antennaName = "";
-                            //while (velocity <= velocityAfter)
-                            //while (s <= count)
-                            //while (before <= after)
+
                             while (velocity <= velocityAfter)
                             {
-                                //velocity = velocityBefore + k * step; //чтобы не было моментов типа 0000000000.1
-                                //velocity = before/10; //чтобы не было моментов типа 0000000000.1
                                 //алг 30
                                 Coordinates AE = Algoritm30.getAECoordinates(antenna, (double)velocity);
                                 Algoritm30.DirectData(false, antenna, AE, (double)velocity);

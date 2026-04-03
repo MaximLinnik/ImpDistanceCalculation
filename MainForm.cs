@@ -2402,14 +2402,14 @@ while (reader.Read())
             //alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
             alg30.combinationCalc(impEvent, dataGridResult, before, after, step, location, parametrTime);
             
-            /*
+            
             //Excel
             string res = "";
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
             res = System.IO.Path.GetDirectoryName(strExeFilePath); //папка
             res = res +"\\" +"result.xlsx";
             excel("Антенны",dataGridResult, res);
-            */
+            
             MessageBox.Show("Окончание расчета");
         }
 
