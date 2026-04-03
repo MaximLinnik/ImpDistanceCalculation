@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace ImpDistanceCalculation
 {
-    class Impulse
+    public class Impulse
     {
         public double id;
         public String hwid;

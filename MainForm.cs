@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using System.Data.SqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Threading;
-using System.IO;
 
 namespace ImpDistanceCalculation
 {
@@ -436,12 +437,12 @@ namespace ImpDistanceCalculation
 
 
                         filenameHours = folderSaveHours(dateBefore, typeName);
-                        excel(typeName, ImpulseHoleGridView, filenameHours);
+                        //excel(typeName, ImpulseHoleGridView, filenameHours);
 
                         //if (doubleExcelCheckBox.Checked)
                         //{
                             filenameDays = folderSaveDays(dateBefore, typeName);
-                            excel(typeName, ImpulseHoleGridView2, filenameDays);
+                            //excel(typeName, ImpulseHoleGridView2, filenameDays);
                         //}
                     }
 
@@ -2072,7 +2073,7 @@ while (reader.Read())
             //countImpulses(holeName);
         }
 
-        public void excel(String name, DataGridView dataGridView, String filename)
+        public void excel_Events(String antennaNames, DataGridView dataGridView, List<AntennaCalculation> allImpulses, String filename)
         {
             Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
@@ -2083,14 +2084,14 @@ while (reader.Read())
 
                 worksheet = workbook.ActiveSheet;
 
-                worksheet.Name = name;
+                worksheet.Name = antennaNames;
 
 
                 for (int j = 0; j < dataGridView.Columns.Count; j++)
                 {
-
                     worksheet.Cells[1, j + 1] = dataGridView.Columns[j].HeaderText;
                 }
+
 
                 int cellRowIndex = 2;
                 int cellColumnIndex = 1;
@@ -2124,8 +2125,12 @@ while (reader.Read())
                 worksheet.Rows[1].Font.Bold = true;
                 worksheet.Range["A:AZ"].EntireColumn.AutoFit();
 
+                //вторая вкладка - все импульсы, использовавшиеся для расчета
+                Microsoft.Office.Interop.Excel._Worksheet worksheet2 = worksheetImpulses("Импульсы", workbook, allImpulses);
+
                 //if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 //{
+                worksheet.Activate();
                 workbook.SaveAs(filename);
                 //MessageBox.Show("Сохранение успешно");
                 //}
@@ -2140,6 +2145,51 @@ while (reader.Read())
                 workbook = null;
                 excel = null;
             }
+        }
+
+        //вкладка импульсы
+        public Microsoft.Office.Interop.Excel._Worksheet worksheetImpulses(String name, Microsoft.Office.Interop.Excel._Workbook workbook, List<AntennaCalculation> allImpulses)
+        {
+            Microsoft.Office.Interop.Excel._Worksheet worksheet = (Microsoft.Office.Interop.Excel._Worksheet)workbook.Worksheets.Add
+                (Type.Missing, workbook.Worksheets[workbook.Worksheets.Count], 1, Type.Missing);
+            worksheet.Name = name;
+            worksheet.Cells[1, 1] = "№";
+            worksheet.Cells[1, 2] = "ID";
+            worksheet.Cells[1, 3] = "HWID";
+            worksheet.Cells[1, 4] = "Время импульса";
+            worksheet.Cells[1, 5] = "Время Акаике";
+            worksheet.Cells[1, 6] = "Точка OX (Акаике)";
+            worksheet.Cells[1, 7] = "Корректировка мс (Акаике)";
+            worksheet.Cells[1, 8] = "Имя скважины";
+            worksheet.Cells[1, 9] = "Амплитуда";
+            worksheet.Cells[1, 10] = "Длительность";
+            worksheet.Cells[1, 11] = "Частота";
+            worksheet.Cells[1, 12] = "X";
+            worksheet.Cells[1, 13] = "Y";
+            worksheet.Cells[1, 14] = "Z";
+            int i = 2;
+            foreach(AntennaCalculation impulse in allImpulses) {
+                worksheet.Cells[i, 1] = i - 1;
+                worksheet.Cells[i, 2] = impulse.id;
+                worksheet.Cells[i, 3] = impulse.hwid;
+                worksheet.Cells[i, 4] = impulse.date.ToString("dd.MM.yyyy HH:mm:ss.fff"); ;
+                worksheet.Cells[i, 5] = impulse.dateAkaike.ToString("dd.MM.yyyy HH:mm:ss.fff");
+                worksheet.Cells[i, 6] = impulse.pointAkaike;
+                worksheet.Cells[i, 7] = impulse.msAkaike;
+                worksheet.Cells[i, 8] = impulse.holeName;
+                worksheet.Cells[i, 9] = impulse.amplitude;
+                worksheet.Cells[i, 10] = impulse.duration;
+                worksheet.Cells[i, 11] = impulse.freq;
+                worksheet.Cells[i, 12] = impulse.coordinates.x;
+                worksheet.Cells[i, 13] = impulse.coordinates.y;
+                worksheet.Cells[i, 14] = impulse.coordinates.z;
+                i++;
+            }
+
+            worksheet.Cells[1, 1].CurrentRegion.Borders.LineStyle = Excel.XlLineStyle.xlContinuous; //границы
+            worksheet.Rows[1].Font.Bold = true;
+            worksheet.Range["A:AZ"].EntireColumn.AutoFit();
+            return worksheet;
         }
 
         //получение количества импульсов по прогреесс бару
@@ -2340,6 +2390,15 @@ while (reader.Read())
             }
 
             rows.Sort((a, b) => a.Index.CompareTo(b.Index));
+            Coordinates location = null;
+            CoordinatesForm coordinateForm = new CoordinatesForm();
+            if (coordinateForm.ShowDialog() == DialogResult.OK)
+            {
+                //coordinateForm.Show();
+                location = coordinateForm.location;
+            }
+            else { return; }
+
             /*
             foreach (DataGridViewRow row in rows)
             {
@@ -2355,7 +2414,7 @@ while (reader.Read())
             DateTime dateAfter = (DateTime)rows[rows.Count-1].Cells["ImpDate_DB"].Value; //дата последнего импульса в выборке
 
             AntennaCalculation[] dataEvents = AntennaCalculation.getAntennaImpulses(rows);
-            AntennaCalculation.setEvents(rows, dataGridView_Events, dateBefore, dateAfter);
+            AntennaCalculation.setEvents(rows, dataGridView_Events, dateBefore, dateAfter, location);
             //HoleForm = new HoleForm(this, ImpulsesGridView, DateTime.Parse(dateBeforeText.Text), DateTime.Parse(dateAfterText.Text), id, 4, server, db, login, password);
 
             MessageBox.Show("Выбрано импульсов: " + rows.Count);
@@ -2374,6 +2433,7 @@ while (reader.Read())
             Coordinates AE = alg30.getAECoordinates(antenna, 5000);
 
             */
+            /*
             Coordinates location = null;
             CoordinatesForm coordinateForm = new CoordinatesForm();
             if (coordinateForm.ShowDialog() == DialogResult.OK)
@@ -2382,6 +2442,7 @@ while (reader.Read())
                 location = coordinateForm.location;
             }
             else { return; }
+            */
 
             int parametrTime = 0; //параметр для способва вычисления время импульса
 
@@ -2403,27 +2464,33 @@ while (reader.Read())
             double locationZ = Double.Parse(real_Z.Text);
             Coordinates location = new Coordinates(locationX, locationY, locationZ);
             */
-            if (dataGridView_Events.Rows.Count == 0)
+            if (dataGridView_Events.Rows.Count == 1) //пустая строка
             {
                 MessageBox.Show("Импульсы не выбраны для расчета");
                 return;
             }
+            List<AntennaCalculation> allImpulses = new List<AntennaCalculation>(); //список для записи всех массивов для экселя
 
             for (int i = 0; i < dataGridView_Events.Rows.Count - 1; i++)
             {
                 String[] data = (String[])dataGridView_Events.Rows[i].Cells["Imp_Events"].Value;
                 AntennaCalculation[] impEvent = getImpulsesByID_withGap(data);
                 //alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
-
+                double x = double.Parse(dataGridView_Events.Rows[i].Cells["LocationX0_Events"].Value.ToString());
+                double y = double.Parse(dataGridView_Events.Rows[i].Cells["LocationY0_Events"].Value.ToString());
+                double z = double.Parse(dataGridView_Events.Rows[i].Cells["LocationZ0_Events"].Value.ToString());
+                Coordinates location = new Coordinates(x, y, z);
                 int combinationNumber = 4; // антенна из 4х элементов
                 calc.combinationCalc(combinationNumber, impEvent, dataGridResult, before, after, step, location, parametrTime);
-            }       
+                allImpulses.AddRange(impEvent); //запись каждого ивента в общий список
+            } 
+            
             //Excel
             string res = "";
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение
             res = System.IO.Path.GetDirectoryName(strExeFilePath); //папка
             res = res +"\\" +"result.xlsx";
-            excel("Антенны",dataGridResult, res);
+            excel_Events("Антенны", dataGridResult, allImpulses, res);
             
             MessageBox.Show("Окончание расчета");
         }

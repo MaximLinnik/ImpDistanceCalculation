@@ -13,7 +13,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace ImpDistanceCalculation
 {
-    class AntennaCalculation
+    public class AntennaCalculation
     {
         public int no { get; set; }
         public double id { get; set; }
@@ -48,7 +48,7 @@ namespace ImpDistanceCalculation
 
 
         //получение массива импульсов и занесение строки в DataGrid
-        public static void setEvents(List<DataGridViewRow> rows, DataGridView EventGrid, DateTime dateBefore, DateTime dateAfter)
+        public static void setEvents(List<DataGridViewRow> rows, DataGridView EventGrid, DateTime dateBefore, DateTime dateAfter, Coordinates location)
         {
             String antennaName = setEventsName(rows);
             int numberOfEvents = 1;
@@ -63,6 +63,9 @@ namespace ImpDistanceCalculation
                 EventGrid.Rows[lastRowIndex].Cells["Imp_Events"].Value = setImpulses(rows);
                 EventGrid.Rows[lastRowIndex].Cells["DateBefore_Events"].Value = dateBefore;
                 EventGrid.Rows[lastRowIndex].Cells["DateAfter_Events"].Value = dateAfter;
+                EventGrid.Rows[lastRowIndex].Cells["LocationX0_Events"].Value = location.x;
+                EventGrid.Rows[lastRowIndex].Cells["LocationY0_Events"].Value = location.y;
+                EventGrid.Rows[lastRowIndex].Cells["LocationZ0_Events"].Value = location.z;
 
             //}
         }
