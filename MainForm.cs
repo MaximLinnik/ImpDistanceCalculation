@@ -2303,6 +2303,7 @@ while (reader.Read())
 
         private void StartButton_Button_Click_1(object sender, EventArgs e)
         {
+            
             oneRowParametr = false;
             progressLabel.Text = "";
             getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
@@ -2320,10 +2321,11 @@ while (reader.Read())
 
         private void ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
+            /*
             dataGridView_Imp.Rows.Clear();
             dataGridView_Imp.Columns["data_ImpDate_DB"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
             dataGridView_Imp.Columns["data_ImpDate_DB_Akaike"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
+            */
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
 
             foreach (DataGridViewRow row in ImpulsesGridView.SelectedRows)
@@ -2331,8 +2333,14 @@ while (reader.Read())
                 rows.Add(row);
             }
 
-            rows.Sort((a, b) => a.Index.CompareTo(b.Index));
+            if(rows.Count< 4)
+            {
+                MessageBox.Show("Количество выбранных импульсов меньше 4");
+                return;
+            }
 
+            rows.Sort((a, b) => a.Index.CompareTo(b.Index));
+            /*
             foreach (DataGridViewRow row in rows)
             {
                 object[] rowData = new object[row.Cells.Count];
@@ -2342,23 +2350,23 @@ while (reader.Read())
 
                 dataGridView_Imp.Rows.Add(rowData);
             }
-
-            String dateBefore = rows[0].Cells["ImpDate_DB"].Value.ToString(); //дата первого импульса в выборке
-            String dateAfter = rows[rows.Count-1].Cells["ImpDate_DB"].Value.ToString(); //дата последнего импульса в выборке
+            */
+            DateTime dateBefore = (DateTime)rows[0].Cells["ImpDate_DB"].Value; //дата первого импульса в выборке
+            DateTime dateAfter = (DateTime)rows[rows.Count-1].Cells["ImpDate_DB"].Value; //дата последнего импульса в выборке
 
             AntennaCalculation[] dataEvents = AntennaCalculation.getAntennaImpulses(rows);
             AntennaCalculation.setEvents(rows, dataGridView_Events, dateBefore, dateAfter);
             //HoleForm = new HoleForm(this, ImpulsesGridView, DateTime.Parse(dateBeforeText.Text), DateTime.Parse(dateAfterText.Text), id, 4, server, db, login, password);
 
-            MessageBox.Show("Выбрано строк: " + rows.Count);
+            MessageBox.Show("Выбрано импульсов: " + rows.Count);
         }
         //получение фронта импульса
 
 
         private void CalcButton_Click(object sender, EventArgs e)
         {
-            
-            AntennaCalculation alg30= new AntennaCalculation();
+            dataGridResult.Rows.Clear();
+            AntennaCalculation calc = new AntennaCalculation();
             /*
             //Coordinates []coordinates = alg30.getImpulsesCoordinates(dataGridView_Imp);
             //double []DT = alg30.getDT(dataGridView_Imp);
@@ -2395,22 +2403,21 @@ while (reader.Read())
             double locationZ = Double.Parse(real_Z.Text);
             Coordinates location = new Coordinates(locationX, locationY, locationZ);
             */
-
-
-            String[] data = (String[])dataGridView_Events.Rows[0].Cells["Imp_Events"].Value;
-
-            if (data == null)
+            if (dataGridView_Events.Rows.Count == 0)
             {
                 MessageBox.Show("Импульсы не выбраны для расчета");
                 return;
             }
-            AntennaCalculation[] impEvent = getImpulsesByID_withGap(data);
-            //alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
 
-            int combinationNumber = 4; // антенна из 4х элементов
-            alg30.combinationCalc(combinationNumber, impEvent, dataGridResult, before, after, step, location, parametrTime);
-            
-            
+            for (int i = 0; i < dataGridView_Events.Rows.Count - 1; i++)
+            {
+                String[] data = (String[])dataGridView_Events.Rows[i].Cells["Imp_Events"].Value;
+                AntennaCalculation[] impEvent = getImpulsesByID_withGap(data);
+                //alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
+
+                int combinationNumber = 4; // антенна из 4х элементов
+                calc.combinationCalc(combinationNumber, impEvent, dataGridResult, before, after, step, location, parametrTime);
+            }       
             //Excel
             string res = "";
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;// общее расположение

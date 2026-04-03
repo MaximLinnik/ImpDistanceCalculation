@@ -41,11 +41,6 @@
             this.startButtonTest = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView_Events = new System.Windows.Forms.DataGridView();
-            this.No_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Antenna_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Imp_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateBefore_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateAfter_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView_Imp = new System.Windows.Forms.DataGridView();
             this.data_No = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.data_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -180,6 +175,14 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.radioButtonAkaike = new System.Windows.Forms.RadioButton();
             this.radioButtonStdTime = new System.Windows.Forms.RadioButton();
+            this.No_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Antenna_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Imp_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateBefore_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateAfter_Events = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.X0_location_event = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Y0_location_event = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Z0_location_event = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Events)).BeginInit();
@@ -336,56 +339,25 @@
             // 
             // dataGridView_Events
             // 
-            this.dataGridView_Events.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.dataGridView_Events.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView_Events.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Events.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.No_Events,
             this.Antenna_Events,
             this.Imp_Events,
             this.DateBefore_Events,
-            this.DateAfter_Events});
+            this.DateAfter_Events,
+            this.X0_location_event,
+            this.Y0_location_event,
+            this.Z0_location_event});
             this.dataGridView_Events.Location = new System.Drawing.Point(0, 420);
             this.dataGridView_Events.Name = "dataGridView_Events";
             this.dataGridView_Events.RowHeadersWidth = 51;
             this.dataGridView_Events.RowTemplate.Height = 24;
-            this.dataGridView_Events.Size = new System.Drawing.Size(875, 202);
+            this.dataGridView_Events.Size = new System.Drawing.Size(1329, 251);
             this.dataGridView_Events.TabIndex = 48;
-            // 
-            // No_Events
-            // 
-            this.No_Events.HeaderText = "№";
-            this.No_Events.MinimumWidth = 6;
-            this.No_Events.Name = "No_Events";
-            this.No_Events.Width = 125;
-            // 
-            // Antenna_Events
-            // 
-            this.Antenna_Events.HeaderText = "Антенна";
-            this.Antenna_Events.MinimumWidth = 6;
-            this.Antenna_Events.Name = "Antenna_Events";
-            this.Antenna_Events.Width = 125;
-            // 
-            // Imp_Events
-            // 
-            this.Imp_Events.HeaderText = "Импульсы";
-            this.Imp_Events.MinimumWidth = 6;
-            this.Imp_Events.Name = "Imp_Events";
-            this.Imp_Events.Width = 125;
-            // 
-            // DateBefore_Events
-            // 
-            this.DateBefore_Events.HeaderText = "Время (от)";
-            this.DateBefore_Events.MinimumWidth = 6;
-            this.DateBefore_Events.Name = "DateBefore_Events";
-            this.DateBefore_Events.Width = 125;
-            // 
-            // DateAfter_Events
-            // 
-            this.DateAfter_Events.HeaderText = "Время (до)";
-            this.DateAfter_Events.MinimumWidth = 6;
-            this.DateAfter_Events.Name = "DateAfter_Events";
-            this.DateAfter_Events.Width = 125;
             // 
             // dataGridView_Imp
             // 
@@ -412,12 +384,13 @@
             this.data_Y,
             this.data_Z});
             this.dataGridView_Imp.ContextMenuStrip = this.contextMenuStrip1;
-            this.dataGridView_Imp.Location = new System.Drawing.Point(882, 420);
+            this.dataGridView_Imp.Location = new System.Drawing.Point(200, 678);
             this.dataGridView_Imp.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView_Imp.Name = "dataGridView_Imp";
             this.dataGridView_Imp.RowHeadersWidth = 51;
-            this.dataGridView_Imp.Size = new System.Drawing.Size(441, 271);
+            this.dataGridView_Imp.Size = new System.Drawing.Size(198, 130);
             this.dataGridView_Imp.TabIndex = 47;
+            this.dataGridView_Imp.Visible = false;
             this.dataGridView_Imp.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_Imp_CellContentClick);
             // 
             // data_No
@@ -1493,12 +1466,13 @@
             this.RtoFirst,
             this.AvgGeomFreq,
             this.AvgR});
-            this.dataGridResult.Location = new System.Drawing.Point(-14, 668);
+            this.dataGridResult.Location = new System.Drawing.Point(1121, 697);
             this.dataGridResult.Name = "dataGridResult";
             this.dataGridResult.RowHeadersWidth = 51;
             this.dataGridResult.RowTemplate.Height = 24;
-            this.dataGridResult.Size = new System.Drawing.Size(1564, 107);
+            this.dataGridResult.Size = new System.Drawing.Size(429, 78);
             this.dataGridResult.TabIndex = 48;
+            this.dataGridResult.Visible = false;
             // 
             // Antenna
             // 
@@ -1640,6 +1614,66 @@
             this.radioButtonStdTime.TabStop = true;
             this.radioButtonStdTime.Text = "Стандартное время";
             this.radioButtonStdTime.UseVisualStyleBackColor = true;
+            // 
+            // No_Events
+            // 
+            this.No_Events.HeaderText = "№";
+            this.No_Events.MinimumWidth = 6;
+            this.No_Events.Name = "No_Events";
+            this.No_Events.Width = 125;
+            // 
+            // Antenna_Events
+            // 
+            this.Antenna_Events.HeaderText = "Антенна";
+            this.Antenna_Events.MinimumWidth = 6;
+            this.Antenna_Events.Name = "Antenna_Events";
+            this.Antenna_Events.Width = 125;
+            // 
+            // Imp_Events
+            // 
+            this.Imp_Events.HeaderText = "Импульсы";
+            this.Imp_Events.MinimumWidth = 6;
+            this.Imp_Events.Name = "Imp_Events";
+            this.Imp_Events.Visible = false;
+            this.Imp_Events.Width = 125;
+            // 
+            // DateBefore_Events
+            // 
+            this.DateBefore_Events.HeaderText = "Время (от)";
+            this.DateBefore_Events.MinimumWidth = 6;
+            this.DateBefore_Events.Name = "DateBefore_Events";
+            this.DateBefore_Events.Width = 125;
+            // 
+            // DateAfter_Events
+            // 
+            this.DateAfter_Events.HeaderText = "Время (до)";
+            this.DateAfter_Events.MinimumWidth = 6;
+            this.DateAfter_Events.Name = "DateAfter_Events";
+            this.DateAfter_Events.Width = 125;
+            // 
+            // X0_location_event
+            // 
+            this.X0_location_event.HeaderText = "X0";
+            this.X0_location_event.MinimumWidth = 6;
+            this.X0_location_event.Name = "X0_location_event";
+            this.X0_location_event.Visible = false;
+            this.X0_location_event.Width = 125;
+            // 
+            // Y0_location_event
+            // 
+            this.Y0_location_event.HeaderText = "Y0";
+            this.Y0_location_event.MinimumWidth = 6;
+            this.Y0_location_event.Name = "Y0_location_event";
+            this.Y0_location_event.Visible = false;
+            this.Y0_location_event.Width = 125;
+            // 
+            // Z0_location_event
+            // 
+            this.Z0_location_event.HeaderText = "Z0";
+            this.Z0_location_event.MinimumWidth = 6;
+            this.Z0_location_event.Name = "Z0_location_event";
+            this.Z0_location_event.Visible = false;
+            this.Z0_location_event.Width = 125;
             // 
             // MainForm
             // 
@@ -1869,5 +1903,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Imp_Events;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateBefore_Events;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateAfter_Events;
+        private System.Windows.Forms.DataGridViewTextBoxColumn X0_location_event;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Y0_location_event;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Z0_location_event;
     }
 }

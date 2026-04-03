@@ -48,12 +48,12 @@ namespace ImpDistanceCalculation
 
 
         //получение массива импульсов и занесение строки в DataGrid
-        public static void setEvents(List<DataGridViewRow> rows, DataGridView EventGrid, String dateBefore, String dateAfter)
+        public static void setEvents(List<DataGridViewRow> rows, DataGridView EventGrid, DateTime dateBefore, DateTime dateAfter)
         {
             String antennaName = setEventsName(rows);
             int numberOfEvents = 1;
             EventGrid.Columns["DateBefore_Events"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff";
-            EventGrid.Columns["DateBefore_Events"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff";
+            EventGrid.Columns["DateAfter_Events"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff";
             int lastRowIndex = EventGrid.Rows.Count - 1;
             //for (int i = lastRowIndex; i < numberOfEvents; i++)
             //{
@@ -535,7 +535,7 @@ namespace ImpDistanceCalculation
         public void combinationCalc(int combintationNumber, AntennaCalculation[] impEvent, DataGridView resultGrid, decimal velocityBefore, decimal velocityAfter, decimal step, Coordinates location, int parametrTime)
         {
 
-            resultGrid.Rows.Clear();
+            //resultGrid.Rows.Clear();
             resultGrid.Columns[1].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
 
             int n = impEvent.Length;
