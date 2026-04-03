@@ -829,7 +829,7 @@ namespace ImpDistanceCalculation
         }
 
         //вариант, когда между импульсами есть промежутки
-        private AntennaCalculation[] getImpulsesByID_withGap(String[] data)
+        private AntennaCalculation[] getImpulsesByID_withGap(String[] data, Coordinates location)
         {
             HoleParametrs holeName; //имя скважины, если нашлась
             AntennaCalculation[] antennaData = new AntennaCalculation[data.Length];
@@ -838,7 +838,7 @@ namespace ImpDistanceCalculation
             {
                 SqlConnection con = new SqlConnection(connectionString);
                 SqlConnection con2 = new SqlConnection(connectionString);
-                String query = @"select Impulses.ID, Impulses.HWID, Impulses.ImpulseTime, Impulses.Amplitude, Impulses.Duration  
+                String query = @"select Impulses.ID, Impulses.HWID, Impulses.ImpulseTime, Impulses.Amplitude, Impulses.Duration, Impulses.Area  
                             from Impulses
                              " +
                 @"  ";
@@ -859,6 +859,7 @@ namespace ImpDistanceCalculation
                     String impDate = dt.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     String amplitude = reader[3].ToString();
                     String duration = reader[4].ToString();
+                    double area = double.Parse(reader[5].ToString()); //площадь
 
                     holeName = checkHoleImp(hwid, dt);
 
@@ -886,6 +887,12 @@ namespace ImpDistanceCalculation
                     double Y = holeName.getY();
                     double Z = holeName.getZ();
                     antenna.coordinates = new Coordinates(X, Y, Z);
+
+                    //координаты локации
+                    antenna.location0 = location;
+
+                    antenna.RtoLocation = antenna.deltaR(location, antenna.coordinates);
+                    antenna.energy = antenna.energyCalc(area, antenna.RtoLocation);
                     antennaData[i] = antenna;
                 }
                 con.Close();
@@ -2167,6 +2174,12 @@ while (reader.Read())
             worksheet.Cells[1, 12] = "X";
             worksheet.Cells[1, 13] = "Y";
             worksheet.Cells[1, 14] = "Z";
+            worksheet.Cells[1, 15] = "X0";
+            worksheet.Cells[1, 16] = "Y0";
+            worksheet.Cells[1, 17] = "Z0";
+            worksheet.Cells[1, 18] = "Расстояние до локации";
+            worksheet.Cells[1, 19] = "Энергия импульса";
+
             int i = 2;
             foreach(AntennaCalculation impulse in allImpulses) {
                 worksheet.Cells[i, 1] = i - 1;
@@ -2183,6 +2196,11 @@ while (reader.Read())
                 worksheet.Cells[i, 12] = impulse.coordinates.x;
                 worksheet.Cells[i, 13] = impulse.coordinates.y;
                 worksheet.Cells[i, 14] = impulse.coordinates.z;
+                worksheet.Cells[i, 15] = impulse.location0.x;
+                worksheet.Cells[i, 16] = impulse.location0.y;
+                worksheet.Cells[i, 17] = impulse.location0.z;
+                worksheet.Cells[i, 18] = impulse.RtoLocation;
+                worksheet.Cells[i, 19] = impulse.energy;
                 i++;
             }
 
@@ -2474,12 +2492,12 @@ while (reader.Read())
             for (int i = 0; i < dataGridView_Events.Rows.Count - 1; i++)
             {
                 String[] data = (String[])dataGridView_Events.Rows[i].Cells["Imp_Events"].Value;
-                AntennaCalculation[] impEvent = getImpulsesByID_withGap(data);
-                //alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
                 double x = double.Parse(dataGridView_Events.Rows[i].Cells["LocationX0_Events"].Value.ToString());
                 double y = double.Parse(dataGridView_Events.Rows[i].Cells["LocationY0_Events"].Value.ToString());
                 double z = double.Parse(dataGridView_Events.Rows[i].Cells["LocationZ0_Events"].Value.ToString());
                 Coordinates location = new Coordinates(x, y, z);
+                AntennaCalculation[] impEvent = getImpulsesByID_withGap(data, location);
+                //alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
                 int combinationNumber = 4; // антенна из 4х элементов
                 calc.combinationCalc(combinationNumber, impEvent, dataGridResult, before, after, step, location, parametrTime);
                 allImpulses.AddRange(impEvent); //запись каждого ивента в общий список
@@ -2511,7 +2529,10 @@ while (reader.Read())
             Akaike akaike = new Akaike();
             double time = akaike.calculationAIC(waveform, xp);
             */
+
+            /*
             String[] data = (String[])dataGridView_Events.Rows[0].Cells["Imp_Events"].Value;
+
             AntennaCalculation []impEvent = getImpulsesByID_withGap(data);
 
             Coordinates location = null;
@@ -2540,6 +2561,7 @@ while (reader.Read())
 
             AntennaCalculation test = new AntennaCalculation();
             test.combinationCalc(impEvent, dataGridResult, before, after, step, location, parametrTime);
+            */
             MessageBox.Show("end");
         }
     }

@@ -28,8 +28,11 @@ namespace ImpDistanceCalculation
         public double freq { get; set; }
         public long dateTicks { get; set; }
         public Coordinates coordinates { get; set; }
+        public Coordinates location0 { get; set; } //локация относительно которой считается
+        public double RtoLocation { get; set; } //расстояние до взрыва (X0, ...)
+        public double energy { get; set; }
 
-        public AntennaCalculation(int no, double id, double hwid, DateTime date, int holeName, double amplitude, double duration, double freq, Coordinates coordinates)
+        public AntennaCalculation(int no, double id, double hwid, DateTime date, int holeName, double amplitude, double duration, double freq, Coordinates coordinates, double RtoLocation, double energy)
         {
             this.no = no;
             this.id = id;
@@ -40,6 +43,8 @@ namespace ImpDistanceCalculation
             this.duration = duration;
             this.freq = freq;
             this.coordinates = coordinates;
+            this.RtoLocation = RtoLocation;
+            this.energy = energy;
         }
 
         public AntennaCalculation() { }
@@ -257,6 +262,13 @@ namespace ImpDistanceCalculation
                 coordinates[i] = new Coordinates(x, y, z);
             }
             return coordinates;
+        }
+        //вычисление энергии (более универсально, поэтому без this
+        public double energyCalc(double area, double R)
+        {
+            double K = 10000;
+            double E = (area * Math.Pow(R, 2)) / Math.Pow(K, 2);
+            return E;
         }
 
         //создание массива выбранных импульсов (антенна) с необходимыми для расчета параметрами (вариант с DataGrid)
