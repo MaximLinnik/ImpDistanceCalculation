@@ -2398,9 +2398,17 @@ while (reader.Read())
 
 
             String[] data = (String[])dataGridView_Events.Rows[0].Cells["Imp_Events"].Value;
+
+            if (data == null)
+            {
+                MessageBox.Show("Импульсы не выбраны для расчета");
+                return;
+            }
             AntennaCalculation[] impEvent = getImpulsesByID_withGap(data);
             //alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
-            alg30.combinationCalc(impEvent, dataGridResult, before, after, step, location, parametrTime);
+
+            int combinationNumber = 4; // антенна из 4х элементов
+            alg30.combinationCalc(combinationNumber, impEvent, dataGridResult, before, after, step, location, parametrTime);
             
             
             //Excel

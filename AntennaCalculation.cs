@@ -356,9 +356,32 @@ namespace ImpDistanceCalculation
             return antenna;
         }
 
-        //вычисление по комбинациям по 4 элемента
-        //parametrTime - способ вычисления времени импульса
-        //1 - стандарт, 2 - по Акаике
+        //универсальный перебор вариантов (k - количество элементов в комбинации (4), n - 
+        public static IEnumerable<int[]> GetCombinations(int n, int k)
+        {
+            if (k <= 0 || k > n) yield break;
+
+            var indices = new int[k];
+            for (int i = 0; i < k; i++) indices[i] = i;
+
+            while (true)
+            {
+                yield return (int[])indices.Clone();
+
+                int pos = k - 1;
+                while (pos >= 0 && indices[pos] == n - k + pos) pos--;
+                if (pos < 0) yield break;
+
+                indices[pos]++;
+                for (int i = pos + 1; i < k; i++)
+                    indices[i] = indices[i - 1] + 1;
+            }
+        }
+        /// <summary>
+        ///вычисление по комбинациям по 4 элементам
+        ///parametrTime - способ вычисления времени импульса
+        ///1 - стандарт, 2 - по Акаике
+        /// <summary>    
         public void combinationCalc(DataGridView impulseGrid, DataGridView resultGrid, decimal velocityBefore, decimal velocityAfter, decimal step, Coordinates location, int parametrTime)
         {
 
@@ -507,6 +530,64 @@ namespace ImpDistanceCalculation
                 }
             }
         }
+
+        //расчет через объект класса (универсальный вариант)
+        public void combinationCalc(int combintationNumber, AntennaCalculation[] impEvent, DataGridView resultGrid, decimal velocityBefore, decimal velocityAfter, decimal step, Coordinates location, int parametrTime)
+        {
+
+            resultGrid.Rows.Clear();
+            resultGrid.Columns[1].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
+
+            int n = impEvent.Length;
+            int s = 0;
+            foreach (int[] idx in GetCombinations(n, combintationNumber))
+            {
+                var indexes = idx.ToList();
+                Impulse[] antenna = setAntenna(indexes, impEvent, parametrTime);
+                DateTime firstImp = DateTime.MinValue;
+                //for (double velocity = velocityBefore; velocity < velocityAfter; velocity += step)
+                decimal velocity = velocityBefore;
+                double Rmin = Double.MaxValue, AE_Xmin = 0, AE_Ymin = 0, AE_Zmin = 0, X0 = 0, Y0 = 0, Z0 = 0;
+                decimal velocityMin = 0;
+                float minTimeError = 0;
+                String antennaName = "";
+
+                while (velocity <= velocityAfter)
+                {
+                    //алг 30
+                    Coordinates AE = Algoritm30.getAECoordinates(antenna, (double)velocity);
+                    Algoritm30.DirectData(false, antenna, AE, (double)velocity);
+                    float TimeError = Algoritm30.TimeErrorClassic(antenna);
+                    double R = deltaR(location, AE);
+                    if (R < Rmin)
+                    {
+                        firstImp = antenna[0].date;
+                        Rmin = R;
+                        AE_Xmin = AE.x;
+                        AE_Ymin = AE.y;
+                        AE_Zmin = AE.z;
+                        X0 = location.x;
+                        Y0 = location.y;
+                        Z0 = location.z;
+                        velocityMin = velocity;
+                        minTimeError = TimeError;
+                        antennaName = antenna[0].holeName + "-" + antenna[1].holeName + "-" + antenna[2].holeName + "-" + antenna[3].holeName;
+                    }
+                    //velocity += step;
+                    //s++; //чтобы не было моментов типа 0000000000.1
+                    velocity += step;
+                }
+                //сохранение названия антенны, значений скорости, Rмин, координат AE
+                if (antennaName != "")
+                {
+                    double RtoX0 = deltaR(location, antenna[0].coordinates);
+                    double freqGeom = avgFreq(antenna);
+                    double avgDistance = avgDeltaR(antenna, location);
+                    resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0, RtoX0, freqGeom, avgDistance);
+                }
+            }
+        }
+
 
         //вычисление расстояния между вычисленными координатами и искомыми 
         public double deltaR(Coordinates location, Coordinates AE)
