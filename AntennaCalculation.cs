@@ -63,7 +63,7 @@ namespace ImpDistanceCalculation
             //for (int i = lastRowIndex; i < numberOfEvents; i++)
             //{
                 EventGrid.Rows.Add();
-                EventGrid.Rows[lastRowIndex].Cells["No_Events"].Value = lastRowIndex + 1;
+                //EventGrid.Rows[lastRowIndex].Cells["No_Events"].Value = lastRowIndex + 1;
                 EventGrid.Rows[lastRowIndex].Cells["Antenna_Events"].Value = antennaName;
                 EventGrid.Rows[lastRowIndex].Cells["Imp_Events"].Value = setImpulses(rows);
                 EventGrid.Rows[lastRowIndex].Cells["DateBefore_Events"].Value = dateBefore;
@@ -263,7 +263,7 @@ namespace ImpDistanceCalculation
             }
             return coordinates;
         }
-        //вычисление энергии (более универсально, поэтому без this
+        //вычисление энергии (более универсально, поэтому без this)
         public double energyCalc(double area, double R)
         {
             double K = 10000;

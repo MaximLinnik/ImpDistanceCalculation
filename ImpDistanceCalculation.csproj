@@ -80,6 +80,7 @@
     <Compile Include="CoordinatesForm.Designer.cs">
       <DependentUpon>CoordinatesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExcelCalc.cs" />
     <Compile Include="HoleParametrs.cs" />
     <Compile Include="ExcelMerge.cs" />
     <Compile Include="ExcelRow.cs" />
