@@ -144,7 +144,6 @@
             this.persentageLabel = new System.Windows.Forms.Label();
             this.progressLabel = new System.Windows.Forms.Label();
             this.excelMergeButton = new System.Windows.Forms.Button();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.velocityBefore = new System.Windows.Forms.TextBox();
             this.velocityAfter = new System.Windows.Forms.TextBox();
             this.velocityStep = new System.Windows.Forms.TextBox();
@@ -232,7 +231,7 @@
             // 
             // ParametrsButton
             // 
-            this.ParametrsButton.Location = new System.Drawing.Point(38, 67);
+            this.ParametrsButton.Location = new System.Drawing.Point(1426, 59);
             this.ParametrsButton.Margin = new System.Windows.Forms.Padding(4);
             this.ParametrsButton.Name = "ParametrsButton";
             this.ParametrsButton.Size = new System.Drawing.Size(182, 49);
@@ -249,7 +248,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.dateBeforeText);
             this.groupBox1.Controls.Add(this.dateAfterText);
-            this.groupBox1.Location = new System.Drawing.Point(12, 134);
+            this.groupBox1.Location = new System.Drawing.Point(8, 7);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
@@ -304,10 +303,11 @@
             // 
             // returnButton
             // 
-            this.returnButton.Location = new System.Drawing.Point(35, 15);
+            this.returnButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.returnButton.Location = new System.Drawing.Point(1414, 7);
             this.returnButton.Margin = new System.Windows.Forms.Padding(4);
             this.returnButton.Name = "returnButton";
-            this.returnButton.Size = new System.Drawing.Size(185, 44);
+            this.returnButton.Size = new System.Drawing.Size(201, 44);
             this.returnButton.TabIndex = 14;
             this.returnButton.Text = "Изменение параметров\r\nподключения";
             this.returnButton.UseVisualStyleBackColor = true;
@@ -315,7 +315,7 @@
             // 
             // startButtonTest
             // 
-            this.startButtonTest.Location = new System.Drawing.Point(20, 488);
+            this.startButtonTest.Location = new System.Drawing.Point(25, 139);
             this.startButtonTest.Margin = new System.Windows.Forms.Padding(4);
             this.startButtonTest.Name = "startButtonTest";
             this.startButtonTest.Size = new System.Drawing.Size(100, 28);
@@ -331,11 +331,12 @@
             this.tabPage1.Controls.Add(this.ImpulsesGridView);
             this.tabPage1.Controls.Add(this.HoleListGridView);
             this.tabPage1.Controls.Add(this.TempHoleGridView);
+            this.tabPage1.Controls.Add(this.excelMergeButton);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(1332, 691);
+            this.tabPage1.Size = new System.Drawing.Size(1596, 530);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Импульсы";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -359,7 +360,7 @@
             this.dataGridView_Events.Name = "dataGridView_Events";
             this.dataGridView_Events.RowHeadersWidth = 51;
             this.dataGridView_Events.RowTemplate.Height = 24;
-            this.dataGridView_Events.Size = new System.Drawing.Size(1329, 251);
+            this.dataGridView_Events.Size = new System.Drawing.Size(1593, 90);
             this.dataGridView_Events.TabIndex = 48;
             // 
             // filtrationDataGridView
@@ -377,11 +378,11 @@
             this.dataGridViewTextBoxColumn10,
             this.Column20,
             this.Column17});
-            this.filtrationDataGridView.Location = new System.Drawing.Point(1281, 672);
+            this.filtrationDataGridView.Location = new System.Drawing.Point(1281, 511);
             this.filtrationDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.filtrationDataGridView.Name = "filtrationDataGridView";
             this.filtrationDataGridView.RowHeadersWidth = 51;
-            this.filtrationDataGridView.Size = new System.Drawing.Size(96, 12);
+            this.filtrationDataGridView.Size = new System.Drawing.Size(360, 12);
             this.filtrationDataGridView.TabIndex = 46;
             this.filtrationDataGridView.Visible = false;
             // 
@@ -476,7 +477,7 @@
             this.ImpulsesGridView.Margin = new System.Windows.Forms.Padding(4);
             this.ImpulsesGridView.Name = "ImpulsesGridView";
             this.ImpulsesGridView.RowHeadersWidth = 51;
-            this.ImpulsesGridView.Size = new System.Drawing.Size(1319, 408);
+            this.ImpulsesGridView.Size = new System.Drawing.Size(1583, 408);
             this.ImpulsesGridView.TabIndex = 3;
             // 
             // No
@@ -637,7 +638,7 @@
             this.HoleListGridView.Margin = new System.Windows.Forms.Padding(4);
             this.HoleListGridView.Name = "HoleListGridView";
             this.HoleListGridView.RowHeadersWidth = 51;
-            this.HoleListGridView.Size = new System.Drawing.Size(456, 16);
+            this.HoleListGridView.Size = new System.Drawing.Size(720, 0);
             this.HoleListGridView.TabIndex = 44;
             this.HoleListGridView.Visible = false;
             this.HoleListGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HoleListGridView_CellContentClick);
@@ -713,11 +714,11 @@
             this.Column29,
             this.Column30,
             this.Column31});
-            this.TempHoleGridView.Location = new System.Drawing.Point(591, 674);
+            this.TempHoleGridView.Location = new System.Drawing.Point(591, 513);
             this.TempHoleGridView.Margin = new System.Windows.Forms.Padding(4);
             this.TempHoleGridView.Name = "TempHoleGridView";
             this.TempHoleGridView.RowHeadersWidth = 51;
-            this.TempHoleGridView.Size = new System.Drawing.Size(687, 13);
+            this.TempHoleGridView.Size = new System.Drawing.Size(951, 13);
             this.TempHoleGridView.TabIndex = 4;
             this.TempHoleGridView.Visible = false;
             // 
@@ -1041,11 +1042,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Location = new System.Drawing.Point(272, 15);
+            this.tabControl1.Location = new System.Drawing.Point(8, 176);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1340, 720);
+            this.tabControl1.Size = new System.Drawing.Size(1604, 559);
             this.tabControl1.TabIndex = 15;
             // 
             // labelNumbImpAll
@@ -1102,11 +1103,11 @@
             this.groupBox2.Controls.Add(this.OneRowCheckBox);
             this.groupBox2.Controls.Add(this.labelTypeCalc);
             this.groupBox2.Controls.Add(this.listComboBox);
-            this.groupBox2.Location = new System.Drawing.Point(4, 608);
+            this.groupBox2.Location = new System.Drawing.Point(21, 666);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(243, 177);
+            this.groupBox2.Size = new System.Drawing.Size(243, 109);
             this.groupBox2.TabIndex = 43;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры";
@@ -1343,7 +1344,7 @@
             // 
             // excelMergeButton
             // 
-            this.excelMergeButton.Location = new System.Drawing.Point(239, 628);
+            this.excelMergeButton.Location = new System.Drawing.Point(19, 654);
             this.excelMergeButton.Margin = new System.Windows.Forms.Padding(4);
             this.excelMergeButton.Name = "excelMergeButton";
             this.excelMergeButton.Size = new System.Drawing.Size(120, 49);
@@ -1435,7 +1436,7 @@
             // 
             // calcButton
             // 
-            this.calcButton.Location = new System.Drawing.Point(141, 488);
+            this.calcButton.Location = new System.Drawing.Point(142, 139);
             this.calcButton.Name = "calcButton";
             this.calcButton.Size = new System.Drawing.Size(101, 31);
             this.calcButton.TabIndex = 61;
@@ -1461,11 +1462,11 @@
             this.RtoFirst,
             this.AvgGeomFreq,
             this.AvgR});
-            this.dataGridResult.Location = new System.Drawing.Point(839, 752);
+            this.dataGridResult.Location = new System.Drawing.Point(239, 744);
             this.dataGridResult.Name = "dataGridResult";
             this.dataGridResult.RowHeadersWidth = 51;
             this.dataGridResult.RowTemplate.Height = 24;
-            this.dataGridResult.Size = new System.Drawing.Size(429, 36);
+            this.dataGridResult.Size = new System.Drawing.Size(1012, 52);
             this.dataGridResult.TabIndex = 48;
             this.dataGridResult.Visible = false;
             // 
@@ -1569,7 +1570,7 @@
             // 
             // test_button
             // 
-            this.test_button.Location = new System.Drawing.Point(85, 532);
+            this.test_button.Location = new System.Drawing.Point(249, 141);
             this.test_button.Name = "test_button";
             this.test_button.Size = new System.Drawing.Size(79, 26);
             this.test_button.TabIndex = 51;
@@ -1581,7 +1582,7 @@
             // 
             this.groupBox6.Controls.Add(this.radioButtonAkaike);
             this.groupBox6.Controls.Add(this.radioButtonStdTime);
-            this.groupBox6.Location = new System.Drawing.Point(12, 368);
+            this.groupBox6.Location = new System.Drawing.Point(523, 18);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(251, 84);
             this.groupBox6.TabIndex = 62;
@@ -1617,7 +1618,7 @@
             this.groupBox7.Controls.Add(this.velocityAfter);
             this.groupBox7.Controls.Add(this.velocityStep);
             this.groupBox7.Controls.Add(this.label2);
-            this.groupBox7.Location = new System.Drawing.Point(12, 258);
+            this.groupBox7.Location = new System.Drawing.Point(266, 14);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(251, 100);
             this.groupBox7.TabIndex = 63;
@@ -1695,11 +1696,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1628, 785);
+            this.Controls.Add(this.dataGridResult);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.dataGridView_Imp);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.test_button);
-            this.Controls.Add(this.dataGridResult);
             this.Controls.Add(this.calcButton);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.ImpulseHoleGridView2);
@@ -1707,7 +1708,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.excelMergeButton);
             this.Controls.Add(this.progressLabel);
             this.Controls.Add(this.persentageLabel);
             this.Controls.Add(this.daysRadioButton);
@@ -1821,7 +1821,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.TextBox velocityBefore;
         private System.Windows.Forms.TextBox velocityAfter;
         private System.Windows.Forms.TextBox velocityStep;

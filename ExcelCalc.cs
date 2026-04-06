@@ -10,6 +10,33 @@ namespace ImpDistanceCalculation
 {
     public class ExcelCalc
     {
+        public String antennaName { get; set; }
+        public DateTime timeFirst { get; set; }
+        public decimal velocityMin { get; set; }
+        public double minTimeError { get; set; }
+        public double Rmin { get; set; }
+        public Coordinates AEmin { get; set; }
+        public Coordinates location0 { get; set; }
+        public double RtoX0 { get; set; }
+        public double freqGeom { get; set; }
+        public double avgDistance { get; set; }
+
+        public ExcelCalc(string antennaName, DateTime timeFirst, decimal velocityMin, double minTimeError, double rmin, Coordinates aEmin, Coordinates location0, double RtoX0, double freqGeom, double avgDistance)
+        {
+            this.antennaName = antennaName;
+            this.timeFirst = timeFirst;
+            this.velocityMin = velocityMin;
+            this.minTimeError = minTimeError;
+            this.Rmin = rmin;
+            this.AEmin = aEmin;
+            this.location0 = location0;
+            this.RtoX0 = RtoX0;
+            this.freqGeom = freqGeom;
+            this.avgDistance = avgDistance;
+        }
+
+        public ExcelCalc() { }
+
         //старый вариант для сравнения
         public void excel_Original(String antennaNames, DataGridView dataGridView, List<AntennaCalculation> allImpulses, String filename)
         {
@@ -82,7 +109,7 @@ namespace ImpDistanceCalculation
         }
 
         //сохрание в эксель (с кучей вкладок)
-        public void excel_Events(String antennaNames, DataGridView dataGridView, List<AntennaCalculation> allImpulses, String filename)
+        public void excel_Events(List<AntennaCalculation> allImpulses, List<ExcelCalc> bestSolution, List<ExcelCalc> closeSolution, String filename)
         {
             Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
@@ -91,55 +118,18 @@ namespace ImpDistanceCalculation
             try
             {
 
-                worksheet = workbook.ActiveSheet;
-
-                worksheet.Name = antennaNames;
-
-
-                for (int j = 0; j < dataGridView.Columns.Count; j++)
-                {
-                    worksheet.Cells[1, j + 1] = dataGridView.Columns[j].HeaderText;
-                }
-
-
-                int cellRowIndex = 2;
-                int cellColumnIndex = 1;
-                for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
-                {
-                    for (int j = 0; j < dataGridView.Columns.Count; j++)
-                    {
-                        var value = dataGridView.Rows[i].Cells[j].Value;
-                        if (value is DateTime dt)
-                        {
-                            // Формат с миллисекундами
-                            worksheet.Cells[cellRowIndex, cellColumnIndex] = dt.ToString("dd.MM.yyyy HH:mm:ss.fff");
-                        }
-                        else
-                        {
-                            worksheet.Cells[cellRowIndex, cellColumnIndex] = value;
-                        }
-                        cellColumnIndex++;
-                    }
-                    cellColumnIndex = 1;
-                    cellRowIndex++;
-                }
-
-                /*
-                SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Filter = "Excel files All files (*.*)|*.*|(*.xlsx)|*.xlsx";
-                saveDialog.FilterIndex = 2;
-                */
-
-                worksheet.Cells[1, 1].CurrentRegion.Borders.LineStyle = Excel.XlLineStyle.xlContinuous; //границы
-                worksheet.Rows[1].Font.Bold = true;
-                worksheet.Range["A:AZ"].EntireColumn.AutoFit();
-
                 //2 вкладка:Импульсы, использовавшиеся для расчета
-                Microsoft.Office.Interop.Excel._Worksheet worksheet2 = worksheetImpulses("Импульсы", workbook, allImpulses);
+                Microsoft.Office.Interop.Excel._Worksheet worksheet2 = worksheetImpulses ("Импульсы", workbook, allImpulses);
+
+                //вкладка:Импульсы, использовавшиеся для расчета
+                Microsoft.Office.Interop.Excel._Worksheet worksheet3 = worksheetEventBest("Лучшее решение", workbook, bestSolution);
+
+                //вкладка:Импульсы, использовавшиеся для расчета
+                Microsoft.Office.Interop.Excel._Worksheet worksheet4 = worksheetEventBest("Ближайшее решение", workbook, closeSolution);
 
                 //if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 //{
-                worksheet.Activate();
+                worksheet3.Activate();
                 workbook.SaveAs(filename);
                 //MessageBox.Show("Сохранение успешно");
                 //}
@@ -213,6 +203,52 @@ namespace ImpDistanceCalculation
             return worksheet;
         }
 
+        //вкладка решение
+        public Microsoft.Office.Interop.Excel._Worksheet worksheetEventBest(String name, Microsoft.Office.Interop.Excel._Workbook workbook, List<ExcelCalc> allEvents)
+        {
+            Microsoft.Office.Interop.Excel._Worksheet worksheet = (Microsoft.Office.Interop.Excel._Worksheet)workbook.Worksheets.Add
+                (Type.Missing, workbook.Worksheets[workbook.Worksheets.Count], 1, Type.Missing);
+            worksheet.Name = name;
+            worksheet.Cells[1, 1] = "Антенна";
+            worksheet.Cells[1, 2] = "Время первого сигнала";
+            worksheet.Cells[1, 3] = "Скорость";
+            worksheet.Cells[1, 4] = "Невязка";
+            worksheet.Cells[1, 5] = "Rmin";
+            worksheet.Cells[1, 6] = "X";
+            worksheet.Cells[1, 7] = "Y";
+            worksheet.Cells[1, 8] = "Z";
+            worksheet.Cells[1, 9] = "X0";
+            worksheet.Cells[1, 10] = "Y0";
+            worksheet.Cells[1, 11] = "Z0";
+            worksheet.Cells[1, 12] = "R до первого датчика";
+            worksheet.Cells[1, 13] = "Средне геом зн-ие частоты";
+            worksheet.Cells[1, 14] = "Средне расстояние до датчиков";
+
+            int i = 2;
+            foreach (ExcelCalc result in allEvents)
+            {
+                worksheet.Cells[i, 1] = result.antennaName;
+                worksheet.Cells[i, 2] = result.timeFirst.ToString("dd.MM.yyyy HH:mm:ss.fff"); ;
+                worksheet.Cells[i, 3] = result.velocityMin;
+                worksheet.Cells[i, 4] = result.minTimeError;
+                worksheet.Cells[i, 5] = result.Rmin;
+                worksheet.Cells[i, 6] = result.AEmin.x;
+                worksheet.Cells[i, 7] = result.AEmin.y;
+                worksheet.Cells[i, 8] = result.AEmin.z;
+                worksheet.Cells[i, 9] = result.location0.x;
+                worksheet.Cells[i, 10] = result.location0.y;
+                worksheet.Cells[i, 11] = result.location0.z;
+                worksheet.Cells[i, 12] = result.RtoX0;
+                worksheet.Cells[i, 13] = result.freqGeom;
+                worksheet.Cells[i, 14] = result.avgDistance;
+                i++;
+            }
+
+            worksheet.Cells[1, 1].CurrentRegion.Borders.LineStyle = Excel.XlLineStyle.xlContinuous; //границы
+            worksheet.Rows[1].Font.Bold = true;
+            worksheet.Range["A:AZ"].EntireColumn.AutoFit();
+            return worksheet;
+        }
 
     }
 }

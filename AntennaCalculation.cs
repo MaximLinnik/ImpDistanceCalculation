@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace ImpDistanceCalculation
 {
@@ -31,6 +32,11 @@ namespace ImpDistanceCalculation
         public Coordinates location0 { get; set; } //локация относительно которой считается
         public double RtoLocation { get; set; } //расстояние до взрыва (X0, ...)
         public double energy { get; set; }
+
+        //список лучших решений
+        public List<ExcelCalc> bestSolution { get; set; }
+        //список ближайших решений
+        public List<ExcelCalc> closeSolution { get; set; }
 
         public AntennaCalculation(int no, double id, double hwid, DateTime date, int holeName, double amplitude, double duration, double freq, Coordinates coordinates, double RtoLocation, double energy)
         {
@@ -549,23 +555,36 @@ namespace ImpDistanceCalculation
         //расчет через объект класса (универсальный вариант)
         public void combinationCalc(int combintationNumber, AntennaCalculation[] impEvent, DataGridView resultGrid, decimal velocityBefore, decimal velocityAfter, decimal step, Coordinates location, int parametrTime)
         {
-
+            
             //resultGrid.Rows.Clear();
             resultGrid.Columns[1].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss.fff"; //для миллисекунд
 
             int n = impEvent.Length;
             int s = 0;
+            this.bestSolution = new List<ExcelCalc>();
+            this.closeSolution = new List<ExcelCalc>();
+
             foreach (int[] idx in GetCombinations(n, combintationNumber))
             {
                 var indexes = idx.ToList();
                 Impulse[] antenna = setAntenna(indexes, impEvent, parametrTime);
-                DateTime firstImp = DateTime.MinValue;
                 //for (double velocity = velocityBefore; velocity < velocityAfter; velocity += step)
                 decimal velocity = velocityBefore;
-                double Rmin = Double.MaxValue, AE_Xmin = 0, AE_Ymin = 0, AE_Zmin = 0, X0 = 0, Y0 = 0, Z0 = 0;
+
+                //лучшее решение
+                String antennaName = "";
+                DateTime firstImp = DateTime.MinValue;
+                double Rmin = Double.MaxValue, AE_Xmin = 0, AE_Ymin = 0, AE_Zmin = 0, X0 = 0, Y0 = 0, Z0 = 0; 
                 decimal velocityMin = 0;
                 float minTimeError = 0;
-                String antennaName = "";
+
+                //ближайшее решение
+                String antennaNameСlose = "";
+                DateTime firstImpClose = DateTime.MinValue;
+                double RminClose = Double.MaxValue, AE_XminClose = 0, AE_YminClose = 0, AE_ZminClose = 0, X0Close = 0, Y0Close = 0, Z0Close = 0;
+                decimal velocityMinClose = 0;
+                float minTimeErrorClose = 0;
+
 
                 while (velocity <= velocityAfter)
                 {
@@ -574,6 +593,7 @@ namespace ImpDistanceCalculation
                     Algoritm30.DirectData(false, antenna, AE, (double)velocity);
                     float TimeError = Algoritm30.TimeErrorClassic(antenna);
                     double R = deltaR(location, AE);
+                    //лучшее решение
                     if (R < Rmin)
                     {
                         firstImp = antenna[0].date;
@@ -588,17 +608,53 @@ namespace ImpDistanceCalculation
                         minTimeError = TimeError;
                         antennaName = antenna[0].holeName + "-" + antenna[1].holeName + "-" + antenna[2].holeName + "-" + antenna[3].holeName;
                     }
+
+                    //ближайшее решение
+                    double Rclose = deltaR(location, AE);
+                    double RtoX0close = deltaR(location, antenna[0].coordinates);
+                    double minCloseCheck = Math.Abs(Rclose - RtoX0close);
+                    if (minCloseCheck < RminClose)
+                    {
+                        firstImpClose = antenna[0].date;
+                        RminClose = R;
+                        AE_XminClose = AE.x;
+                        AE_YminClose = AE.y;
+                        AE_ZminClose = AE.z;
+                        X0Close = location.x;
+                        Y0Close = location.y;
+                        Z0Close = location.z;
+                        velocityMinClose = velocity;
+                        minTimeErrorClose = TimeError;
+                        antennaNameСlose = antenna[0].holeName + "-" + antenna[1].holeName + "-" + antenna[2].holeName + "-" + antenna[3].holeName;
+                    }
+
                     //velocity += step;
                     //s++; //чтобы не было моментов типа 0000000000.1
                     velocity += step;
                 }
-                //сохранение названия антенны, значений скорости, Rмин, координат AE
+                //сохранение названия антенны, значений скорости, Rмин, координат AE (лучшее решение)
                 if (antennaName != "")
                 {
                     double RtoX0 = deltaR(location, antenna[0].coordinates);
                     double freqGeom = avgFreq(antenna);
                     double avgDistance = avgDeltaR(antenna, location);
-                    resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0, RtoX0, freqGeom, avgDistance);
+                    Coordinates AE_min = new Coordinates(AE_XminClose, AE_YminClose, AE_ZminClose);
+                    Coordinates location0 = new Coordinates(X0Close, Y0Close, Z0Close);
+                    ExcelCalc resultBest = new ExcelCalc(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_min, location0, RtoX0, freqGeom, avgDistance);
+                    this.bestSolution.Add(resultBest);
+                    //resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0, RtoX0, freqGeom, avgDistance);
+                }
+
+                //ближайшее решение
+                if (antennaNameСlose != "")
+                {
+                    double RtoX0Сlose = deltaR(location, antenna[0].coordinates);
+                    double freqGeomСlose = avgFreq(antenna);
+                    double avgDistanceСlose = avgDeltaR(antenna, location);
+                    Coordinates AE_minClose = new Coordinates(AE_Xmin, AE_Ymin, AE_Zmin);
+                    Coordinates location0Close = new Coordinates(X0, Y0, Z0);
+                    this.closeSolution.Add(new ExcelCalc(antennaNameСlose, firstImpClose, velocityMinClose, minTimeErrorClose, RminClose, AE_minClose, location0Close, RtoX0Сlose, freqGeomСlose, avgDistanceСlose));
+                    //resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0, RtoX0Сlose, freqGeomСlose, avgDistanceСlose);
                 }
             }
         }

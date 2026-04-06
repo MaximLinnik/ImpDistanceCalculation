@@ -2157,7 +2157,6 @@ while (reader.Read())
 
         private void AllClustersForm_Load(object sender, EventArgs e)
         {
-            
             dateBeforeText.Text = Properties.Settings.Default.DateBef;
             dateAfterText.Text = Properties.Settings.Default.DateAft;
             velocityBefore.Text = Properties.Settings.Default.vBefore;
@@ -2242,7 +2241,7 @@ while (reader.Read())
 
         private void StartButton_Button_Click_1(object sender, EventArgs e)
         {
-            
+            progressBar1.Value = 0;
             oneRowParametr = false;
             progressLabel.Text = "";
             getAllHole(); // таблица с соответствиями сенсоров-скважин-hwid
@@ -2315,6 +2314,10 @@ while (reader.Read())
         private void CalcButton_Click(object sender, EventArgs e)
         {
             dataGridResult.Rows.Clear();
+
+
+
+
             AntennaCalculation calc = new AntennaCalculation();
             /*
             //Coordinates []coordinates = alg30.getImpulsesCoordinates(dataGridView_Imp);
@@ -2359,8 +2362,10 @@ while (reader.Read())
                 MessageBox.Show("Импульсы не выбраны для расчета");
                 return;
             }
-            List<AntennaCalculation> allImpulses = new List<AntennaCalculation>(); //список для записи всех массивов для экселя
 
+            List<AntennaCalculation> allImpulses = new List<AntennaCalculation>(); //список для записи всех массивов для экселя
+            List<ExcelCalc> allSolutionBest = new List<ExcelCalc>();
+            List<ExcelCalc> allSolutionClose = new List<ExcelCalc>();
             for (int i = 0; i < dataGridView_Events.Rows.Count - 1; i++)
             {
                 String[] data = (String[])dataGridView_Events.Rows[i].Cells["Imp_Events"].Value;
@@ -2371,8 +2376,26 @@ while (reader.Read())
                 AntennaCalculation[] impEvent = getImpulsesByID_withGap(data, location);
                 //alg30.combinationCalc(dataGridView_Imp, dataGridResult, before, after, step, location, parametrTime);
                 int combinationNumber = 4; // антенна из 4х элементов
+
+                /*
+                progressBar1.Value = 0;
+                progressBar1.Minimum = 0;
+                progressBar1.Maximum = 100;
+                progressBar1.Value = 0;
+                var progress = new Progress<int>(currentStep =>
+                {
+                    progressBar1.Value = currentStep;
+
+                });
+                */
+
+                //calc.combinationCalc(combinationNumber, impEvent, dataGridResult, before, after, step, location, parametrTime);
                 calc.combinationCalc(combinationNumber, impEvent, dataGridResult, before, after, step, location, parametrTime);
+
                 allImpulses.AddRange(impEvent); //запись каждого ивента в общий список
+                allSolutionBest.AddRange(calc.bestSolution);
+                allSolutionClose.AddRange(calc.closeSolution);
+
             } 
             
             //Excel
@@ -2381,8 +2404,8 @@ while (reader.Read())
             res = System.IO.Path.GetDirectoryName(strExeFilePath); //папка
             res = res +"\\" +"result.xlsx";
             ExcelCalc excel = new ExcelCalc();
-            excel.excel_Events("Антенны", dataGridResult, allImpulses, res);
-            
+            //excel.excel_Original("Антенны", dataGridResult, allImpulses, res); //старый вариант
+            excel.excel_Events(allImpulses, allSolutionBest, allSolutionClose, res);
             MessageBox.Show("Окончание расчета");
         }
 
