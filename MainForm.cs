@@ -2366,6 +2366,7 @@ while (reader.Read())
             List<AntennaCalculation> allImpulses = new List<AntennaCalculation>(); //список для записи всех массивов для экселя
             List<ExcelCalc> allSolutionBest = new List<ExcelCalc>();
             List<ExcelCalc> allSolutionClose = new List<ExcelCalc>();
+            List <decimal> allOneVelocity = new List<decimal>();
             for (int i = 0; i < dataGridView_Events.Rows.Count - 1; i++)
             {
                 String[] data = (String[])dataGridView_Events.Rows[i].Cells["Imp_Events"].Value;
@@ -2391,10 +2392,12 @@ while (reader.Read())
 
                 //calc.combinationCalc(combinationNumber, impEvent, dataGridResult, before, after, step, location, parametrTime);
                 calc.combinationCalc(combinationNumber, impEvent, dataGridResult, before, after, step, location, parametrTime);
-
+                calc.combinationCalcOneVelocity(combinationNumber, impEvent, dataGridResult, before, after, step, location, parametrTime);
+                
                 allImpulses.AddRange(impEvent); //запись каждого ивента в общий список
                 allSolutionBest.AddRange(calc.bestSolution);
                 allSolutionClose.AddRange(calc.closeSolution);
+                allOneVelocity.Add(calc.oneVelocity);
 
             } 
             
@@ -2405,7 +2408,7 @@ while (reader.Read())
             res = res +"\\" +"result.xlsx";
             ExcelCalc excel = new ExcelCalc();
             //excel.excel_Original("Антенны", dataGridResult, allImpulses, res); //старый вариант
-            excel.excel_Events(allImpulses, allSolutionBest, allSolutionClose, res);
+            excel.excel_Events(allImpulses, allSolutionBest, allSolutionClose, allOneVelocity, res);
             MessageBox.Show("Окончание расчета");
         }
 

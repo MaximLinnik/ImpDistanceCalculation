@@ -109,7 +109,7 @@ namespace ImpDistanceCalculation
         }
 
         //сохрание в эксель (с кучей вкладок)
-        public void excel_Events(List<AntennaCalculation> allImpulses, List<ExcelCalc> bestSolution, List<ExcelCalc> closeSolution, String filename)
+        public void excel_Events(List<AntennaCalculation> allImpulses, List<ExcelCalc> bestSolution, List<ExcelCalc> closeSolution, List<decimal> oneVelocity, String filename)
         {
             Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
@@ -126,6 +126,9 @@ namespace ImpDistanceCalculation
 
                 //вкладка:Импульсы, использовавшиеся для расчета
                 Microsoft.Office.Interop.Excel._Worksheet worksheet4 = worksheetEventBest("Ближайшее решение", workbook, closeSolution);
+
+                //вкладка: Одна скорость
+                Microsoft.Office.Interop.Excel._Worksheet worksheet5 = worksheetOneVelocity("Одна скорость", workbook, oneVelocity);
 
                 //if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 //{
@@ -241,6 +244,27 @@ namespace ImpDistanceCalculation
                 worksheet.Cells[i, 12] = result.RtoX0;
                 worksheet.Cells[i, 13] = result.freqGeom;
                 worksheet.Cells[i, 14] = result.avgDistance;
+                i++;
+            }
+
+            worksheet.Cells[1, 1].CurrentRegion.Borders.LineStyle = Excel.XlLineStyle.xlContinuous; //границы
+            worksheet.Rows[1].Font.Bold = true;
+            worksheet.Range["A:AZ"].EntireColumn.AutoFit();
+            return worksheet;
+        }
+
+        //вкладка "одна скорость"
+        public Microsoft.Office.Interop.Excel._Worksheet worksheetOneVelocity(String name, Microsoft.Office.Interop.Excel._Workbook workbook, List<decimal> allOneVelocity)
+        {
+            Microsoft.Office.Interop.Excel._Worksheet worksheet = (Microsoft.Office.Interop.Excel._Worksheet)workbook.Worksheets.Add
+                (Type.Missing, workbook.Worksheets[workbook.Worksheets.Count], 1, Type.Missing);
+            worksheet.Name = name;
+            worksheet.Cells[1, 1] = "Скорость, при которой процент решений с расстоянием <=10м максимален";
+
+            int i = 2;
+            foreach (decimal oneVelocity in allOneVelocity)
+            {
+                worksheet.Cells[i, 1] = oneVelocity;
                 i++;
             }
 

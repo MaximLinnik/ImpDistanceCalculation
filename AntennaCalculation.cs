@@ -33,11 +33,15 @@ namespace ImpDistanceCalculation
         public double RtoLocation { get; set; } //расстояние до взрыва (X0, ...)
         public double energy { get; set; }
 
+
+        //результаты вычислений:
+
         //список лучших решений
         public List<ExcelCalc> bestSolution { get; set; }
         //список ближайших решений
         public List<ExcelCalc> closeSolution { get; set; }
-
+        //"одна скорость"
+        public decimal oneVelocity { get; set; }
         public AntennaCalculation(int no, double id, double hwid, DateTime date, int holeName, double amplitude, double duration, double freq, Coordinates coordinates, double RtoLocation, double energy)
         {
             this.no = no;
@@ -659,6 +663,47 @@ namespace ImpDistanceCalculation
                     //resultGrid.Rows.Add(antennaName, firstImp, velocityMin, minTimeError, Rmin, AE_Xmin, AE_Ymin, AE_Zmin, X0, Y0, Z0, RtoX0Сlose, freqGeomСlose, avgDistanceСlose);
                 }
             }
+        }
+        /// <summary>
+        ///расчет "одной скорости":
+        ///скорость, при которой находится максимальный % результатов расстояния 
+        ///между координатами вычисленного решения и расстоянием до взрыва, при котором результат меньше/равен 10 м
+        /// <summary>   
+        public void combinationCalcOneVelocity(int combintationNumber, AntennaCalculation[] impEvent, DataGridView resultGrid, decimal velocityBefore, decimal velocityAfter, decimal step, Coordinates location, int parametrTime)
+        {
+            int n = impEvent.Length;
+            this.oneVelocity = 0;
+            decimal velocity = velocityBefore, minVelocity = 0;
+            double checkCount = 0, minCount = 0;
+            while (velocity <= velocityAfter)
+            {
+
+                foreach (int[] idx in GetCombinations(n, combintationNumber))
+                {
+                    var indexes = idx.ToList();
+                    Impulse[] antenna = setAntenna(indexes, impEvent, parametrTime);
+                    DateTime firstImp = DateTime.MinValue;
+
+                    //алг 30
+                    Coordinates AE = Algoritm30.getAECoordinates(antenna, (double)velocity);
+                    Algoritm30.DirectData(false, antenna, AE, (double)velocity);
+                    float TimeError = Algoritm30.TimeErrorClassic(antenna);
+                    double R = deltaR(location, AE);
+                    //лучшее решение
+                    if (R <= 10)
+                    {
+                        checkCount++;
+                    }
+                }
+                if(checkCount > minCount)
+                {
+                    minCount = checkCount;
+                    minVelocity = velocity;
+                }
+                checkCount = 0;
+                velocity += step;
+            }
+            this.oneVelocity = minVelocity;
         }
 
 
