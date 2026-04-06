@@ -610,13 +610,15 @@ namespace ImpDistanceCalculation
                     }
 
                     //ближайшее решение
-                    double Rclose = deltaR(location, AE);
-                    double RtoX0close = deltaR(location, antenna[0].coordinates);
-                    double minCloseCheck = Math.Abs(Rclose - RtoX0close);
+                    //double Rclose = deltaR(location, AE);
+                    //double RtoX0close = deltaR(location, antenna[0].coordinates);
+                    //double minCloseCheck = Math.Abs(Rclose - RtoX0close);
+                    double minCloseCheck = deltaR(antenna[0].coordinates, AE);
                     if (minCloseCheck < RminClose)
                     {
                         firstImpClose = antenna[0].date;
-                        RminClose = R;
+                        //RminClose = R;
+                        RminClose = minCloseCheck;
                         AE_XminClose = AE.x;
                         AE_YminClose = AE.y;
                         AE_ZminClose = AE.z;
